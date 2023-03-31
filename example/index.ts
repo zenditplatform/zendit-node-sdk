@@ -39,7 +39,7 @@ zenditAPI.topupsPurchasesGet(10, 0).then(v => {
 
 zenditAPI.topupsPurchasesPost({
     offerId: "TIGO_GT-US-PAQUETIGO-001",
-    recipientPhoneNumber: "+520000000000",
+    recipientPhoneNumber: "+5355564362", // This testing phone number is used to pass the test case successfully in the sandbox
     transactionId: uuid.v4()
 }).then(v => {
     console.log(v.body)
@@ -61,17 +61,17 @@ zenditAPI.vouchersOffersGet(10, 0).then(v => {
 
 
 
-zenditAPI.vouchersPurchasesPost({
-    offerId: "TELCEL_MX_BUNDLE007",
-    fields: [
-        {key: "recipient.msisdn", value: "+520000000000"},
-        {key: "sender.msisdn", value: "+480000000000"},
-        {key: "sender.country", value: "US"},
-    ],
-    transactionId: uuid.v4(),
-}).then(v => {
-    console.log(v.body)
-})
+    zenditAPI.vouchersPurchasesPost({
+        offerId: "TELCEL_MX_BUNDLE007",
+        fields: [
+            {key: "recipient.msisdn", value: "+5355564362"}, // This testing phone number is used to pass the test case successfully in the sandbox
+            {key: "sender.msisdn", value: "+5355564362"}, // This testing phone number is used to pass the test case successfully in the sandbox
+            {key: "sender.country", value: "US"},
+        ],
+        transactionId: uuid.v4(),
+    }).then(v => {
+        console.log(v.body)
+    })
 
 ///
 /// Transactions

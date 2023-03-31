@@ -25,7 +25,7 @@ You can do so by running the following command:
 npm install zendit-sdk
 ```
 
-Take a look at this [code example](https://github.com/coretech/zendit-node-sdk/blob/master/sdk/typescript-node/example/index.ts) to quickly get up and running.
+Take a look at this [code example](https://github.com/coretech/zendit-node-sdk/blob/main/example/index.ts) to quickly get up and running.
 
 ## Configuration
 To configure the Zendit SDK for Node.js, you'll need to set the ZENDIT_API_KEY environment variable. You can find this key on the [dashboard](https://console.zendit.io/).

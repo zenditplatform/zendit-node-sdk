@@ -1,33 +1,36 @@
 {
-    "name": "zendit-sdk",
-    "version": "1.0.0",
-    "description": "NodeJS client for Zendit API",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/coretech/zendit-node-sdk.git"
-    },
-    "main": "dist/api.js",
-    "types": "dist/api.d.ts",
-    "scripts": {
-        "clean": "rm -Rf node_modules/ *.js",
-        "build": "tsc",
-        "example": "npm run build && node dist/example/index.js"
-    },
-    "author": "Zendit",
-    "license": "MIT",
-    "dependencies": {
-        "bluebird": "^3.5.0",
-        "dotenv": "^16.0.3",
-        "request": "^2.81.0",
-        "rewire": "^6.0.0"
-    },
-    "devDependencies": {
-        "@types/bluebird": "^3.5.33",
-        "@types/node": "^12",
-        "@types/request": "^2.48.8",
-        "typescript": "^4.0"
-    },
-    "publishConfig": {
-        "registry": "https://github.com/coretech/zendit-node-sdk"
-    }
+  "name": "zendit-sdk",
+  "version": "1.0.0",
+  "description": "NodeJS client for Zendit API",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coretech/zendit-node-sdk.git"
+  },
+  "main": "dist/api.js",
+  "types": "dist/api.d.ts",
+  "scripts": {
+    "clean": "rm -Rf node_modules/ *.js",
+    "build": "tsc",
+    "example": "npm run build && node dist/example/index.js",
+    "test": "jest"
+  },
+  "author": "Zendit",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "dotenv": "^16.0.3",
+    "request": "^2.81.0",
+    "rewire": "^6.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1",
+    "@types/bluebird": "^3.5.33",
+    "@types/node": "^12",
+    "@types/request": "^2.48.8",
+    "typescript": "^4.0",
+    "ts-node": "^10.9.1"
+  },
+  "publishConfig": {
+    "registry": "https://github.com/coretech/zendit-node-sdk"
+  }
 }
