@@ -41,6 +41,10 @@ To run an example of the Zendit SDK for Node.js, you can execute the following c
 npm run example
 ```
 
+## SDK Guide
+
+For additional documentation checkout the [SDK Guide](SDK-GUIDE.md)
+
 ## Getting help
 
 If you need assistance with installing or using the library, please refer to the [Developers site][docs-link] first. 
