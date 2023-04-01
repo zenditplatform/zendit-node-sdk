@@ -89,7 +89,7 @@ zenditAPI.topupsOffersOfferIdGet('TIGO_GT-US-PAQUETIGO-001').then(v => {
 ### Make a Purchase
 Parameter |Required | Description|
 -------|------------|------|
-|data|Yes|JSON structure containing the offerId, recipient phone number and transactionId. For RANGE offers the value and value sent type must be included. Optional information about the sender can be included|
+|data|Yes|DtoTopupPurhcaseMakeInput object containing the offerId, recipient phone number and transactionId. For RANGE offers the value and value sent type must be included. Optional information about the sender can be included|
 
 The following example will send a purchase to a Zendit test mode phone number using a random UUID as the transaction ID.
 
@@ -189,7 +189,7 @@ zenditAPI.vouchersOffersOfferIdGet('NETSHOES_BR_002_EGIFT_USD').then(v => {
 ### Make a Purchase
 |Parameter |Required | Description|
 -------|------------|------|
-|data|Yes|JSON structure containing the offerId, unique transaction ID and a field list of required fields for the purchase. For RANGE offers the value and value sent type must be included.|
+|data|Yes|DtoVoucherPurchaseInput object containing the offerId, unique transaction ID and a field list of required fields for the purchase. For RANGE offers the value and value sent type must be included.|
 
 The following example will purchase the AIRCANADA_CA_001_EGIFT_USD for the recipient John Doe. Note fields list includes 6 reqired fields for the offer. Required fields will vary by offer and the catalog will return the list of fields that are required with each offer.
 
