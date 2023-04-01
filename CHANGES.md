@@ -7,3 +7,4 @@ The first version of the `zendit-node` SDK!
 
 - [General Documentation](https://developers.zendit.io)
 - [Full API Documentation](https://developers.zendit.io/api)
+- [SDK Guide](SDK-GUIDE.md)
