@@ -166,7 +166,7 @@ export class ZenditApi {
      * @param country 
      * @param subType 
      */
-    public async topupsOffersGet (limit?: number, offset?: number, brand?: string, country?: string, subType?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: DtoTopupOffersResponse;  }> {
+    public async topupsOffersGet (limit: number, offset: number, brand?: string, country?: string, subType?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: DtoTopupOffersResponse;  }> {
         const localVarPath = this.basePath + '/topups/offers';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -178,6 +178,16 @@ export class ZenditApi {
             localVarHeaderParams.Accept = produces.join(',');
         }
         let localVarFormParams: any = {};
+
+        // verify required parameter 'limit' is not null or undefined
+        if (limit === null || limit === undefined) {
+            throw new Error('Required parameter limit was null or undefined when calling topupsOffersGet.');
+        }
+
+        // verify required parameter 'offset' is not null or undefined
+        if (offset === null || offset === undefined) {
+            throw new Error('Required parameter offset was null or undefined when calling topupsOffersGet.');
+        }
 
         if (limit !== undefined) {
             localVarQueryParameters['_limit'] = ObjectSerializer.serialize(limit, "number");
@@ -326,7 +336,7 @@ export class ZenditApi {
      * @param offset 
      * @param createdAt 
      */
-    public async topupsPurchasesGet (limit?: number, offset?: number, createdAt?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: DtoTopupPurchasesResponse;  }> {
+    public async topupsPurchasesGet (limit: number, offset: number, createdAt?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: DtoTopupPurchasesResponse;  }> {
         const localVarPath = this.basePath + '/topups/purchases';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -338,6 +348,16 @@ export class ZenditApi {
             localVarHeaderParams.Accept = produces.join(',');
         }
         let localVarFormParams: any = {};
+
+        // verify required parameter 'limit' is not null or undefined
+        if (limit === null || limit === undefined) {
+            throw new Error('Required parameter limit was null or undefined when calling topupsPurchasesGet.');
+        }
+
+        // verify required parameter 'offset' is not null or undefined
+        if (offset === null || offset === undefined) {
+            throw new Error('Required parameter offset was null or undefined when calling topupsPurchasesGet.');
+        }
 
         if (limit !== undefined) {
             localVarQueryParameters['_limit'] = ObjectSerializer.serialize(limit, "number");
@@ -551,7 +571,7 @@ export class ZenditApi {
      * @param createdAt 
      * @param productType 
      */
-    public async transactionsGet (limit?: number, offset?: number, createdAt?: string, productType?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: DtoTransactionsResponse;  }> {
+    public async transactionsGet (limit: number, offset: number, createdAt?: string, productType?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: DtoTransactionsResponse;  }> {
         const localVarPath = this.basePath + '/transactions';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -563,6 +583,16 @@ export class ZenditApi {
             localVarHeaderParams.Accept = produces.join(',');
         }
         let localVarFormParams: any = {};
+
+        // verify required parameter 'limit' is not null or undefined
+        if (limit === null || limit === undefined) {
+            throw new Error('Required parameter limit was null or undefined when calling transactionsGet.');
+        }
+
+        // verify required parameter 'offset' is not null or undefined
+        if (offset === null || offset === undefined) {
+            throw new Error('Required parameter offset was null or undefined when calling transactionsGet.');
+        }
 
         if (limit !== undefined) {
             localVarQueryParameters['_limit'] = ObjectSerializer.serialize(limit, "number");
@@ -709,7 +739,7 @@ export class ZenditApi {
      * @param country 
      * @param subType 
      */
-    public async vouchersOffersGet (limit?: number, offset?: number, brand?: string, country?: string, subType?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: DtoVoucherOffersResponse;  }> {
+    public async vouchersOffersGet (limit: number, offset: number, brand?: string, country?: string, subType?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: DtoVoucherOffersResponse;  }> {
         const localVarPath = this.basePath + '/vouchers/offers';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -721,6 +751,16 @@ export class ZenditApi {
             localVarHeaderParams.Accept = produces.join(',');
         }
         let localVarFormParams: any = {};
+
+        // verify required parameter 'limit' is not null or undefined
+        if (limit === null || limit === undefined) {
+            throw new Error('Required parameter limit was null or undefined when calling vouchersOffersGet.');
+        }
+
+        // verify required parameter 'offset' is not null or undefined
+        if (offset === null || offset === undefined) {
+            throw new Error('Required parameter offset was null or undefined when calling vouchersOffersGet.');
+        }
 
         if (limit !== undefined) {
             localVarQueryParameters['_limit'] = ObjectSerializer.serialize(limit, "number");
@@ -869,7 +909,7 @@ export class ZenditApi {
      * @param offset 
      * @param createdAt 
      */
-    public async vouchersPurchasesGet (limit?: number, offset?: number, createdAt?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: DtoVoucherPurchasesResponse;  }> {
+    public async vouchersPurchasesGet (limit: number, offset: number, createdAt?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: DtoVoucherPurchasesResponse;  }> {
         const localVarPath = this.basePath + '/vouchers/purchases';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -881,6 +921,16 @@ export class ZenditApi {
             localVarHeaderParams.Accept = produces.join(',');
         }
         let localVarFormParams: any = {};
+
+        // verify required parameter 'limit' is not null or undefined
+        if (limit === null || limit === undefined) {
+            throw new Error('Required parameter limit was null or undefined when calling vouchersPurchasesGet.');
+        }
+
+        // verify required parameter 'offset' is not null or undefined
+        if (offset === null || offset === undefined) {
+            throw new Error('Required parameter offset was null or undefined when calling vouchersPurchasesGet.');
+        }
 
         if (limit !== undefined) {
             localVarQueryParameters['_limit'] = ObjectSerializer.serialize(limit, "number");
