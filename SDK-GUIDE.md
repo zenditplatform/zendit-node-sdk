@@ -350,7 +350,7 @@ When searching dates, there are search prefixes to use to handle how you want to
 |lt|Search for a date/time that is earlier than the supplied value|lt2023-02-15T03:15:22Z will search for transactions that are before February 15, 2023 at 3:15 and 22 seconds in UTC timezone|
 |lte|Search for a date/time that is equal to the supplied value and earlier|lte2023-02-15T03:15:22Z will search for transactions that are equal February 15, 2023 at 3:15 and 22 seconds in UTC timezone and transactions that are earlier|
 |gt|Search for a date/time that is later than the supplied value|gt2023-02-15T03:15:22Z will search for transactions that are after February 15, 2023 at 3:15 and 22 seconds in UTC timezone|
-|gte|Search for a date/time that is equal to the supplied value and later|gt2023-02-15T03:15:22Z will search for transactions that are equal to February 15, 2023 at 3:15 and 22 seconds in UTC timezone and transactions that are later|
+|gte|Search for a date/time that is equal to the supplied value and later|gte2023-02-15T03:15:22Z will search for transactions that are equal to February 15, 2023 at 3:15 and 22 seconds in UTC timezone and transactions that are later|
 
 ## Handling Errors
 
