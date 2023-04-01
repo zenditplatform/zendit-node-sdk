@@ -94,25 +94,28 @@ Parameter |Required | Description|
 The following example will send a purchase to a Zendit test mode phone number using a random UUID as the transaction ID.
 
 ```typescript
-zenditAPI.topupsPurchasesPost({
-    offerId: "TIGO_GT-US-PAQUETIGO-001",
-    recipientPhoneNumber: "+5355564362", 
-    transactionId: uuid.v4()
-})
+var data = new DtoTopupPurchaseMakeInput();
+data.transactionId = uuid.v4();
+data.offerId = "TIGO_GT-US-PAQUETIGO-001";
+data.recipientPhoneNumber = "+5355564362";
+
+zenditAPI.topupsPurchasesPost(data)
 ```
 
 The following example will send an open range purchase valued at 250 CUP to a Zendit test mode phone number using a random UUID as the transaction ID.
 
 ```typescript
-zenditAPI.topupsPurchasesPost({
-    offerId: "CUBACEL_CU_OPEN",
-    recipientPhoneNumber: "+5355564362", 
-    transactionId: uuid.v4(),
-    value: {
-        type: "Zend",
-        value: "25000"
-    }
-})
+var data = new DtoTopupPurchaseMakeInput();
+data.transactionId = uuid.v4();
+data.offerId = "CUBACEL_CU_OPEN";
+data.recipientPhoneNumber = "+5355564362"; // Test Mode Cubacel Phone number
+var value = new DtoPurchaseValue();
+value.type = DtoValueType.ValueTypeZend;
+value.value = 25000; // 250 CUP using minor currency
+data.value = value;
+
+
+zenditAPI.topupsPurchasesPost(data)
 ```
 
 ### Get a Transaction by ID
@@ -191,37 +194,42 @@ zenditAPI.vouchersOffersOfferIdGet('NETSHOES_BR_002_EGIFT_USD').then(v => {
 The following example will purchase the AIRCANADA_CA_001_EGIFT_USD for the recipient John Doe. Note fields list includes 6 reqired fields for the offer. Required fields will vary by offer and the catalog will return the list of fields that are required with each offer.
 
 ```typescript
-zenditAPI.vouchersPurchasesPost({
-    offerId: "AIRCANADA_CA_001_EGIFT_USD",
-    transactionId: uuid.v4(),
-    fields: [
-        {
-            key: "recipient.firstName",
-            value: "John"
-        },
-        {
-            key: "recipient.lastName",
-            value: "Doe"
-        },
-        {
-            key: "recipient.msisdn",
-            value: "+15515551212"
-        },
-        {
-            key: "sender.firstName",
-            value: "Jane"
-        },
-        {
-            key: "sender.lastName",
-            value: "Doe"
-        },
-        {
-            key: "sender.msisdn",
-            value: "+15515551212"
-        }
+// Create voucher purchase request and set offer parameters
+var data = new DtoVoucherPurchaseInput()
+data.offerId = offerId;
+data.transactionId = transactionId;
 
-    ]   
-})
+// Create required fields and add data
+var reqFields = new Array<DtoVoucherField>();
+var voucherField = new DtoVoucherField();
+voucherField.key = "recipient.firstName";
+voucherField.value = "John";
+reqFields.push(voucherField)
+voucherField = new DtoVoucherField();
+voucherField.key = "recipient.lastName";
+voucherField.value = "Doe";
+reqFields.push(voucherField)
+voucherField = new DtoVoucherField();
+voucherField.key = "recipient.msisdn";
+voucherField.value = "+15515551212";
+reqFields.push(voucherField)
+voucherField = new DtoVoucherField();
+voucherField.key = "sender.firstName";
+voucherField.value = "Jane";
+reqFields.push(voucherField)
+voucherField = new DtoVoucherField();
+voucherField.key = "sender.lastName";
+voucherField.value = "Doe";
+reqFields.push(voucherField)
+voucherField = new DtoVoucherField();
+voucherField.key = "sender.msisdn";
+voucherField.value = "+15515551212";
+reqFields.push(voucherField)
+
+data.fields = reqFields;
+
+
+zenditAPI.vouchersPurchasesPost(data)
 ```
 
 
