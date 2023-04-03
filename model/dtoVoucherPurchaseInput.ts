@@ -1,11 +1,23 @@
 import { DtoPurchaseValue } from './dtoPurchaseValue';
 import { DtoVoucherField } from './dtoVoucherField';
+import { DtoValueType } from './dtoValueType';
 
 export class DtoVoucherPurchaseInput {
     'fields'?: Array<DtoVoucherField>;
     'offerId'?: string;
     'transactionId'?: string;
     'value'?: DtoPurchaseValue;
+
+    constructor(transactionId: string, offerId: string, fields: Array<DtoVoucherField>, value?: DtoPurchaseValue) {
+        this.transactionId = transactionId;
+        this.offerId = offerId;
+        this.fields = fields;
+        if (value !== undefined) 
+            this.value = value;
+        
+    }
+
+    
 
     static discriminator: string | undefined = undefined;
 

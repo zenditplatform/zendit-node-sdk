@@ -8,6 +8,16 @@ export class DtoTopupPurchaseMakeInput {
     'transactionId'?: string;
     'value'?: DtoPurchaseValue;
 
+    constructor(transactionId: string, offerId: string, recipientPhoneNumber: string, value?: DtoPurchaseValue, sender?: DtoTopupSender) {
+        this.transactionId = transactionId;
+        this.offerId = offerId;
+        this.recipientPhoneNumber = recipientPhoneNumber;
+        if (sender !== undefined) 
+           this.sender = sender;
+        if (value !== undefined)
+           this.value = value; 
+    }
+
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [

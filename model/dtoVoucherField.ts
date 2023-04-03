@@ -2,6 +2,11 @@ export class DtoVoucherField {
     'key'?: string;
     'value'?: string;
 
+    constructor(key: string, value: string) {
+        this.key = key;
+        this.value = value;
+    }
+
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [

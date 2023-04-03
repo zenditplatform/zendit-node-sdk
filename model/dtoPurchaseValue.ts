@@ -4,6 +4,11 @@ export class DtoPurchaseValue {
     'type'?: DtoValueType;
     'value'?: number;
 
+    constructor(type: DtoValueType, value: number) {
+        this.type = type;
+        this.value = value; 
+    }
+
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
