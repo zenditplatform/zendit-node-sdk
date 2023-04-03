@@ -11,4 +11,4 @@
 Please report vulnerabilities as an issue on this repository. 
 
 The Zendit team will review issues every weekday to investigate reported issues and provide ETA on fixes and notification 
-to users of updates that fix vulnerabilities resolved.
+to users of updates that fix vulnerabilities discovered.
