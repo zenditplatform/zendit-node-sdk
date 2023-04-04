@@ -4,7 +4,7 @@
   "description": "NodeJS client for Zendit API",
   "repository": {
     "type": "git",
-    "url": "https://github.com/coretech/zendit-node-sdk.git"
+    "url": "https://github.com/zenditplatform/zendit-node-sdk.git"
   },
   "main": "dist/api.js",
   "types": "dist/api.d.ts",
@@ -32,6 +32,6 @@
     "ts-node": "^10.9.1"
   },
   "publishConfig": {
-    "registry": "https://github.com/coretech/zendit-node-sdk"
+    "registry": "https://github.com/zenditplatform/zendit-node-sdk"
   }
 }
