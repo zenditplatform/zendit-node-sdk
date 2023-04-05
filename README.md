@@ -15,28 +15,50 @@ This library has been tested using the following Node.js implementations:
 * Node.js 18
 * TypeScript is supported for version 4.0 and above.
 
-# Sample Usage
+# Installation
 
-## Installation
+## Add Zendit SDK to your project
 
-Before running the examples, you'll need to install the package from the NPM repository. 
-You can do so by running the following command:
+Add the Zendit SDK to your NPM dependencies by running the following command:
 ```bash
-npm install zendit-sdk
+npm install git+https://github.com/zenditplatform/zendit-node-sdk.git
 ```
 
-Take a look at this [code example](https://github.com/coretech/zendit-node-sdk/blob/main/example/index.ts) to quickly get up and running.
+To use the Zendit SDK in your project, provide your API key instead of the placeholder `YOUR_KEY_HERE`. 
+You can find your key in the [dashboard](https://console.zendit.io/)
+```typescript
+import { ZenditApi } from "@zenditplatform/zendit-sdk";
+
+const zenditAPI = new ZenditApi("YOUR_KEY_HERE")
+```
+
+# Example
+
+For a quick start, we have set up the [example app](https://github.com/zenditplatform/zendit-node-sdk/blob/main/example) for you.
+
+You can install the example app in two ways:
+
+1. **Clone the example app**: Copy the [example app](https://github.com/zenditplatform/zendit-node-sdk/blob/main/example) to your own directory and run the following command: 
+```bash
+npm install
+```
+2. **Install from the NPM registry**: Use this command to install the example app directly from the NPM registry:
+```bash
+npm install @zenditplatform/zendit-sdk-example
+```
 
 ## Configuration
-To configure the Zendit SDK for Node.js, you'll need to set the ZENDIT_API_KEY environment variable. You can find this key on the [dashboard](https://console.zendit.io/).
+To configure the example app, you'll need to set the `ZENDIT_API_KEY` environment variable. 
+You can find this key on the [dashboard](https://console.zendit.io/).
 
-To set this variable, you can use a .env file located in the root folder of your project. Here's an example of how to set it:
+To set this variable, you can use a .env file located in the root folder of the example application. 
+Paste your API key instead of placeholder `YOUR_KEY_HERE`:
 ```.env
 ZENDIT_API_KEY=YOUR_KEY_HERE
 ```
 
 ## Run example
-To run an example of the Zendit SDK for Node.js, you can execute the following command:
+To run an example of the Zendit SDK for Node.js, execute the following command:
 ```bash
 npm run example
 ```
@@ -61,6 +83,6 @@ Bug fixes, docs, and library improvements are always welcome. Please refer to ou
 If you're not familiar with the GitHub pull request/contribution process, [this is a nice tutorial](https://gun.io/blog/how-to-github-fork-branch-and-pull-request/).
 
 [docs-link]: https://developers.zendit.io
-[issue-link]: https://github.com/coretech/zendit-node-sdk/issues/new
-[github]: https://github.com/coretech/zendit-node-sdk
+[issue-link]: https://github.com/zenditplatform/zendit-node-sdk/issues/new
+[github]: https://github.com/zenditplatform/zendit-node-sdk
 [support-page]: https://developers.zendit.io/zendit-support

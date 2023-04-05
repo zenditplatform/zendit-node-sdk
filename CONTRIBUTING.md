@@ -72,6 +72,6 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
 * All classes and methods **must be documented**.
 
 [docs-link]: https://developers.zendit.io/api
-[issue-link]: https://github.com/coretech/zendit-node-sdk/issues/new
-[github]: https://github.com/coretech/zendit-node-sdk
+[issue-link]: https://github.com/zenditplatform/zendit-node-sdk/issues/new
+[github]: https://github.com/zenditplatform/zendit-node-sdk
 [support-page]: https://developers.zendit.io/zendit-support
