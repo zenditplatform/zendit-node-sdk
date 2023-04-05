@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "ES6",
         "noImplicitAny": false,
         "suppressImplicitAnyIndexErrors": true,
         "target": "ES5",
@@ -13,14 +13,10 @@
         "noLib": false,
         "declaration": true,
         "lib": ["dom", "es6", "es5", "dom.iterable", "scripthost"],
-        "outDir": "dist",
-        "typeRoots": [
-            "node_modules/@types"
-        ]
+        "outDir": "./",
     },
     "exclude": [
         "dist",
-        "node_modules",
-        "example"
+        "node_modules"
     ]
 }

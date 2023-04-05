@@ -1,5 +1,5 @@
 {
-  "name": "zendit-sdk",
+  "name": "@zenditplatform/zendit-sdk",
   "version": "1.0.0",
   "description": "NodeJS client for Zendit API",
   "repository": {
@@ -12,7 +12,6 @@
     "prepare": "npm run build",
     "clean": "rm -Rf node_modules/ *.js",
     "build": "tsc",
-    "example": "npm run build && node dist/example/index.js",
     "test": "jest"
   },
   "author": "Zendit",
@@ -32,6 +31,6 @@
     "ts-node": "^10.9.1"
   },
   "publishConfig": {
-    "registry": "https://github.com/zenditplatform/zendit-node-sdk"
+    "registry": "https://npm.pkg.github.com/"
   }
 }
