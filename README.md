@@ -34,17 +34,13 @@ const zenditAPI = new ZenditApi("YOUR_KEY_HERE")
 
 # Example
 
-For a quick start, we have set up the [example app](https://github.com/zenditplatform/zendit-node-sdk/blob/main/example) for you.
+## Create a new project
 
-You can install the example app in two ways:
+To help you get started quickly, we've set up an [example app](https://github.com/zenditplatform/zendit-node-sdk/blob/main/example) for you.
 
-1. **Clone the example app**: Copy the [example app](https://github.com/zenditplatform/zendit-node-sdk/blob/main/example) to your own directory and run the following command: 
+To get started, copy the [example app](https://github.com/zenditplatform/zendit-node-sdk/blob/main/example) to your own directory. Then, run the following command:
 ```bash
 npm install
-```
-2. **Install from the NPM registry**: Use this command to install the example app directly from the NPM registry:
-```bash
-npm install @zenditplatform/zendit-sdk-example
 ```
 
 ## Configuration
