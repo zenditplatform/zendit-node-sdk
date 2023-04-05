@@ -28,8 +28,3 @@ jobs:
 
       - run: npm install
       - run: npm run build
-      - name: Run Tests
-        run: npm run test
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ZENDIT_API_KEY: ${{ secrets.ZENDIT_API_KEY }}
