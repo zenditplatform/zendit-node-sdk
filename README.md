@@ -12,8 +12,8 @@ Zendit-node uses [Semantic Versioning](https://semver.org/) for all changes.
 # Supported Node.js Versions
 This library has been tested using the following Node.js implementations:
 
-* Node.js 18
-* TypeScript is supported for version 4.0 and above.
+* Node.js 17.5+
+* TypeScript 4.0+
 
 # Installation
 
