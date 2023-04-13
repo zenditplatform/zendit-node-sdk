@@ -36,8 +36,8 @@ To check the balance of your account, with your zenditAPI client use the followi
 
 ```typescript
 zenditAPI.balanceGet().then(v => {
-    console.log(v.body.availableBalance)
-})
+        console.log(v.availableBalance);
+    })
 ```
 
 ## Mobile Topup, Mobile Bundle, and Mobile Data 
@@ -49,17 +49,17 @@ Mobile Topup, Mobile Bundle, and Mobile Data use a common set of methods for obt
 #### Parameter List
 |Parameter |Required | Description|Example|
 -------|------------|------|------|
-|Limit|Yes|Number of offers to retrieve, minimum 1 and maximum 1024. Used for pagination of the catalog.|10|
-|Offset|Yes|Number of offers to skip, minimum 0. Used for pagination to skip items.|20|
-|Brand|No|The Brand of carrier for the search| Cubacel|
-|Country|No|The 2 letter ISO country code for the destination of the offer search|CU|
-|Subtype|No|The product subtype for the offer search|Mobile Bundle|
+|limit|Yes|Number of offers to retrieve, minimum 1 and maximum 1024. Used for pagination of the catalog.|10|
+|offset|Yes|Number of offers to skip, minimum 0. Used for pagination to skip items.|20|
+|brand|No|The Brand of carrier for the search| Cubacel|
+|country|No|The 2 letter ISO country code for the destination of the offer search|CU|
+|subtype|No|The product subtype for the offer search|Mobile Bundle|
 
 The following example retrieves the first 10 offers in the catalog:
 
 ```typescript
 zenditAPI.topupsOffersGet(10, 0).then(v => {
-    console.log(v.body.list)
+    console.log(v.list)
 })
 ```
 
@@ -67,7 +67,7 @@ The following example retrieves the first 10 offers in the catalog for Cubacel
 
 ```typescript
 zenditAPI.topupsOffersGet(10, 0, 'Cubacel').then(v => {
-    console.log(v.body.list)
+    console.log(v.list)
 })
 ```
 
@@ -82,7 +82,7 @@ The following example will return the offer details for the offer TIGO_GT-US-PAQ
 
 ```typescript
 zenditAPI.topupsOffersOfferIdGet('TIGO_GT-US-PAQUETIGO-001').then(v => {
-        console.log(v.body)
+        console.log(v)
     })
 ```
 
@@ -94,23 +94,22 @@ Parameter |Required | Description|
 The following example will send a purchase to a Zendit test mode phone number using a random UUID as the transaction ID.
 
 ```typescript
-const data = new DtoTopupPurchaseMakeInput(uuid.v4(), "CUBACEL_CU_PAQUETE001", "+5355564362");
-
+const data : DtoTopupPurchaseMakeInput = {transactionId: uuid.v4(), offerId: "CUBACEL_CU_PAQUETE001", recipientPhoneNumber: "+5355564362"};
 zenditAPI.topupsPurchasesPost(data).then(v => {
-  console.log(v.body)
+  console.log(v)
 })
 ```
 
 The following example will send an open range purchase valued at 250 CUP to a Zendit test mode phone number using a random UUID as the transaction ID. This example also shows the structure for the Purchase Value and the optional Sender information using only the sender phone number but excluding the optional country.
 
 ```typescript
-const purchaseValue = new DtoPurchaseValue(DtoValueType.ValueTypeZend, 25000);
-const topupSender = new DtoTopupSender(undefined,  "+15515551212");
-const dataOpenRange = new DtoTopupPurchaseMakeInput(uuid.v4(), "CUBACEL_CU_OPEN", "+5355564362", purchaseValue, topupSender);
-        
+const purchaseValue : DtoPurchaseValue = {type: DtoValueType.ValueTypeZend, value: 25000};
+const topupSender : DtoTopupSender = {country: undefined, phoneNumber: "+15515551212"};
+const dataOpenRange : DtoTopupPurchaseMakeInput = {transactionId: uuid.v4(), offerId: "CUBACEL_CU_OPEN", recipientPhoneNumber: "+5355564362", value: purchaseValue, sender: topupSender};
+            
 
 zenditAPI.topupsPurchasesPost(data).then(v => {
-   console.log(v.body)
+   console.log(v)
 })
 ```
 
@@ -122,7 +121,7 @@ zenditAPI.topupsPurchasesPost(data).then(v => {
 
 ```typescript
 zenditAPI.topupsPurchasesTransactionIdGet('0f1db8e2-b0c9-49ac-a814-1f469e71c8a8').then(v => {
-  console.log(v.body);
+  console.log(v);
 })
 ```
 
@@ -130,15 +129,15 @@ zenditAPI.topupsPurchasesTransactionIdGet('0f1db8e2-b0c9-49ac-a814-1f469e71c8a8'
 
 |Parameter |Required | Description|Example|
 -------|------------|------|------|
-|Limit|Yes|Number of transactions to retrieve, minimum 1 and maximum 1024. Used for pagination of the transaction list.|10|
-|Offset|Yes|Number of transactions to skip, minimum 0. Used for pagination to skip items.|20|
+|limit|Yes|Number of transactions to retrieve, minimum 1 and maximum 1024. Used for pagination of the transaction list.|10|
+|offset|Yes|Number of transactions to skip, minimum 0. Used for pagination to skip items.|20|
 |createdAt|No|Created date/time of transaction with search modifiers as described in the Date Formats section|gte2023-03-29T00:00:00Z|
 
 The following example will retrieve the first 10 Mobile Top Up, Mobile Bundle or Mobile Data transactions created on March 29th ad midnight UTC or later.
 
 ```typescript
 zenditAPI.topupsPurchasesGet(10, 0, 'gte2023-03-29T00:00:00Z').then(v => {
-  console.log(v.body);
+  console.log(v);
 })
 ```
 
@@ -153,17 +152,17 @@ Digital Gift Card and Utility Payment products use a common set of methods for o
 #### Parameter List
 |Parameter |Required | Description|Example|
 -------|------------|------|------|
-|Limit|Yes|Number of offers to retrieve, minimum 1 and maximum 1024. Used for pagination of the catalog.|10|
-|Offset|Yes|Number of offers to skip, minimum 0. Used for pagination to skip items.|20|
-|Brand|No|The Brand of carrier for the search| Cubacel|
-|Country|No|The 2 letter ISO country code for the destination of the offer search|CU|
-|Subtype|No|The product subtype for the offer search|Mobile Bundle|
+|limit|Yes|Number of offers to retrieve, minimum 1 and maximum 1024. Used for pagination of the catalog.|10|
+|offset|Yes|Number of offers to skip, minimum 0. Used for pagination to skip items.|20|
+|brand|No|The Brand of carrier for the search| Cubacel|
+|country|No|The 2 letter ISO country code for the destination of the offer search|CU|
+|subtype|No|The product subtype for the offer search|Mobile Bundle|
 
 The following example retrieves the first 10 offers in the catalog:
 
 ```typescript
 zenditAPI.topupsOffersGet(10, 0).then(v => {
-    console.log(v.body.list)
+    console.log(v.list)
 })
 ```
 
@@ -178,7 +177,7 @@ The following example will return the offer details for the offer NETSHOES_BR_00
 
 ```typescript
 zenditAPI.vouchersOffersOfferIdGet('NETSHOES_BR_002_EGIFT_USD').then(v => {
-  console.log(v.body);
+  console.log(v);
 })
 ```
 
@@ -190,19 +189,21 @@ zenditAPI.vouchersOffersOfferIdGet('NETSHOES_BR_002_EGIFT_USD').then(v => {
 The following example will purchase the AIRCANADA_CA_001_EGIFT_USD for the recipient John Doe. Note fields list includes 6 reqired fields for the offer. Required fields will vary by offer and the catalog will return the list of fields that are required with each offer.
 
 ```typescript
- const reqFields: Array<DtoVoucherField> = [
-        new DtoVoucherField("recipient.firstName", "John"),
-        new DtoVoucherField("recipient.lastName", "Doe"),
-        new DtoVoucherField("recipient.msisdn", "+15515551212"),
-        new DtoVoucherField("sender.firstName", "Jane"),
-        new DtoVoucherField("sender.lastName", "Doe"),
-        new DtoVoucherField("sender.msisdn", "+15515551212"),
-        
+const reqFields: Array<DtoVoucherField> = [
+        {key: "recipient.firstName", value: "John"},
+        {key: "recipient.lastName", value: "Doe"},
+        {key: "recipient.msisdn", value: "+15515551212"},
+        {key: "sender.firstName", value: "Jane"},
+        {key: "sender.lastName", value: "Doe"},
+        {key: "sender.msisdn", value: "+15515551212"},
     ]
 
-const voucherData = new DtoVoucherPurchaseInput(uuid.v4(), "AIRCANADA_CA_001_EGIFT_USD", reqFields);
+const voucherPurchaseInput: DtoVoucherPurchaseInput = {
+        transactionId: uuid.v4(), offerId: "AIRCANADA_CA_001_EGIFT_USD", fields: reqFields
+    };
+
 zenditAPI.vouchersPurchasesPost(voucherData).then(v => {
-   console.log(v.body)
+   console.log(v)
 })
 ```
 
@@ -217,7 +218,7 @@ The following example will retrieve the transaction with the ID 0f1db8e2-b0c9-49
 
 ```typescript
 zenditAPI.vouchersPurchasesTransactionIdGet('0f1db8e2-b0c9-49ac-a814-1f469e71c8a8').then(v => {
-  console.log(v.body);
+  console.log(v);
 })
 ```
 
@@ -225,15 +226,15 @@ zenditAPI.vouchersPurchasesTransactionIdGet('0f1db8e2-b0c9-49ac-a814-1f469e71c8a
 
 |Parameter |Required | Description|Example|
 -------|------------|------|------|
-|Limit|Yes|Number of transactions to retrieve, minimum 1 and maximum 1024. Used for pagination of the transaction list.|10|
-|Offset|Yes|Number of transactions to skip, minimum 0. Used for pagination to skip items.|20|
+|limit|Yes|Number of transactions to retrieve, minimum 1 and maximum 1024. Used for pagination of the transaction list.|10|
+|offset|Yes|Number of transactions to skip, minimum 0. Used for pagination to skip items.|20|
 |createdAt|No|Created date/time of transaction with search modifiers as described in the Date Formats section|gte2023-03-29T00:00:00Z|
 
 The following example will retrieve the first 10 Mobile Top Up, Mobile Bundle or Mobile Data transactions created on March 29th ad midnight UTC or later.
 
 ```typescript
 zenditAPI.vouchersPurchasesGet(10, 0, 'gte2023-03-29T00:00:00Z').then(v => {
-  console.log(v.body);
+  console.log(v);
 })
 ```
 
@@ -251,7 +252,7 @@ The following example retrieves the transaction with the ID 0f1db8e2-b0c9-49ac-a
 
 ```typescript
 zenditAPI.transactionsTransactionIdGet('0f1db8e2-b0c9-49ac-a814-1f469e71c8a8').then(v => {
-  console.log(v.body);
+  console.log(v);
 })
 ```
 
@@ -259,8 +260,8 @@ zenditAPI.transactionsTransactionIdGet('0f1db8e2-b0c9-49ac-a814-1f469e71c8a8').t
 
 |Parameter |Required | Description|Example|
 -------|------------|------|------|
-|Limit|Yes|Number of transactions to retrieve, minimum 1 and maximum 1024. Used for pagination of the transaction list.|10|
-|Offset|Yes|Number of transactions to skip, minimum 0. Used for pagination to skip items.|20|
+|limit|Yes|Number of transactions to retrieve, minimum 1 and maximum 1024. Used for pagination of the transaction list.|10|
+|offset|Yes|Number of transactions to skip, minimum 0. Used for pagination to skip items.|20|
 |createdAt|No|Created date/time of transaction with search modifiers as described in the Date Formats section|gte2023-03-29T00:00:00Z|
 |productType|No|Product type as listed in the enum section under product types|TOPUP
 
@@ -268,7 +269,7 @@ The following example retrieves up to 10 transactions with a created date that i
 
 ```typescript
 zenditAPI.transactionsGet(10, 0, 'gte2023-03-29T00:00:00Z').then(v => {
-  console.log(v.body);
+  console.log(v);
 })
 ```
 
