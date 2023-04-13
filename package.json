@@ -8,6 +8,9 @@
   },
   "main": "./dist/api.js",
   "typings": "./dist/api.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "prepare": "npm run build",
     "clean": "rm -Rf node_modules/ *.js",
