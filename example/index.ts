@@ -1,7 +1,7 @@
-import uuid from "uuid";
+import * as uuid from 'uuid';
 import * as dotenv from "dotenv"
 import { ZenditApi, DtoTransaction,  DtoVoucherOffer, DtoTopupPurchase, DtoPurchaseValue, DtoVoucherPurchaseInput,
-    DtoValueType, DtoVoucherField, DtoTopupPurchaseMakeInput, DtoTopupSender } from "./../api";
+    DtoValueType, DtoVoucherField, DtoTopupPurchaseMakeInput, DtoTopupSender } from "@zenditplatform/zendit-sdk";
 
 dotenv.config()
 

@@ -15,7 +15,7 @@
     "example": "node index.js"
   },
   "dependencies": {
-    "@zenditplatform/zendit-sdk": "^1.1.0",
+    "@zenditplatform/zendit-sdk": "~1.5.1",
     "dotenv": "^16.0.3",
     "uuid": "^9.0.0"
   },

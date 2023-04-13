@@ -1,13 +1,13 @@
 {
   "name": "@zenditplatform/zendit-sdk",
-  "version": "1.2.0",
+  "version": "1.5.1",
   "description": "NodeJS client for Zendit API",
   "repository": {
     "type": "git",
     "url": "https://github.com/zenditplatform/zendit-node-sdk.git"
   },
-  "main": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
+  "main": "./dist/api.js",
+  "typings": "./dist/api.d.ts",
   "scripts": {
     "prepare": "npm run build",
     "clean": "rm -Rf node_modules/ *.js",
