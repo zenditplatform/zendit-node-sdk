@@ -16,6 +16,11 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           scope: '@zenditplatform'
       - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set package registry
+        run: npm config set registry https://npm.pkg.github.com
+      - name: GitHub package registry authentication
+        run: npm set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+      - name: Npm registry authentication
+        run: npm set //registry.npmjs.org/:_authToken ${{ secrets.NPMJS_TOKEN }}
+      - name: Publish the package to Github and Npm package registries
+        run: npm publish 
