@@ -16,7 +16,7 @@ Library - Security
 
 - PR #14: Replace package request with fetch to fix security vulnerability
 
-[2023-04-13] Version 1.1.0
+[2023-04-13] Version 1.1.1
 --------------------------------
 
 Documentation 
