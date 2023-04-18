@@ -22,7 +22,7 @@
     "build": "tsc",
     "test": "jest",
     "postpublish": "npm run publish-npm",
-    "publish-npm": "npm publish --access public --ignore-scripts --@OWNER:registry='https://registry.npmjs.org'"
+    "publish-npm": "npm publish --access public --ignore-scripts --@zenditplatform:registry='https://registry.npmjs.org'"
   },
   "engines": {
     "node": ">=17.5"
