@@ -21,7 +21,7 @@ This library has been tested using the following Node.js implementations:
 
 Add the Zendit SDK to your NPM dependencies by running the following command:
 ```bash
-npm install git+https://github.com/zenditplatform/zendit-node-sdk.git
+npm install @zenditplatform/zendit-node-sdk.git
 ```
 
 To use the Zendit SDK in your project, provide your API key instead of the placeholder `YOUR_KEY_HERE`. 
