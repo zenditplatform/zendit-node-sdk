@@ -23,3 +23,10 @@ Documentation
 
 - Updated install instructions
 
+
+[2023-04-13] Version 1.2.0
+--------------------------------
+
+Library - Enhancements 
+
+- The confirmations field has been added into both the DtoTopupPurchaseResponse and DtoVoucherPurchaseResponse models.
