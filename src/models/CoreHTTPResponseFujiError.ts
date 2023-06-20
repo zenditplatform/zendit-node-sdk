@@ -32,12 +32,6 @@ export interface CoreHTTPResponseFujiError {
      * @memberof CoreHTTPResponseFujiError
      */
     payload?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof CoreHTTPResponseFujiError
-     */
-    txid?: string;
 }
 
 /**
@@ -62,7 +56,6 @@ export function CoreHTTPResponseFujiErrorFromJSONTyped(json: any, ignoreDiscrimi
         'errorCode': !exists(json, 'errorCode') ? undefined : CoreErrorCodeFromJSON(json['errorCode']),
         'message': !exists(json, 'message') ? undefined : json['message'],
         'payload': !exists(json, 'payload') ? undefined : json['payload'],
-        'txid': !exists(json, 'txid') ? undefined : json['txid'],
     };
 }
 
@@ -78,7 +71,6 @@ export function CoreHTTPResponseFujiErrorToJSON(value?: CoreHTTPResponseFujiErro
         'errorCode': CoreErrorCodeToJSON(value.errorCode),
         'message': value.message,
         'payload': value.payload,
-        'txid': value.txid,
     };
 }
 

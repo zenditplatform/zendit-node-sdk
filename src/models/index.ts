@@ -3,6 +3,7 @@
 export * from './CoreErrorCode';
 export * from './CoreHTTPResponseFujiError';
 export * from './DtoBalanceResponse';
+export * from './DtoConfirmation';
 export * from './DtoCost';
 export * from './DtoError';
 export * from './DtoPrice';

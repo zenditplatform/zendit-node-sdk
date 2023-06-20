@@ -1,6 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
 import { exists, mapValues } from '../runtime';
+import type { DtoConfirmation } from './DtoConfirmation';
+import {
+    DtoConfirmationFromJSON,
+    DtoConfirmationFromJSONTyped,
+    DtoConfirmationToJSON,
+} from './DtoConfirmation';
 import type { DtoError } from './DtoError';
 import {
     DtoErrorFromJSON,
@@ -62,6 +68,12 @@ export interface DtoVoucherPurchase {
      * @memberof DtoVoucherPurchase
      */
     brand?: string;
+    /**
+     * 
+     * @type {DtoConfirmation}
+     * @memberof DtoVoucherPurchase
+     */
+    confirmation?: DtoConfirmation;
     /**
      * 
      * @type {number}
@@ -216,6 +228,7 @@ export function DtoVoucherPurchaseFromJSONTyped(json: any, ignoreDiscriminator: 
     return {
         
         'brand': !exists(json, 'brand') ? undefined : json['brand'],
+        'confirmation': !exists(json, 'confirmation') ? undefined : DtoConfirmationFromJSON(json['confirmation']),
         'cost': !exists(json, 'cost') ? undefined : json['cost'],
         'costCurrency': !exists(json, 'costCurrency') ? undefined : json['costCurrency'],
         'country': !exists(json, 'country') ? undefined : json['country'],
@@ -251,6 +264,7 @@ export function DtoVoucherPurchaseToJSON(value?: DtoVoucherPurchase | null): any
     return {
         
         'brand': value.brand,
+        'confirmation': DtoConfirmationToJSON(value.confirmation),
         'cost': value.cost,
         'costCurrency': value.costCurrency,
         'country': value.country,
