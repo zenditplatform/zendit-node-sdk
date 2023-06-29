@@ -1,10 +1,9 @@
 name: Test
 on:
   push:
-    branches: [ '*' ]
-    tags: [ '*' ]
-  pull_request:
     branches: [ main ]
+  pull_request:
+    branches: [ '*' ]
   workflow_dispatch:
 
 jobs:
@@ -26,5 +25,10 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - run: npm install
+      - run: npm ci
       - run: npm run build
+
+      - name: Run tests
+        run: npm run test
+        env:
+          ZENDIT_API_KEY: ${{ secrets.ZENDIT_API_KEY }}
