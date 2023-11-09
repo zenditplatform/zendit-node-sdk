@@ -30,3 +30,11 @@ Documentation
 Library - Enhancements 
 
 - The confirmations field has been added into both the DtoTopupPurchaseResponse and DtoVoucherPurchaseResponse models.
+
+
+[2023-11-10] Version 1.2.1
+--------------------------------
+
+Library - Security 
+
+- Vulnerability https://nvd.nist.gov/vuln/detail/CVE-2023-45133 has been fixed by updating babel/traverse to version 7.23.3

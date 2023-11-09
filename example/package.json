@@ -1,6 +1,6 @@
 {
   "name": "@zenditplatform/zendit-sdk-example",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Example usage of Node.js client for Zendit API",
   "main": "index.js",
   "types": "index.d.ts",
