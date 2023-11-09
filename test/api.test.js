@@ -31,7 +31,7 @@ test('topupsPurchasesTransactionIdGet should return purchase', async () => {
 
 test('topupsPurchasesPost should create voucher', async () => {
     const response = await zenditAPI.topupsPurchasesPost({
-            offerId: "TIGO_GT-US-PAQUETIGO-001",
+            offerId: "CUBACEL_CU_PAQUETE001",
             recipientPhoneNumber: "+5355564362", // This testing phone number is used to pass the test case successfully in the sandbox
             transactionId: uuid.v4()
         });
@@ -49,11 +49,15 @@ test('vouchersOffersGet should return offers', async () => {
 
 test('vouchersPurchasesPost should create purchase', async () => {
     const response = await zenditAPI.vouchersPurchasesPost({
-            offerId: "TELCEL_MX_BUNDLE007",
+            offerId: "AIRCANADA_CA_001_EGIFT_USD",
             fields: [
                 {key: "recipient.msisdn", value: "+5355564362"}, // This testing phone number is used to pass the test case successfully in the sandbox
                 {key: "sender.msisdn", value: "+5355564362"}, // This testing phone number is used to pass the test case successfully in the sandbox
                 {key: "sender.country", value: "US"},
+                {key: "sender.firstName", value: "Jane"},
+                {key: "sender.lastName", value: "Doe"},
+                {key: "recipient.firstName", value: "John"},
+                {key: "recipient.lastName", value: "Doe"},
             ],
             transactionId: uuid.v4(),
         });
