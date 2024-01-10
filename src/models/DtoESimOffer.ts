@@ -55,7 +55,7 @@ export interface DtoESimOffer {
      * @type {string}
      * @memberof DtoESimOffer
      */
-    country?: string;
+    country: string;
     /**
      * 
      * @type {string}
@@ -185,6 +185,7 @@ export function instanceOfDtoESimOffer(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "brand" in value;
     isInstance = isInstance && "cost" in value;
+    isInstance = isInstance && "country" in value;
     isInstance = isInstance && "createdAt" in value;
     isInstance = isInstance && "dataGB" in value;
     isInstance = isInstance && "dataSpeeds" in value;
@@ -221,7 +222,7 @@ export function DtoESimOfferFromJSONTyped(json: any, ignoreDiscriminator: boolea
         
         'brand': json['brand'],
         'cost': DtoCostFromJSON(json['cost']),
-        'country': !exists(json, 'country') ? undefined : json['country'],
+        'country': json['country'],
         'createdAt': json['createdAt'],
         'dataGB': json['dataGB'],
         'dataSpeeds': json['dataSpeeds'],

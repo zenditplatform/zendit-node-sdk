@@ -19,19 +19,19 @@ export interface DtoTransactionLogItem {
      * @type {string}
      * @memberof DtoTransactionLogItem
      */
-    dateTime?: string;
+    dateTime: string;
     /**
      * 
      * @type {DtoTransactionStatus}
      * @memberof DtoTransactionLogItem
      */
-    status?: DtoTransactionStatus;
+    status: DtoTransactionStatus;
     /**
      * 
      * @type {string}
      * @memberof DtoTransactionLogItem
      */
-    statusMessage?: string;
+    statusMessage: string;
 }
 
 /**
@@ -39,6 +39,9 @@ export interface DtoTransactionLogItem {
  */
 export function instanceOfDtoTransactionLogItem(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "dateTime" in value;
+    isInstance = isInstance && "status" in value;
+    isInstance = isInstance && "statusMessage" in value;
 
     return isInstance;
 }
@@ -53,9 +56,9 @@ export function DtoTransactionLogItemFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'dateTime': !exists(json, 'dateTime') ? undefined : json['dateTime'],
-        'status': !exists(json, 'status') ? undefined : DtoTransactionStatusFromJSON(json['status']),
-        'statusMessage': !exists(json, 'statusMessage') ? undefined : json['statusMessage'],
+        'dateTime': json['dateTime'],
+        'status': DtoTransactionStatusFromJSON(json['status']),
+        'statusMessage': json['statusMessage'],
     };
 }
 

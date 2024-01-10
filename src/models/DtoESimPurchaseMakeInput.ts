@@ -12,13 +12,13 @@ export interface DtoESimPurchaseMakeInput {
      * @type {string}
      * @memberof DtoESimPurchaseMakeInput
      */
-    offerId?: string;
+    offerId: string;
     /**
      * 
      * @type {string}
      * @memberof DtoESimPurchaseMakeInput
      */
-    transactionId?: string;
+    transactionId: string;
 }
 
 /**
@@ -26,6 +26,8 @@ export interface DtoESimPurchaseMakeInput {
  */
 export function instanceOfDtoESimPurchaseMakeInput(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "offerId" in value;
+    isInstance = isInstance && "transactionId" in value;
 
     return isInstance;
 }
@@ -40,8 +42,8 @@ export function DtoESimPurchaseMakeInputFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
-        'offerId': !exists(json, 'offerId') ? undefined : json['offerId'],
-        'transactionId': !exists(json, 'transactionId') ? undefined : json['transactionId'],
+        'offerId': json['offerId'],
+        'transactionId': json['transactionId'],
     };
 }
 

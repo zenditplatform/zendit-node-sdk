@@ -169,7 +169,7 @@ export interface DtoTopupPurchase {
      * @type {Array<string>}
      * @memberof DtoTopupPurchase
      */
-    regions: Array<string>;
+    regions?: Array<string>;
     /**
      * 
      * @type {number}
@@ -271,7 +271,6 @@ export function instanceOfDtoTopupPurchase(value: object): boolean {
     isInstance = isInstance && "priceType" in value;
     isInstance = isInstance && "productType" in value;
     isInstance = isInstance && "recipientPhoneNumber" in value;
-    isInstance = isInstance && "regions" in value;
     isInstance = isInstance && "send" in value;
     isInstance = isInstance && "sendCurrency" in value;
     isInstance = isInstance && "sender" in value;
@@ -316,7 +315,7 @@ export function DtoTopupPurchaseFromJSONTyped(json: any, ignoreDiscriminator: bo
         'priceType': DtoPriceTypeFromJSON(json['priceType']),
         'productType': DtoProductTypeFromJSON(json['productType']),
         'recipientPhoneNumber': json['recipientPhoneNumber'],
-        'regions': json['regions'],
+        'regions': !exists(json, 'regions') ? undefined : json['regions'],
         'send': json['send'],
         'sendCurrency': json['sendCurrency'],
         'sender': DtoTopupSenderFromJSON(json['sender']),

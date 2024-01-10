@@ -19,25 +19,25 @@ export interface DtoTransactionsResponse {
      * @type {number}
      * @memberof DtoTransactionsResponse
      */
-    limit?: number;
+    limit: number;
     /**
      * 
      * @type {Array<DtoTransaction>}
      * @memberof DtoTransactionsResponse
      */
-    list?: Array<DtoTransaction>;
+    list: Array<DtoTransaction>;
     /**
      * 
      * @type {number}
      * @memberof DtoTransactionsResponse
      */
-    offset?: number;
+    offset: number;
     /**
      * 
      * @type {number}
      * @memberof DtoTransactionsResponse
      */
-    total?: number;
+    total: number;
 }
 
 /**
@@ -45,6 +45,10 @@ export interface DtoTransactionsResponse {
  */
 export function instanceOfDtoTransactionsResponse(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "limit" in value;
+    isInstance = isInstance && "list" in value;
+    isInstance = isInstance && "offset" in value;
+    isInstance = isInstance && "total" in value;
 
     return isInstance;
 }
@@ -59,10 +63,10 @@ export function DtoTransactionsResponseFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'list': !exists(json, 'list') ? undefined : ((json['list'] as Array<any>).map(DtoTransactionFromJSON)),
-        'offset': !exists(json, 'offset') ? undefined : json['offset'],
-        'total': !exists(json, 'total') ? undefined : json['total'],
+        'limit': json['limit'],
+        'list': ((json['list'] as Array<any>).map(DtoTransactionFromJSON)),
+        'offset': json['offset'],
+        'total': json['total'],
     };
 }
 
@@ -76,7 +80,7 @@ export function DtoTransactionsResponseToJSON(value?: DtoTransactionsResponse | 
     return {
         
         'limit': value.limit,
-        'list': value.list === undefined ? undefined : ((value.list as Array<any>).map(DtoTransactionToJSON)),
+        'list': ((value.list as Array<any>).map(DtoTransactionToJSON)),
         'offset': value.offset,
         'total': value.total,
     };

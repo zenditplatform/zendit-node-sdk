@@ -12,31 +12,31 @@ export interface DtoESimConfirmation {
      * @type {string}
      * @memberof DtoESimConfirmation
      */
-    activationCode?: string;
+    activationCode: string;
     /**
      * 
      * @type {string}
      * @memberof DtoESimConfirmation
      */
-    externalReferenceId?: string;
+    externalReferenceId: string;
     /**
      * 
      * @type {string}
      * @memberof DtoESimConfirmation
      */
-    iccid?: string;
+    iccid: string;
     /**
      * 
      * @type {string}
      * @memberof DtoESimConfirmation
      */
-    redemptionInstructions?: string;
+    redemptionInstructions: string;
     /**
      * 
      * @type {string}
      * @memberof DtoESimConfirmation
      */
-    smdpAddress?: string;
+    smdpAddress: string;
 }
 
 /**
@@ -44,6 +44,11 @@ export interface DtoESimConfirmation {
  */
 export function instanceOfDtoESimConfirmation(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "activationCode" in value;
+    isInstance = isInstance && "externalReferenceId" in value;
+    isInstance = isInstance && "iccid" in value;
+    isInstance = isInstance && "redemptionInstructions" in value;
+    isInstance = isInstance && "smdpAddress" in value;
 
     return isInstance;
 }
@@ -58,11 +63,11 @@ export function DtoESimConfirmationFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'activationCode': !exists(json, 'activationCode') ? undefined : json['activationCode'],
-        'externalReferenceId': !exists(json, 'externalReferenceId') ? undefined : json['externalReferenceId'],
-        'iccid': !exists(json, 'iccid') ? undefined : json['iccid'],
-        'redemptionInstructions': !exists(json, 'redemptionInstructions') ? undefined : json['redemptionInstructions'],
-        'smdpAddress': !exists(json, 'smdpAddress') ? undefined : json['smdpAddress'],
+        'activationCode': json['activationCode'],
+        'externalReferenceId': json['externalReferenceId'],
+        'iccid': json['iccid'],
+        'redemptionInstructions': json['redemptionInstructions'],
+        'smdpAddress': json['smdpAddress'],
     };
 }
 

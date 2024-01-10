@@ -19,13 +19,13 @@ export interface DtoPurchaseValue {
      * @type {DtoValueType}
      * @memberof DtoPurchaseValue
      */
-    type?: DtoValueType;
+    type: DtoValueType;
     /**
      * 
      * @type {number}
      * @memberof DtoPurchaseValue
      */
-    value?: number;
+    value: number;
 }
 
 /**
@@ -33,6 +33,8 @@ export interface DtoPurchaseValue {
  */
 export function instanceOfDtoPurchaseValue(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "value" in value;
 
     return isInstance;
 }
@@ -47,8 +49,8 @@ export function DtoPurchaseValueFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'type': !exists(json, 'type') ? undefined : DtoValueTypeFromJSON(json['type']),
-        'value': !exists(json, 'value') ? undefined : json['value'],
+        'type': DtoValueTypeFromJSON(json['type']),
+        'value': json['value'],
     };
 }
 

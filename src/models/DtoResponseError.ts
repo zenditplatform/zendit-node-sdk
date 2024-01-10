@@ -12,19 +12,19 @@ export interface DtoResponseError {
      * @type {string}
      * @memberof DtoResponseError
      */
-    errorCode?: string;
+    errorCode: string;
     /**
      * 
      * @type {{ [key: string]: string; }}
      * @memberof DtoResponseError
      */
-    fields?: { [key: string]: string; };
+    fields: { [key: string]: string; };
     /**
      * 
      * @type {string}
      * @memberof DtoResponseError
      */
-    message?: string;
+    message: string;
 }
 
 /**
@@ -32,6 +32,9 @@ export interface DtoResponseError {
  */
 export function instanceOfDtoResponseError(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "errorCode" in value;
+    isInstance = isInstance && "fields" in value;
+    isInstance = isInstance && "message" in value;
 
     return isInstance;
 }
@@ -46,9 +49,9 @@ export function DtoResponseErrorFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'errorCode': !exists(json, 'errorCode') ? undefined : json['errorCode'],
-        'fields': !exists(json, 'fields') ? undefined : json['fields'],
-        'message': !exists(json, 'message') ? undefined : json['message'],
+        'errorCode': json['errorCode'],
+        'fields': json['fields'],
+        'message': json['message'],
     };
 }
 

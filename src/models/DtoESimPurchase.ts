@@ -85,7 +85,7 @@ export interface DtoESimPurchase {
      * @type {string}
      * @memberof DtoESimPurchase
      */
-    country?: string;
+    country: string;
     /**
      * 
      * @type {string}
@@ -246,6 +246,7 @@ export function instanceOfDtoESimPurchase(value: object): boolean {
     isInstance = isInstance && "brand" in value;
     isInstance = isInstance && "cost" in value;
     isInstance = isInstance && "costCurrency" in value;
+    isInstance = isInstance && "country" in value;
     isInstance = isInstance && "createdAt" in value;
     isInstance = isInstance && "dataGB" in value;
     isInstance = isInstance && "dataSpeeds" in value;
@@ -287,7 +288,7 @@ export function DtoESimPurchaseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'confirmation': !exists(json, 'confirmation') ? undefined : DtoESimConfirmationFromJSON(json['confirmation']),
         'cost': json['cost'],
         'costCurrency': json['costCurrency'],
-        'country': !exists(json, 'country') ? undefined : json['country'],
+        'country': json['country'],
         'createdAt': json['createdAt'],
         'dataGB': json['dataGB'],
         'dataSpeeds': json['dataSpeeds'],

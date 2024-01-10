@@ -42,5 +42,5 @@ Library - Security
 
 Library - Enhancements
 
-- **eSIM Product Support**: Added functions to facilitate work with eSIM products.
-- **Improved Response Models**: Fields in response models are now non-nullable when they are consistently present in responses
+- **eSIM Product Support**: Added functions to work with eSIM products.
+- **Model Improvements**: Updated data models to set fields as non-nullable when they consistently appear in requests and responses, enhancing data integrity
