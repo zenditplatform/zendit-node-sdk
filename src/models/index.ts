@@ -1,15 +1,22 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from './CoreErrorCode';
-export * from './CoreHTTPResponseFujiError';
 export * from './DtoBalanceResponse';
 export * from './DtoConfirmation';
 export * from './DtoCost';
+export * from './DtoESimConfirmation';
+export * from './DtoESimOffer';
+export * from './DtoESimOffersResponse';
+export * from './DtoESimPurchase';
+export * from './DtoESimPurchaseMakeInput';
+export * from './DtoESimPurchaseResponse';
+export * from './DtoESimPurchasesResponse';
+export * from './DtoESimRoaming';
 export * from './DtoError';
 export * from './DtoPrice';
 export * from './DtoPriceType';
 export * from './DtoProductType';
 export * from './DtoPurchaseValue';
+export * from './DtoResponseError';
 export * from './DtoTopupOffer';
 export * from './DtoTopupOffersResponse';
 export * from './DtoTopupPurchase';

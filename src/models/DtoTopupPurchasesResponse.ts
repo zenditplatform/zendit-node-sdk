@@ -19,25 +19,25 @@ export interface DtoTopupPurchasesResponse {
      * @type {number}
      * @memberof DtoTopupPurchasesResponse
      */
-    limit?: number;
+    limit: number;
     /**
      * 
      * @type {Array<DtoTopupPurchase>}
      * @memberof DtoTopupPurchasesResponse
      */
-    list?: Array<DtoTopupPurchase>;
+    list: Array<DtoTopupPurchase>;
     /**
      * 
      * @type {number}
      * @memberof DtoTopupPurchasesResponse
      */
-    offset?: number;
+    offset: number;
     /**
      * 
      * @type {number}
      * @memberof DtoTopupPurchasesResponse
      */
-    total?: number;
+    total: number;
 }
 
 /**
@@ -45,6 +45,10 @@ export interface DtoTopupPurchasesResponse {
  */
 export function instanceOfDtoTopupPurchasesResponse(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "limit" in value;
+    isInstance = isInstance && "list" in value;
+    isInstance = isInstance && "offset" in value;
+    isInstance = isInstance && "total" in value;
 
     return isInstance;
 }
@@ -59,10 +63,10 @@ export function DtoTopupPurchasesResponseFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'list': !exists(json, 'list') ? undefined : ((json['list'] as Array<any>).map(DtoTopupPurchaseFromJSON)),
-        'offset': !exists(json, 'offset') ? undefined : json['offset'],
-        'total': !exists(json, 'total') ? undefined : json['total'],
+        'limit': json['limit'],
+        'list': ((json['list'] as Array<any>).map(DtoTopupPurchaseFromJSON)),
+        'offset': json['offset'],
+        'total': json['total'],
     };
 }
 
@@ -76,7 +80,7 @@ export function DtoTopupPurchasesResponseToJSON(value?: DtoTopupPurchasesRespons
     return {
         
         'limit': value.limit,
-        'list': value.list === undefined ? undefined : ((value.list as Array<any>).map(DtoTopupPurchaseToJSON)),
+        'list': ((value.list as Array<any>).map(DtoTopupPurchaseToJSON)),
         'offset': value.offset,
         'total': value.total,
     };

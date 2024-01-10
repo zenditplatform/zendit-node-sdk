@@ -11,27 +11,27 @@ import {
 /**
  * 
  * @export
- * @interface DtoVoucherPurchaseResponse
+ * @interface DtoESimPurchaseResponse
  */
-export interface DtoVoucherPurchaseResponse {
+export interface DtoESimPurchaseResponse {
     /**
      * 
      * @type {DtoTransactionStatus}
-     * @memberof DtoVoucherPurchaseResponse
+     * @memberof DtoESimPurchaseResponse
      */
     status: DtoTransactionStatus;
     /**
      * 
      * @type {string}
-     * @memberof DtoVoucherPurchaseResponse
+     * @memberof DtoESimPurchaseResponse
      */
     transactionId: string;
 }
 
 /**
- * Check if a given object implements the DtoVoucherPurchaseResponse interface.
+ * Check if a given object implements the DtoESimPurchaseResponse interface.
  */
-export function instanceOfDtoVoucherPurchaseResponse(value: object): boolean {
+export function instanceOfDtoESimPurchaseResponse(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "status" in value;
     isInstance = isInstance && "transactionId" in value;
@@ -39,11 +39,11 @@ export function instanceOfDtoVoucherPurchaseResponse(value: object): boolean {
     return isInstance;
 }
 
-export function DtoVoucherPurchaseResponseFromJSON(json: any): DtoVoucherPurchaseResponse {
-    return DtoVoucherPurchaseResponseFromJSONTyped(json, false);
+export function DtoESimPurchaseResponseFromJSON(json: any): DtoESimPurchaseResponse {
+    return DtoESimPurchaseResponseFromJSONTyped(json, false);
 }
 
-export function DtoVoucherPurchaseResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoVoucherPurchaseResponse {
+export function DtoESimPurchaseResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESimPurchaseResponse {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -54,7 +54,7 @@ export function DtoVoucherPurchaseResponseFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function DtoVoucherPurchaseResponseToJSON(value?: DtoVoucherPurchaseResponse | null): any {
+export function DtoESimPurchaseResponseToJSON(value?: DtoESimPurchaseResponse | null): any {
     if (value === undefined) {
         return undefined;
     }

@@ -19,25 +19,25 @@ export interface DtoVoucherOffersResponse {
      * @type {number}
      * @memberof DtoVoucherOffersResponse
      */
-    limit?: number;
+    limit: number;
     /**
      * 
      * @type {Array<DtoVoucherOffer>}
      * @memberof DtoVoucherOffersResponse
      */
-    list?: Array<DtoVoucherOffer>;
+    list: Array<DtoVoucherOffer>;
     /**
      * 
      * @type {number}
      * @memberof DtoVoucherOffersResponse
      */
-    offset?: number;
+    offset: number;
     /**
      * 
      * @type {number}
      * @memberof DtoVoucherOffersResponse
      */
-    total?: number;
+    total: number;
 }
 
 /**
@@ -45,6 +45,10 @@ export interface DtoVoucherOffersResponse {
  */
 export function instanceOfDtoVoucherOffersResponse(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "limit" in value;
+    isInstance = isInstance && "list" in value;
+    isInstance = isInstance && "offset" in value;
+    isInstance = isInstance && "total" in value;
 
     return isInstance;
 }
@@ -59,10 +63,10 @@ export function DtoVoucherOffersResponseFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'list': !exists(json, 'list') ? undefined : ((json['list'] as Array<any>).map(DtoVoucherOfferFromJSON)),
-        'offset': !exists(json, 'offset') ? undefined : json['offset'],
-        'total': !exists(json, 'total') ? undefined : json['total'],
+        'limit': json['limit'],
+        'list': ((json['list'] as Array<any>).map(DtoVoucherOfferFromJSON)),
+        'offset': json['offset'],
+        'total': json['total'],
     };
 }
 
@@ -76,7 +80,7 @@ export function DtoVoucherOffersResponseToJSON(value?: DtoVoucherOffersResponse 
     return {
         
         'limit': value.limit,
-        'list': value.list === undefined ? undefined : ((value.list as Array<any>).map(DtoVoucherOfferToJSON)),
+        'list': ((value.list as Array<any>).map(DtoVoucherOfferToJSON)),
         'offset': value.offset,
         'total': value.total,
     };

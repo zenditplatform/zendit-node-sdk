@@ -19,25 +19,25 @@ export interface DtoVoucherPurchasesResponse {
      * @type {number}
      * @memberof DtoVoucherPurchasesResponse
      */
-    limit?: number;
+    limit: number;
     /**
      * 
      * @type {Array<DtoVoucherPurchase>}
      * @memberof DtoVoucherPurchasesResponse
      */
-    list?: Array<DtoVoucherPurchase>;
+    list: Array<DtoVoucherPurchase>;
     /**
      * 
      * @type {number}
      * @memberof DtoVoucherPurchasesResponse
      */
-    offset?: number;
+    offset: number;
     /**
      * 
      * @type {number}
      * @memberof DtoVoucherPurchasesResponse
      */
-    total?: number;
+    total: number;
 }
 
 /**
@@ -45,6 +45,10 @@ export interface DtoVoucherPurchasesResponse {
  */
 export function instanceOfDtoVoucherPurchasesResponse(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "limit" in value;
+    isInstance = isInstance && "list" in value;
+    isInstance = isInstance && "offset" in value;
+    isInstance = isInstance && "total" in value;
 
     return isInstance;
 }
@@ -59,10 +63,10 @@ export function DtoVoucherPurchasesResponseFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'list': !exists(json, 'list') ? undefined : ((json['list'] as Array<any>).map(DtoVoucherPurchaseFromJSON)),
-        'offset': !exists(json, 'offset') ? undefined : json['offset'],
-        'total': !exists(json, 'total') ? undefined : json['total'],
+        'limit': json['limit'],
+        'list': ((json['list'] as Array<any>).map(DtoVoucherPurchaseFromJSON)),
+        'offset': json['offset'],
+        'total': json['total'],
     };
 }
 
@@ -76,7 +80,7 @@ export function DtoVoucherPurchasesResponseToJSON(value?: DtoVoucherPurchasesRes
     return {
         
         'limit': value.limit,
-        'list': value.list === undefined ? undefined : ((value.list as Array<any>).map(DtoVoucherPurchaseToJSON)),
+        'list': ((value.list as Array<any>).map(DtoVoucherPurchaseToJSON)),
         'offset': value.offset,
         'total': value.total,
     };

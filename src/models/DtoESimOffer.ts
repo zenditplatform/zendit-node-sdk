@@ -7,6 +7,12 @@ import {
     DtoCostFromJSONTyped,
     DtoCostToJSON,
 } from './DtoCost';
+import type { DtoESimRoaming } from './DtoESimRoaming';
+import {
+    DtoESimRoamingFromJSON,
+    DtoESimRoamingFromJSONTyped,
+    DtoESimRoamingToJSON,
+} from './DtoESimRoaming';
 import type { DtoPrice } from './DtoPrice';
 import {
     DtoPriceFromJSON,
@@ -25,126 +31,165 @@ import {
     DtoProductTypeFromJSONTyped,
     DtoProductTypeToJSON,
 } from './DtoProductType';
-import type { DtoZend } from './DtoZend';
-import {
-    DtoZendFromJSON,
-    DtoZendFromJSONTyped,
-    DtoZendToJSON,
-} from './DtoZend';
 
 /**
  * 
  * @export
- * @interface DtoVoucherOffer
+ * @interface DtoESimOffer
  */
-export interface DtoVoucherOffer {
+export interface DtoESimOffer {
     /**
      * 
      * @type {string}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
     brand: string;
     /**
      * 
      * @type {DtoCost}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
     cost: DtoCost;
     /**
      * 
      * @type {string}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
-    country: string;
+    country?: string;
     /**
      * 
      * @type {string}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
     createdAt: string;
     /**
      * 
+     * @type {number}
+     * @memberof DtoESimOffer
+     */
+    dataGB: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DtoESimOffer
+     */
+    dataSpeeds: Array<string>;
+    /**
+     * 
      * @type {boolean}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
+     */
+    dataUnlimited: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoESimOffer
+     */
+    durationDays: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DtoESimOffer
      */
     enabled: boolean;
     /**
      * 
      * @type {string}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
     notes: string;
     /**
      * 
      * @type {string}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
     offerId: string;
     /**
      * 
      * @type {DtoPrice}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
     price: DtoPrice;
     /**
      * 
      * @type {DtoPriceType}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
     priceType: DtoPriceType;
     /**
      * 
      * @type {DtoProductType}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
     productType: DtoProductType;
     /**
      * 
      * @type {Array<string>}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
     regions: Array<string>;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof DtoVoucherOffer
+     * @type {Array<DtoESimRoaming>}
+     * @memberof DtoESimOffer
      */
-    requiredFields: Array<string>;
-    /**
-     * 
-     * @type {DtoZend}
-     * @memberof DtoVoucherOffer
-     */
-    send: DtoZend;
+    roaming: Array<DtoESimRoaming>;
     /**
      * 
      * @type {string}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
     shortNotes: string;
     /**
      * 
+     * @type {number}
+     * @memberof DtoESimOffer
+     */
+    smsNumber: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DtoESimOffer
+     */
+    smsUnlimited: boolean;
+    /**
+     * 
      * @type {Array<string>}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
     subTypes: Array<string>;
     /**
      * 
      * @type {string}
-     * @memberof DtoVoucherOffer
+     * @memberof DtoESimOffer
      */
     updatedAt: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoESimOffer
+     */
+    voiceMinutes: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DtoESimOffer
+     */
+    voiceUnlimited: boolean;
 }
 
 /**
- * Check if a given object implements the DtoVoucherOffer interface.
+ * Check if a given object implements the DtoESimOffer interface.
  */
-export function instanceOfDtoVoucherOffer(value: object): boolean {
+export function instanceOfDtoESimOffer(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "brand" in value;
     isInstance = isInstance && "cost" in value;
-    isInstance = isInstance && "country" in value;
     isInstance = isInstance && "createdAt" in value;
+    isInstance = isInstance && "dataGB" in value;
+    isInstance = isInstance && "dataSpeeds" in value;
+    isInstance = isInstance && "dataUnlimited" in value;
+    isInstance = isInstance && "durationDays" in value;
     isInstance = isInstance && "enabled" in value;
     isInstance = isInstance && "notes" in value;
     isInstance = isInstance && "offerId" in value;
@@ -152,20 +197,23 @@ export function instanceOfDtoVoucherOffer(value: object): boolean {
     isInstance = isInstance && "priceType" in value;
     isInstance = isInstance && "productType" in value;
     isInstance = isInstance && "regions" in value;
-    isInstance = isInstance && "requiredFields" in value;
-    isInstance = isInstance && "send" in value;
+    isInstance = isInstance && "roaming" in value;
     isInstance = isInstance && "shortNotes" in value;
+    isInstance = isInstance && "smsNumber" in value;
+    isInstance = isInstance && "smsUnlimited" in value;
     isInstance = isInstance && "subTypes" in value;
     isInstance = isInstance && "updatedAt" in value;
+    isInstance = isInstance && "voiceMinutes" in value;
+    isInstance = isInstance && "voiceUnlimited" in value;
 
     return isInstance;
 }
 
-export function DtoVoucherOfferFromJSON(json: any): DtoVoucherOffer {
-    return DtoVoucherOfferFromJSONTyped(json, false);
+export function DtoESimOfferFromJSON(json: any): DtoESimOffer {
+    return DtoESimOfferFromJSONTyped(json, false);
 }
 
-export function DtoVoucherOfferFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoVoucherOffer {
+export function DtoESimOfferFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESimOffer {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -173,8 +221,12 @@ export function DtoVoucherOfferFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'brand': json['brand'],
         'cost': DtoCostFromJSON(json['cost']),
-        'country': json['country'],
+        'country': !exists(json, 'country') ? undefined : json['country'],
         'createdAt': json['createdAt'],
+        'dataGB': json['dataGB'],
+        'dataSpeeds': json['dataSpeeds'],
+        'dataUnlimited': json['dataUnlimited'],
+        'durationDays': json['durationDays'],
         'enabled': json['enabled'],
         'notes': json['notes'],
         'offerId': json['offerId'],
@@ -182,15 +234,18 @@ export function DtoVoucherOfferFromJSONTyped(json: any, ignoreDiscriminator: boo
         'priceType': DtoPriceTypeFromJSON(json['priceType']),
         'productType': DtoProductTypeFromJSON(json['productType']),
         'regions': json['regions'],
-        'requiredFields': json['requiredFields'],
-        'send': DtoZendFromJSON(json['send']),
+        'roaming': ((json['roaming'] as Array<any>).map(DtoESimRoamingFromJSON)),
         'shortNotes': json['shortNotes'],
+        'smsNumber': json['smsNumber'],
+        'smsUnlimited': json['smsUnlimited'],
         'subTypes': json['subTypes'],
         'updatedAt': json['updatedAt'],
+        'voiceMinutes': json['voiceMinutes'],
+        'voiceUnlimited': json['voiceUnlimited'],
     };
 }
 
-export function DtoVoucherOfferToJSON(value?: DtoVoucherOffer | null): any {
+export function DtoESimOfferToJSON(value?: DtoESimOffer | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -203,6 +258,10 @@ export function DtoVoucherOfferToJSON(value?: DtoVoucherOffer | null): any {
         'cost': DtoCostToJSON(value.cost),
         'country': value.country,
         'createdAt': value.createdAt,
+        'dataGB': value.dataGB,
+        'dataSpeeds': value.dataSpeeds,
+        'dataUnlimited': value.dataUnlimited,
+        'durationDays': value.durationDays,
         'enabled': value.enabled,
         'notes': value.notes,
         'offerId': value.offerId,
@@ -210,11 +269,14 @@ export function DtoVoucherOfferToJSON(value?: DtoVoucherOffer | null): any {
         'priceType': DtoPriceTypeToJSON(value.priceType),
         'productType': DtoProductTypeToJSON(value.productType),
         'regions': value.regions,
-        'requiredFields': value.requiredFields,
-        'send': DtoZendToJSON(value.send),
+        'roaming': ((value.roaming as Array<any>).map(DtoESimRoamingToJSON)),
         'shortNotes': value.shortNotes,
+        'smsNumber': value.smsNumber,
+        'smsUnlimited': value.smsUnlimited,
         'subTypes': value.subTypes,
         'updatedAt': value.updatedAt,
+        'voiceMinutes': value.voiceMinutes,
+        'voiceUnlimited': value.voiceUnlimited,
     };
 }
 

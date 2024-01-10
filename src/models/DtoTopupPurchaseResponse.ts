@@ -19,13 +19,13 @@ export interface DtoTopupPurchaseResponse {
      * @type {DtoTransactionStatus}
      * @memberof DtoTopupPurchaseResponse
      */
-    status?: DtoTransactionStatus;
+    status: DtoTransactionStatus;
     /**
      * 
      * @type {string}
      * @memberof DtoTopupPurchaseResponse
      */
-    transactionId?: string;
+    transactionId: string;
 }
 
 /**
@@ -33,6 +33,8 @@ export interface DtoTopupPurchaseResponse {
  */
 export function instanceOfDtoTopupPurchaseResponse(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "status" in value;
+    isInstance = isInstance && "transactionId" in value;
 
     return isInstance;
 }
@@ -47,8 +49,8 @@ export function DtoTopupPurchaseResponseFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
-        'status': !exists(json, 'status') ? undefined : DtoTransactionStatusFromJSON(json['status']),
-        'transactionId': !exists(json, 'transactionId') ? undefined : json['transactionId'],
+        'status': DtoTransactionStatusFromJSON(json['status']),
+        'transactionId': json['transactionId'],
     };
 }
 

@@ -12,13 +12,13 @@ export interface DtoVoucherField {
      * @type {string}
      * @memberof DtoVoucherField
      */
-    key?: string;
+    key: string;
     /**
      * 
      * @type {string}
      * @memberof DtoVoucherField
      */
-    value?: string;
+    value: string;
 }
 
 /**
@@ -26,6 +26,8 @@ export interface DtoVoucherField {
  */
 export function instanceOfDtoVoucherField(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "key" in value;
+    isInstance = isInstance && "value" in value;
 
     return isInstance;
 }
@@ -40,8 +42,8 @@ export function DtoVoucherFieldFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'key': !exists(json, 'key') ? undefined : json['key'],
-        'value': !exists(json, 'value') ? undefined : json['value'],
+        'key': json['key'],
+        'value': json['value'],
     };
 }
 

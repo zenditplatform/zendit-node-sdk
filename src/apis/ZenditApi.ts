@@ -3,8 +3,14 @@
 
 import * as runtime from '../runtime';
 import type {
-  CoreHTTPResponseFujiError,
   DtoBalanceResponse,
+  DtoESimOffer,
+  DtoESimOffersResponse,
+  DtoESimPurchase,
+  DtoESimPurchaseMakeInput,
+  DtoESimPurchaseResponse,
+  DtoESimPurchasesResponse,
+  DtoResponseError,
   DtoTopupOffer,
   DtoTopupOffersResponse,
   DtoTopupPurchase,
@@ -19,12 +25,24 @@ import type {
   DtoVoucherPurchaseInput,
   DtoVoucherPurchaseResponse,
   DtoVoucherPurchasesResponse,
-} from '../models';
+} from '../models/index';
 import {
-    CoreHTTPResponseFujiErrorFromJSON,
-    CoreHTTPResponseFujiErrorToJSON,
     DtoBalanceResponseFromJSON,
     DtoBalanceResponseToJSON,
+    DtoESimOfferFromJSON,
+    DtoESimOfferToJSON,
+    DtoESimOffersResponseFromJSON,
+    DtoESimOffersResponseToJSON,
+    DtoESimPurchaseFromJSON,
+    DtoESimPurchaseToJSON,
+    DtoESimPurchaseMakeInputFromJSON,
+    DtoESimPurchaseMakeInputToJSON,
+    DtoESimPurchaseResponseFromJSON,
+    DtoESimPurchaseResponseToJSON,
+    DtoESimPurchasesResponseFromJSON,
+    DtoESimPurchasesResponseToJSON,
+    DtoResponseErrorFromJSON,
+    DtoResponseErrorToJSON,
     DtoTopupOfferFromJSON,
     DtoTopupOfferToJSON,
     DtoTopupOffersResponseFromJSON,
@@ -53,13 +71,46 @@ import {
     DtoVoucherPurchaseResponseToJSON,
     DtoVoucherPurchasesResponseFromJSON,
     DtoVoucherPurchasesResponseToJSON,
-} from '../models';
+} from '../models/index';
+
+export interface EsimOffersGetRequest {
+    limit: number;
+    offset: number;
+    brand?: string;
+    country?: string;
+    regions?: string;
+    subType?: string;
+}
+
+export interface EsimOffersOfferIdGetRequest {
+    offerId: string;
+}
+
+export interface EsimPurchasesGetRequest {
+    limit: number;
+    offset: number;
+    createdAt?: string;
+    status?: EsimPurchasesGetStatusEnum;
+}
+
+export interface EsimPurchasesPostRequest {
+    data: DtoESimPurchaseMakeInput;
+}
+
+export interface EsimPurchasesTransactionIdGetRequest {
+    transactionId: string;
+}
+
+export interface EsimPurchasesTransactionIdQrcodeGetRequest {
+    transactionId: string;
+}
 
 export interface TopupsOffersGetRequest {
     limit: number;
     offset: number;
     brand?: string;
     country?: string;
+    regions?: string;
     subType?: string;
 }
 
@@ -71,6 +122,7 @@ export interface TopupsPurchasesGetRequest {
     limit: number;
     offset: number;
     createdAt?: string;
+    status?: TopupsPurchasesGetStatusEnum;
 }
 
 export interface TopupsPurchasesPostRequest {
@@ -86,6 +138,8 @@ export interface TransactionsGetRequest {
     offset: number;
     createdAt?: string;
     productType?: string;
+    status?: TransactionsGetStatusEnum;
+    type?: TransactionsGetTypeEnum;
 }
 
 export interface TransactionsTransactionIdGetRequest {
@@ -97,6 +151,7 @@ export interface VouchersOffersGetRequest {
     offset: number;
     brand?: string;
     country?: string;
+    regions?: string;
     subType?: string;
 }
 
@@ -108,6 +163,7 @@ export interface VouchersPurchasesGetRequest {
     limit: number;
     offset: number;
     createdAt?: string;
+    status?: VouchersPurchasesGetStatusEnum;
 }
 
 export interface VouchersPurchasesPostRequest {
@@ -154,6 +210,265 @@ export class ZenditApi extends runtime.BaseAPI {
     }
 
     /**
+     * Get list of eSIM offers
+     */
+    async esimOffersGetRaw(requestParameters: EsimOffersGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESimOffersResponse>> {
+        if (requestParameters.limit === null || requestParameters.limit === undefined) {
+            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling esimOffersGet.');
+        }
+
+        if (requestParameters.offset === null || requestParameters.offset === undefined) {
+            throw new runtime.RequiredError('offset','Required parameter requestParameters.offset was null or undefined when calling esimOffersGet.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['_limit'] = requestParameters.limit;
+        }
+
+        if (requestParameters.offset !== undefined) {
+            queryParameters['_offset'] = requestParameters.offset;
+        }
+
+        if (requestParameters.brand !== undefined) {
+            queryParameters['brand'] = requestParameters.brand;
+        }
+
+        if (requestParameters.country !== undefined) {
+            queryParameters['country'] = requestParameters.country;
+        }
+
+        if (requestParameters.regions !== undefined) {
+            queryParameters['regions'] = requestParameters.regions;
+        }
+
+        if (requestParameters.subType !== undefined) {
+            queryParameters['subType'] = requestParameters.subType;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/esim/offers`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoESimOffersResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get list of eSIM offers
+     */
+    async esimOffersGet(limit: number, offset: number, brand?: string, country?: string, regions?: string, subType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimOffersResponse> {
+        const response = await this.esimOffersGetRaw({ limit: limit, offset: offset, brand: brand, country: country, regions: regions, subType: subType }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get an eSIM offer by the offer ID
+     */
+    async esimOffersOfferIdGetRaw(requestParameters: EsimOffersOfferIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESimOffer>> {
+        if (requestParameters.offerId === null || requestParameters.offerId === undefined) {
+            throw new runtime.RequiredError('offerId','Required parameter requestParameters.offerId was null or undefined when calling esimOffersOfferIdGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/esim/offers/{offerId}`.replace(`{${"offerId"}}`, encodeURIComponent(String(requestParameters.offerId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoESimOfferFromJSON(jsonValue));
+    }
+
+    /**
+     * Get an eSIM offer by the offer ID
+     */
+    async esimOffersOfferIdGet(offerId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimOffer> {
+        const response = await this.esimOffersOfferIdGetRaw({ offerId: offerId }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get list of eSim transactions
+     */
+    async esimPurchasesGetRaw(requestParameters: EsimPurchasesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESimPurchasesResponse>> {
+        if (requestParameters.limit === null || requestParameters.limit === undefined) {
+            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling esimPurchasesGet.');
+        }
+
+        if (requestParameters.offset === null || requestParameters.offset === undefined) {
+            throw new runtime.RequiredError('offset','Required parameter requestParameters.offset was null or undefined when calling esimPurchasesGet.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['_limit'] = requestParameters.limit;
+        }
+
+        if (requestParameters.offset !== undefined) {
+            queryParameters['_offset'] = requestParameters.offset;
+        }
+
+        if (requestParameters.createdAt !== undefined) {
+            queryParameters['createdAt'] = requestParameters.createdAt;
+        }
+
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/esim/purchases`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoESimPurchasesResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get list of eSim transactions
+     */
+    async esimPurchasesGet(limit: number, offset: number, createdAt?: string, status?: EsimPurchasesGetStatusEnum, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimPurchasesResponse> {
+        const response = await this.esimPurchasesGetRaw({ limit: limit, offset: offset, createdAt: createdAt, status: status }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Create transaction for purchase
+     */
+    async esimPurchasesPostRaw(requestParameters: EsimPurchasesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESimPurchaseResponse>> {
+        if (requestParameters.data === null || requestParameters.data === undefined) {
+            throw new runtime.RequiredError('data','Required parameter requestParameters.data was null or undefined when calling esimPurchasesPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/esim/purchases`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: DtoESimPurchaseMakeInputToJSON(requestParameters.data),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoESimPurchaseResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Create transaction for purchase
+     */
+    async esimPurchasesPost(data: DtoESimPurchaseMakeInput, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimPurchaseResponse> {
+        const response = await this.esimPurchasesPostRaw({ data: data }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get eSim transaction by id
+     */
+    async esimPurchasesTransactionIdGetRaw(requestParameters: EsimPurchasesTransactionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESimPurchase>> {
+        if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
+            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling esimPurchasesTransactionIdGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/esim/purchases/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters.transactionId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoESimPurchaseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get eSim transaction by id
+     */
+    async esimPurchasesTransactionIdGet(transactionId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimPurchase> {
+        const response = await this.esimPurchasesTransactionIdGetRaw({ transactionId: transactionId }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get eSim QR code by transaction id
+     */
+    async esimPurchasesTransactionIdQrcodeGetRaw(requestParameters: EsimPurchasesTransactionIdQrcodeGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
+            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling esimPurchasesTransactionIdQrcodeGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/esim/purchases/{transactionId}/qrcode`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters.transactionId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<string>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Get eSim QR code by transaction id
+     */
+    async esimPurchasesTransactionIdQrcodeGet(transactionId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.esimPurchasesTransactionIdQrcodeGetRaw({ transactionId: transactionId }, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Get list of topup offers
      */
     async topupsOffersGetRaw(requestParameters: TopupsOffersGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoTopupOffersResponse>> {
@@ -183,6 +498,10 @@ export class ZenditApi extends runtime.BaseAPI {
             queryParameters['country'] = requestParameters.country;
         }
 
+        if (requestParameters.regions !== undefined) {
+            queryParameters['regions'] = requestParameters.regions;
+        }
+
         if (requestParameters.subType !== undefined) {
             queryParameters['subType'] = requestParameters.subType;
         }
@@ -206,8 +525,8 @@ export class ZenditApi extends runtime.BaseAPI {
     /**
      * Get list of topup offers
      */
-    async topupsOffersGet(limit: number, offset: number, brand?: string, country?: string, subType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoTopupOffersResponse> {
-        const response = await this.topupsOffersGetRaw({ limit: limit, offset: offset, brand: brand, country: country, subType: subType }, initOverrides);
+    async topupsOffersGet(limit: number, offset: number, brand?: string, country?: string, regions?: string, subType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoTopupOffersResponse> {
+        const response = await this.topupsOffersGetRaw({ limit: limit, offset: offset, brand: brand, country: country, regions: regions, subType: subType }, initOverrides);
         return await response.value();
     }
 
@@ -271,6 +590,10 @@ export class ZenditApi extends runtime.BaseAPI {
             queryParameters['createdAt'] = requestParameters.createdAt;
         }
 
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -290,8 +613,8 @@ export class ZenditApi extends runtime.BaseAPI {
     /**
      * Get list of topup transactions
      */
-    async topupsPurchasesGet(limit: number, offset: number, createdAt?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoTopupPurchasesResponse> {
-        const response = await this.topupsPurchasesGetRaw({ limit: limit, offset: offset, createdAt: createdAt }, initOverrides);
+    async topupsPurchasesGet(limit: number, offset: number, createdAt?: string, status?: TopupsPurchasesGetStatusEnum, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoTopupPurchasesResponse> {
+        const response = await this.topupsPurchasesGetRaw({ limit: limit, offset: offset, createdAt: createdAt, status: status }, initOverrides);
         return await response.value();
     }
 
@@ -396,6 +719,14 @@ export class ZenditApi extends runtime.BaseAPI {
             queryParameters['productType'] = requestParameters.productType;
         }
 
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
+        if (requestParameters.type !== undefined) {
+            queryParameters['type'] = requestParameters.type;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -415,8 +746,8 @@ export class ZenditApi extends runtime.BaseAPI {
     /**
      * Get list of transactions
      */
-    async transactionsGet(limit: number, offset: number, createdAt?: string, productType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoTransactionsResponse> {
-        const response = await this.transactionsGetRaw({ limit: limit, offset: offset, createdAt: createdAt, productType: productType }, initOverrides);
+    async transactionsGet(limit: number, offset: number, createdAt?: string, productType?: string, status?: TransactionsGetStatusEnum, type?: TransactionsGetTypeEnum, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoTransactionsResponse> {
+        const response = await this.transactionsGetRaw({ limit: limit, offset: offset, createdAt: createdAt, productType: productType, status: status, type: type }, initOverrides);
         return await response.value();
     }
 
@@ -484,6 +815,10 @@ export class ZenditApi extends runtime.BaseAPI {
             queryParameters['country'] = requestParameters.country;
         }
 
+        if (requestParameters.regions !== undefined) {
+            queryParameters['regions'] = requestParameters.regions;
+        }
+
         if (requestParameters.subType !== undefined) {
             queryParameters['subType'] = requestParameters.subType;
         }
@@ -507,8 +842,8 @@ export class ZenditApi extends runtime.BaseAPI {
     /**
      * Get list of voucher offers
      */
-    async vouchersOffersGet(limit: number, offset: number, brand?: string, country?: string, subType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoVoucherOffersResponse> {
-        const response = await this.vouchersOffersGetRaw({ limit: limit, offset: offset, brand: brand, country: country, subType: subType }, initOverrides);
+    async vouchersOffersGet(limit: number, offset: number, brand?: string, country?: string, regions?: string, subType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoVoucherOffersResponse> {
+        const response = await this.vouchersOffersGetRaw({ limit: limit, offset: offset, brand: brand, country: country, regions: regions, subType: subType }, initOverrides);
         return await response.value();
     }
 
@@ -572,6 +907,10 @@ export class ZenditApi extends runtime.BaseAPI {
             queryParameters['createdAt'] = requestParameters.createdAt;
         }
 
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -591,8 +930,8 @@ export class ZenditApi extends runtime.BaseAPI {
     /**
      * Get list of transactions
      */
-    async vouchersPurchasesGet(limit: number, offset: number, createdAt?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoVoucherPurchasesResponse> {
-        const response = await this.vouchersPurchasesGetRaw({ limit: limit, offset: offset, createdAt: createdAt }, initOverrides);
+    async vouchersPurchasesGet(limit: number, offset: number, createdAt?: string, status?: VouchersPurchasesGetStatusEnum, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoVoucherPurchasesResponse> {
+        const response = await this.vouchersPurchasesGetRaw({ limit: limit, offset: offset, createdAt: createdAt, status: status }, initOverrides);
         return await response.value();
     }
 
@@ -668,3 +1007,60 @@ export class ZenditApi extends runtime.BaseAPI {
     }
 
 }
+
+/**
+ * @export
+ */
+export const EsimPurchasesGetStatusEnum = {
+    TransactionStatusAccepted: 'ACCEPTED',
+    TransactionStatusPending: 'PENDING',
+    TransactionStatusAuthorized: 'AUTHORIZED',
+    TransactionStatusInProgress: 'IN_PROGRESS',
+    TransactionStatusDone: 'DONE',
+    TransactionStatusFailed: 'FAILED'
+} as const;
+export type EsimPurchasesGetStatusEnum = typeof EsimPurchasesGetStatusEnum[keyof typeof EsimPurchasesGetStatusEnum];
+/**
+ * @export
+ */
+export const TopupsPurchasesGetStatusEnum = {
+    TransactionStatusAccepted: 'ACCEPTED',
+    TransactionStatusPending: 'PENDING',
+    TransactionStatusAuthorized: 'AUTHORIZED',
+    TransactionStatusInProgress: 'IN_PROGRESS',
+    TransactionStatusDone: 'DONE',
+    TransactionStatusFailed: 'FAILED'
+} as const;
+export type TopupsPurchasesGetStatusEnum = typeof TopupsPurchasesGetStatusEnum[keyof typeof TopupsPurchasesGetStatusEnum];
+/**
+ * @export
+ */
+export const TransactionsGetStatusEnum = {
+    TransactionStatusAccepted: 'ACCEPTED',
+    TransactionStatusPending: 'PENDING',
+    TransactionStatusAuthorized: 'AUTHORIZED',
+    TransactionStatusInProgress: 'IN_PROGRESS',
+    TransactionStatusDone: 'DONE',
+    TransactionStatusFailed: 'FAILED'
+} as const;
+export type TransactionsGetStatusEnum = typeof TransactionsGetStatusEnum[keyof typeof TransactionsGetStatusEnum];
+/**
+ * @export
+ */
+export const TransactionsGetTypeEnum = {
+    Credit: 'CREDIT',
+    Debit: 'DEBIT'
+} as const;
+export type TransactionsGetTypeEnum = typeof TransactionsGetTypeEnum[keyof typeof TransactionsGetTypeEnum];
+/**
+ * @export
+ */
+export const VouchersPurchasesGetStatusEnum = {
+    TransactionStatusAccepted: 'ACCEPTED',
+    TransactionStatusPending: 'PENDING',
+    TransactionStatusAuthorized: 'AUTHORIZED',
+    TransactionStatusInProgress: 'IN_PROGRESS',
+    TransactionStatusDone: 'DONE',
+    TransactionStatusFailed: 'FAILED'
+} as const;
+export type VouchersPurchasesGetStatusEnum = typeof VouchersPurchasesGetStatusEnum[keyof typeof VouchersPurchasesGetStatusEnum];

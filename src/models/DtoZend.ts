@@ -12,7 +12,7 @@ export interface DtoZend {
      * @type {string}
      * @memberof DtoZend
      */
-    currency?: string;
+    currency: string;
     /**
      * 
      * @type {number}
@@ -44,6 +44,7 @@ export interface DtoZend {
  */
 export function instanceOfDtoZend(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "currency" in value;
 
     return isInstance;
 }
@@ -58,7 +59,7 @@ export function DtoZendFromJSONTyped(json: any, ignoreDiscriminator: boolean): D
     }
     return {
         
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
+        'currency': json['currency'],
         'fixed': !exists(json, 'fixed') ? undefined : json['fixed'],
         'fx': !exists(json, 'fx') ? undefined : json['fx'],
         'max': !exists(json, 'max') ? undefined : json['max'],
