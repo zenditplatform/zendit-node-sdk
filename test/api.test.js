@@ -111,3 +111,20 @@ test('esimPurchasesTransactionIdGet should return purchase', async () => {
         expect(purchaseResponse.offerId).toBeDefined();
     }
 });
+
+test('esimPurchasesTransactionIdQrcodeGet should return qrcode in different formats', async () => {
+    const response = await zenditAPI.esimPurchasesGet(10, 0);
+    if (response.list.length > 0) {
+        const purchase = response.list[0];
+        let purchaseID = purchase.transactionId;
+
+        const purchaseResponse = await zenditAPI.esimPurchasesTransactionIdQrcodeGet(purchaseID, "blob");
+        expect(purchaseResponse.type).toBe("image/png");
+
+        const purchaseResponseJson = await zenditAPI.esimPurchasesTransactionIdQrcodeGet(purchaseID, "json");
+        expect(purchaseResponseJson.imageBase64).toBeDefined();
+
+        const purchaseResponseBlobImplicit = await zenditAPI.esimPurchasesTransactionIdQrcodeGet(purchaseID);
+        expect(purchaseResponse.type).toBe("image/png");
+    }
+});

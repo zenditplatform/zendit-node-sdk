@@ -10,6 +10,7 @@ export * from './DtoESimPurchase';
 export * from './DtoESimPurchaseMakeInput';
 export * from './DtoESimPurchaseResponse';
 export * from './DtoESimPurchasesResponse';
+export * from './DtoESimQRCode';
 export * from './DtoESimRoaming';
 export * from './DtoError';
 export * from './DtoPrice';

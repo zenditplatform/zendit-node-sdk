@@ -10,6 +10,7 @@ import type {
   DtoESimPurchaseMakeInput,
   DtoESimPurchaseResponse,
   DtoESimPurchasesResponse,
+  DtoESimQRCode,
   DtoResponseError,
   DtoTopupOffer,
   DtoTopupOffersResponse,
@@ -41,6 +42,8 @@ import {
     DtoESimPurchaseResponseToJSON,
     DtoESimPurchasesResponseFromJSON,
     DtoESimPurchasesResponseToJSON,
+    DtoESimQRCodeFromJSON,
+    DtoESimQRCodeToJSON,
     DtoResponseErrorFromJSON,
     DtoResponseErrorToJSON,
     DtoTopupOfferFromJSON,
@@ -433,7 +436,7 @@ export class ZenditApi extends runtime.BaseAPI {
     /**
      * Get eSim QR code by transaction id
      */
-    async esimPurchasesTransactionIdQrcodeGetRaw(requestParameters: EsimPurchasesTransactionIdQrcodeGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+    async esimPurchasesTransactionIdQrcodeGetRaw(requestParameters: EsimPurchasesTransactionIdQrcodeGetRequest, responseType?: "json" | "blob" | null, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob|DtoESimQRCode>> {
         if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
             throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling esimPurchasesTransactionIdQrcodeGet.');
         }
@@ -446,6 +449,10 @@ export class ZenditApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
+        if (responseType === 'json') {
+            headerParameters['accept'] = 'application/json';
+        }
+
         const response = await this.request({
             path: `/esim/purchases/{transactionId}/qrcode`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters.transactionId))),
             method: 'GET',
@@ -453,19 +460,20 @@ export class ZenditApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<string>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
+        if (responseType === "json") {
+            return new runtime.JSONApiResponse<DtoESimQRCode>(response);
         }
+
+        return new runtime.BlobApiResponse(response);
     }
 
-    /**
-     * Get eSim QR code by transaction id
-     */
-    async esimPurchasesTransactionIdQrcodeGet(transactionId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
-        const response = await this.esimPurchasesTransactionIdQrcodeGetRaw({ transactionId: transactionId }, initOverrides);
-        return await response.value();
+    async esimPurchasesTransactionIdQrcodeGet(transactionId: string, responseType: "blob", initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>
+    async esimPurchasesTransactionIdQrcodeGet(transactionId: string, responseType: "json", initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimQRCode>
+    async esimPurchasesTransactionIdQrcodeGet(transactionId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>
+    async esimPurchasesTransactionIdQrcodeGet(transactionId: string, responseType?: any, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimQRCode|Blob> {
+        const response = await this.esimPurchasesTransactionIdQrcodeGetRaw({ transactionId: transactionId}, responseType, initOverrides);
+
+        return response.value();
     }
 
     /**
