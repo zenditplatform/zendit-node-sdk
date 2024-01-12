@@ -38,7 +38,7 @@ Library - Security
 
 - Vulnerability https://nvd.nist.gov/vuln/detail/CVE-2023-45133 has been fixed by updating babel/traverse to version 7.23.3
 
-# [2024-01-12] Version 1.3.0
+# [2024-01-15] Version 1.3.0
 
 Library - Enhancements
 
