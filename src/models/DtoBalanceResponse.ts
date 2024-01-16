@@ -12,13 +12,13 @@ export interface DtoBalanceResponse {
      * @type {number}
      * @memberof DtoBalanceResponse
      */
-    availableBalance?: number;
+    availableBalance: number;
     /**
      * 
      * @type {string}
      * @memberof DtoBalanceResponse
      */
-    currency?: string;
+    currency: string;
 }
 
 /**
@@ -26,6 +26,8 @@ export interface DtoBalanceResponse {
  */
 export function instanceOfDtoBalanceResponse(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "availableBalance" in value;
+    isInstance = isInstance && "currency" in value;
 
     return isInstance;
 }
@@ -40,8 +42,8 @@ export function DtoBalanceResponseFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'availableBalance': !exists(json, 'availableBalance') ? undefined : json['availableBalance'],
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
+        'availableBalance': json['availableBalance'],
+        'currency': json['currency'],
     };
 }
 

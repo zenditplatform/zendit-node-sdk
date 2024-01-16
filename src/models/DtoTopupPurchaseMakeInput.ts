@@ -25,13 +25,13 @@ export interface DtoTopupPurchaseMakeInput {
      * @type {string}
      * @memberof DtoTopupPurchaseMakeInput
      */
-    offerId?: string;
+    offerId: string;
     /**
      * 
      * @type {string}
      * @memberof DtoTopupPurchaseMakeInput
      */
-    recipientPhoneNumber?: string;
+    recipientPhoneNumber: string;
     /**
      * 
      * @type {DtoTopupSender}
@@ -43,7 +43,7 @@ export interface DtoTopupPurchaseMakeInput {
      * @type {string}
      * @memberof DtoTopupPurchaseMakeInput
      */
-    transactionId?: string;
+    transactionId: string;
     /**
      * 
      * @type {DtoPurchaseValue}
@@ -57,6 +57,9 @@ export interface DtoTopupPurchaseMakeInput {
  */
 export function instanceOfDtoTopupPurchaseMakeInput(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "offerId" in value;
+    isInstance = isInstance && "recipientPhoneNumber" in value;
+    isInstance = isInstance && "transactionId" in value;
 
     return isInstance;
 }
@@ -71,10 +74,10 @@ export function DtoTopupPurchaseMakeInputFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'offerId': !exists(json, 'offerId') ? undefined : json['offerId'],
-        'recipientPhoneNumber': !exists(json, 'recipientPhoneNumber') ? undefined : json['recipientPhoneNumber'],
+        'offerId': json['offerId'],
+        'recipientPhoneNumber': json['recipientPhoneNumber'],
         'sender': !exists(json, 'sender') ? undefined : DtoTopupSenderFromJSON(json['sender']),
-        'transactionId': !exists(json, 'transactionId') ? undefined : json['transactionId'],
+        'transactionId': json['transactionId'],
         'value': !exists(json, 'value') ? undefined : DtoPurchaseValueFromJSON(json['value']),
     };
 }

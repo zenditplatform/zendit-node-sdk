@@ -40,6 +40,112 @@ zenditAPI.balanceGet().then(v => {
     })
 ```
 
+## eSIM
+
+eSIM methods for obtaining the catalog of products, making purchases, getting the details of a transaction and obtaining the QR
+code for an eSIM.
+
+### Getting a list of offers based on a search
+
+#### Parameter List
+|Parameter |Required | Description|Example|
+-------|------------|------|------|
+|limit|Yes|Number of offers to retrieve, minimum 1 and maximum 1024. Used for pagination of the catalog.|10|
+|offset|Yes|Number of offers to skip, minimum 0. Used for pagination to skip items.|20|
+|brand|No|The Brand of carrier for the search| eSIM|
+|country|No|The 2 letter ISO country code for the destination of the offer search|US|
+|regions|No|Region name to search|North America|
+|subtype|No|The product subtype for the offer search|eSIM|
+
+The following example retrieves the first 10 offers in the catalog
+
+```typescript
+zenditAPI.esimOffersGet(10, 0).then(v => {
+    console.log(v.list)
+})
+```
+
+### Getting an offer by its catalog ID
+
+#### Parameter List
+|Parameter |Required | Description|Example|
+-------|------------|------|------|
+|offerId|Yes|Id for the offer in the catalog|ESIM-US-7D-1GB|
+
+The following example will return the offer details for the offer ESIM-US-7D-1GB. 
+
+```typescript
+zenditAPI.esimOffersOfferIdGet('ESIM-US-7D-1GB').then(v => {
+        console.log(v)
+    })
+```
+
+### Make a Purchase
+Parameter |Required | Description|
+-------|------------|------|
+|data|Yes|EsimPurchasesPostRequest object containing the offerId and transactionId.|
+
+The following example will send a purchase to a Zendit using a random UUID as the transaction ID.
+
+```typescript
+const data : EsimPurchasesPostRequest = {transactionId: uuid.v4(), offerId: "ESIM-US-7D-1GB"};
+zenditAPI.esimPurchasesPost(data).then(v => {
+  console.log(v)
+})
+```
+
+### Get a Transaction by ID
+
+|Parameter |Required | Description|Example|
+-------|------------|------|------|
+|transactionId|Yes|ID of the transaction to retrieve|0f1db8e2-b0c9-49ac-a814-1f469e71c8a8|
+
+```typescript
+zenditAPI.esimPurchasesTransactionIdGet('0f1db8e2-b0c9-49ac-a814-1f469e71c8a8').then(v => {
+  console.log(v);
+})
+```
+
+### Get a List of Transactions with Search Parameters
+
+|Parameter |Required | Description|Example|
+-------|------------|------|------|
+|limit|Yes|Number of transactions to retrieve, minimum 1 and maximum 1024. Used for pagination of the transaction list.|10|
+|offset|Yes|Number of transactions to skip, minimum 0. Used for pagination to skip items.|20|
+|createdAt|No|Created date/time of transaction with search modifiers as described in the Date Formats section|gte2023-03-29T00:00:00Z|
+
+The following example will retrieve the first 10 eSIM transactions created on March 29th ad midnight UTC or later.
+
+```typescript
+zenditAPI.esimPurchasesGet(10, 0, 'gte2023-03-29T00:00:00Z').then(v => {
+  console.log(v);
+})
+```
+
+### Get QR Code for Transaction by ID
+
+|Parameter |Required | Description|Example|
+-------|------------|------|------|
+|transactionId|Yes|ID of the transaction to retrieve|0f1db8e2-b0c9-49ac-a814-1f469e71c8a8|
+|responseType|No|Response type to return - binary stream (blob) or base64 encoded (json)|json| 
+
+The following example will retrieve the eSIM QR Code as a binary stream containing the image
+
+```typescript
+zenditAPI.esimPurchasesTransactionIdQrcodeGet('0f1db8e2-b0c9-49ac-a814-1f469e71c8a8').then(v => {
+  console.log(v);
+})
+```
+
+The following example will retrieve the esim QR Code as a base64 encoded item in a DtoESimQRCode type.
+
+```typescript
+zenditAPI.esimPurchasesTransactionIdQrcodeGet('0f1db8e2-b0c9-49ac-a814-1f469e71c8a8', 'json').then(v => {
+  console.log(v);
+})
+```
+
+
 ## Mobile Topup, Mobile Bundle, and Mobile Data 
 
 Mobile Topup, Mobile Bundle, and Mobile Data use a common set of methods for obtaining the catalog of products, making purchases and getting the details of a transaction.
@@ -54,6 +160,8 @@ Mobile Topup, Mobile Bundle, and Mobile Data use a common set of methods for obt
 |brand|No|The Brand of carrier for the search| Cubacel|
 |country|No|The 2 letter ISO country code for the destination of the offer search|CU|
 |subtype|No|The product subtype for the offer search|Mobile Bundle|
+|regions|No|Region name to search|North America|
+
 
 The following example retrieves the first 10 offers in the catalog:
 
@@ -145,8 +253,6 @@ zenditAPI.topupsPurchasesGet(10, 0, 'gte2023-03-29T00:00:00Z').then(v => {
 
 Digital Gift Card and Utility Payment products use a common set of methods for obtaining the catalog of products, making purchases and getting the details of a transaction.
 
-### Catalog
-
 #### Getting a list of offers based on a search
 
 #### Parameter List
@@ -157,6 +263,8 @@ Digital Gift Card and Utility Payment products use a common set of methods for o
 |brand|No|The Brand of carrier for the search| Cubacel|
 |country|No|The 2 letter ISO country code for the destination of the offer search|CU|
 |subtype|No|The product subtype for the offer search|Mobile Bundle|
+|regions|No|Region name to search|North America|
+
 
 The following example retrieves the first 10 offers in the catalog:
 
@@ -320,6 +428,26 @@ Value types are used by RANGE offers allowing the value to be sent based on the 
 |COST|Customer Price and Value delivered calculated using the Zendit client's cost FX|
 |PRICE|Zendit client Cost and Value delivered calculated using the customer's price FX|
 |ZEND|Zendit client cost and customer's price calculated using the cost FX and price FX for a specific value to be delivered in the destination currency|
+
+### Regions
+
+All catalog search endpoints support a predefined list of regions for the region parameter. Values for this parameter are not in an ENUM but the following list may be used:
+
+Global 
+Africa
+Asia
+Caribbean
+Central America
+Eastern Europe
+Western Europe
+North America
+Oceania
+South America
+South Asia
+Southeast Asia
+Middle East and North Africa
+
+To retrieve the Global Roaming eSIM product, use the Global region on the search method to retrieve them.
 
 ## Date Formats for Transaction Searches
 

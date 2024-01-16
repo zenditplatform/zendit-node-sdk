@@ -19,25 +19,25 @@ export interface DtoTopupOffersResponse {
      * @type {number}
      * @memberof DtoTopupOffersResponse
      */
-    limit?: number;
+    limit: number;
     /**
      * 
      * @type {Array<DtoTopupOffer>}
      * @memberof DtoTopupOffersResponse
      */
-    list?: Array<DtoTopupOffer>;
+    list: Array<DtoTopupOffer>;
     /**
      * 
      * @type {number}
      * @memberof DtoTopupOffersResponse
      */
-    offset?: number;
+    offset: number;
     /**
      * 
      * @type {number}
      * @memberof DtoTopupOffersResponse
      */
-    total?: number;
+    total: number;
 }
 
 /**
@@ -45,6 +45,10 @@ export interface DtoTopupOffersResponse {
  */
 export function instanceOfDtoTopupOffersResponse(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "limit" in value;
+    isInstance = isInstance && "list" in value;
+    isInstance = isInstance && "offset" in value;
+    isInstance = isInstance && "total" in value;
 
     return isInstance;
 }
@@ -59,10 +63,10 @@ export function DtoTopupOffersResponseFromJSONTyped(json: any, ignoreDiscriminat
     }
     return {
         
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'list': !exists(json, 'list') ? undefined : ((json['list'] as Array<any>).map(DtoTopupOfferFromJSON)),
-        'offset': !exists(json, 'offset') ? undefined : json['offset'],
-        'total': !exists(json, 'total') ? undefined : json['total'],
+        'limit': json['limit'],
+        'list': ((json['list'] as Array<any>).map(DtoTopupOfferFromJSON)),
+        'offset': json['offset'],
+        'total': json['total'],
     };
 }
 
@@ -76,7 +80,7 @@ export function DtoTopupOffersResponseToJSON(value?: DtoTopupOffersResponse | nu
     return {
         
         'limit': value.limit,
-        'list': value.list === undefined ? undefined : ((value.list as Array<any>).map(DtoTopupOfferToJSON)),
+        'list': ((value.list as Array<any>).map(DtoTopupOfferToJSON)),
         'offset': value.offset,
         'total': value.total,
     };

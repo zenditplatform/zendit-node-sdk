@@ -7,6 +7,7 @@
  */
 export const DtoProductType = {
     ProductTypeTopup: 'TOPUP',
+    ProductTypeESIM: 'ESIM',
     ProductTypeVoucher: 'VOUCHER',
     ProductTypeRechargeSandbox: 'RECHARGE_SANDBOX',
     ProductTypeRechargeWithCreditCard: 'RECHARGE_WITH_CREDIT_CARD'

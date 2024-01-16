@@ -25,19 +25,19 @@ export interface DtoVoucherPurchaseInput {
      * @type {Array<DtoVoucherField>}
      * @memberof DtoVoucherPurchaseInput
      */
-    fields?: Array<DtoVoucherField>;
+    fields: Array<DtoVoucherField>;
     /**
      * 
      * @type {string}
      * @memberof DtoVoucherPurchaseInput
      */
-    offerId?: string;
+    offerId: string;
     /**
      * 
      * @type {string}
      * @memberof DtoVoucherPurchaseInput
      */
-    transactionId?: string;
+    transactionId: string;
     /**
      * 
      * @type {DtoPurchaseValue}
@@ -51,6 +51,9 @@ export interface DtoVoucherPurchaseInput {
  */
 export function instanceOfDtoVoucherPurchaseInput(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "fields" in value;
+    isInstance = isInstance && "offerId" in value;
+    isInstance = isInstance && "transactionId" in value;
 
     return isInstance;
 }
@@ -65,9 +68,9 @@ export function DtoVoucherPurchaseInputFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'fields': !exists(json, 'fields') ? undefined : ((json['fields'] as Array<any>).map(DtoVoucherFieldFromJSON)),
-        'offerId': !exists(json, 'offerId') ? undefined : json['offerId'],
-        'transactionId': !exists(json, 'transactionId') ? undefined : json['transactionId'],
+        'fields': ((json['fields'] as Array<any>).map(DtoVoucherFieldFromJSON)),
+        'offerId': json['offerId'],
+        'transactionId': json['transactionId'],
         'value': !exists(json, 'value') ? undefined : DtoPurchaseValueFromJSON(json['value']),
     };
 }
@@ -81,7 +84,7 @@ export function DtoVoucherPurchaseInputToJSON(value?: DtoVoucherPurchaseInput | 
     }
     return {
         
-        'fields': value.fields === undefined ? undefined : ((value.fields as Array<any>).map(DtoVoucherFieldToJSON)),
+        'fields': ((value.fields as Array<any>).map(DtoVoucherFieldToJSON)),
         'offerId': value.offerId,
         'transactionId': value.transactionId,
         'value': DtoPurchaseValueToJSON(value.value),

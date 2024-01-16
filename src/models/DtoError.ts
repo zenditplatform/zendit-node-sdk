@@ -12,19 +12,19 @@ export interface DtoError {
      * @type {string}
      * @memberof DtoError
      */
-    code?: string;
+    code: string;
     /**
      * 
      * @type {string}
      * @memberof DtoError
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {string}
      * @memberof DtoError
      */
-    message?: string;
+    message: string;
 }
 
 /**
@@ -32,6 +32,9 @@ export interface DtoError {
  */
 export function instanceOfDtoError(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "code" in value;
+    isInstance = isInstance && "description" in value;
+    isInstance = isInstance && "message" in value;
 
     return isInstance;
 }
@@ -46,9 +49,9 @@ export function DtoErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'code': !exists(json, 'code') ? undefined : json['code'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'message': !exists(json, 'message') ? undefined : json['message'],
+        'code': json['code'],
+        'description': json['description'],
+        'message': json['message'],
     };
 }
 

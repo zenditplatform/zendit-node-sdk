@@ -12,55 +12,55 @@ export interface DtoVoucherReceipt {
      * @type {string}
      * @memberof DtoVoucherReceipt
      */
-    currency?: string;
+    currency: string;
     /**
      * 
      * @type {string}
      * @memberof DtoVoucherReceipt
      */
-    epin?: string;
+    epin: string;
     /**
      * 
      * @type {string}
      * @memberof DtoVoucherReceipt
      */
-    expiresAt?: string;
+    expiresAt: string;
     /**
      * 
      * @type {string}
      * @memberof DtoVoucherReceipt
      */
-    instructions?: string;
+    instructions: string;
     /**
      * Additional message information about the voucher
      * @type {string}
      * @memberof DtoVoucherReceipt
      */
-    notes?: string;
+    notes: string;
     /**
      * 
      * @type {string}
      * @memberof DtoVoucherReceipt
      */
-    recipientCustomerServiceNumber?: string;
+    recipientCustomerServiceNumber: string;
     /**
      * The value delivered by the voucher
      * @type {number}
      * @memberof DtoVoucherReceipt
      */
-    send?: number;
+    send: number;
     /**
      * 
      * @type {string}
      * @memberof DtoVoucherReceipt
      */
-    senderCustomerServiceNumber?: string;
+    senderCustomerServiceNumber: string;
     /**
      * 
      * @type {string}
      * @memberof DtoVoucherReceipt
      */
-    terms?: string;
+    terms: string;
 }
 
 /**
@@ -68,6 +68,15 @@ export interface DtoVoucherReceipt {
  */
 export function instanceOfDtoVoucherReceipt(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "currency" in value;
+    isInstance = isInstance && "epin" in value;
+    isInstance = isInstance && "expiresAt" in value;
+    isInstance = isInstance && "instructions" in value;
+    isInstance = isInstance && "notes" in value;
+    isInstance = isInstance && "recipientCustomerServiceNumber" in value;
+    isInstance = isInstance && "send" in value;
+    isInstance = isInstance && "senderCustomerServiceNumber" in value;
+    isInstance = isInstance && "terms" in value;
 
     return isInstance;
 }
@@ -82,15 +91,15 @@ export function DtoVoucherReceiptFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
-        'epin': !exists(json, 'epin') ? undefined : json['epin'],
-        'expiresAt': !exists(json, 'expiresAt') ? undefined : json['expiresAt'],
-        'instructions': !exists(json, 'instructions') ? undefined : json['instructions'],
-        'notes': !exists(json, 'notes') ? undefined : json['notes'],
-        'recipientCustomerServiceNumber': !exists(json, 'recipientCustomerServiceNumber') ? undefined : json['recipientCustomerServiceNumber'],
-        'send': !exists(json, 'send') ? undefined : json['send'],
-        'senderCustomerServiceNumber': !exists(json, 'senderCustomerServiceNumber') ? undefined : json['senderCustomerServiceNumber'],
-        'terms': !exists(json, 'terms') ? undefined : json['terms'],
+        'currency': json['currency'],
+        'epin': json['epin'],
+        'expiresAt': json['expiresAt'],
+        'instructions': json['instructions'],
+        'notes': json['notes'],
+        'recipientCustomerServiceNumber': json['recipientCustomerServiceNumber'],
+        'send': json['send'],
+        'senderCustomerServiceNumber': json['senderCustomerServiceNumber'],
+        'terms': json['terms'],
     };
 }
 

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-
 import { exists, mapValues } from '../runtime';
 /**
  * 
@@ -13,19 +12,19 @@ export interface DtoConfirmation {
      * @type {string}
      * @memberof DtoConfirmation
      */
-    confirmationNumber?: string;
+    confirmationNumber: string;
     /**
      * 
      * @type {string}
      * @memberof DtoConfirmation
      */
-    externalReferenceId?: string;
+    externalReferenceId: string;
     /**
      * 
      * @type {string}
      * @memberof DtoConfirmation
      */
-    transactionTime?: string;
+    transactionTime: string;
 }
 
 /**
@@ -33,6 +32,9 @@ export interface DtoConfirmation {
  */
 export function instanceOfDtoConfirmation(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "confirmationNumber" in value;
+    isInstance = isInstance && "externalReferenceId" in value;
+    isInstance = isInstance && "transactionTime" in value;
 
     return isInstance;
 }
@@ -47,9 +49,9 @@ export function DtoConfirmationFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'confirmationNumber': !exists(json, 'confirmationNumber') ? undefined : json['confirmationNumber'],
-        'externalReferenceId': !exists(json, 'externalReferenceId') ? undefined : json['externalReferenceId'],
-        'transactionTime': !exists(json, 'transactionTime') ? undefined : json['transactionTime'],
+        'confirmationNumber': json['confirmationNumber'],
+        'externalReferenceId': json['externalReferenceId'],
+        'transactionTime': json['transactionTime'],
     };
 }
 
