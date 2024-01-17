@@ -1,7 +1,9 @@
-import * as uuid from 'uuid';
+import * as uuid from "uuid";
 import * as dotenv from "dotenv"
-import { ZenditApi, DtoTransaction,  DtoVoucherOffer, DtoTopupPurchase, DtoPurchaseValue, DtoVoucherPurchaseInput,
-    DtoValueType, DtoVoucherField, DtoTopupPurchaseMakeInput, DtoTopupSender } from "@zenditplatform/zendit-sdk";
+import {
+    ZenditApi, DtoTransaction, DtoVoucherOffer, DtoTopupPurchase, DtoPurchaseValue, DtoVoucherPurchaseInput,
+    DtoValueType, DtoVoucherField, DtoTopupPurchaseMakeInput, DtoTopupSender, DtoESimOffer, DtoESimPurchaseMakeInput
+} from "@zenditplatform/zendit-sdk";
 
 dotenv.config()
 
@@ -76,6 +78,31 @@ const examples = async () => {
     };
     const vouchersPurchasesPostBody = await zenditAPI.vouchersPurchasesPost(voucherPurchaseInput)
     console.log(vouchersPurchasesPostBody)
+
+    ///
+    /// ESim
+    ///
+
+    console.log("\n====== ESIM CATALOG ======")
+    const {list: eSimOffers} = await zenditAPI.esimOffersGet(10, 0);
+    console.log(eSimOffers);
+
+    console.log("\n====== ESIM OFFER BY ID ======")
+    const eSimOffer = eSimOffers!.pop() as DtoESimOffer;
+    const eSimOfferIdToGet = eSimOffer.offerId!;
+    const eSimOfferData = await zenditAPI.esimOffersOfferIdGet(eSimOfferIdToGet);
+    console.log(eSimOfferData);
+
+    console.log("\n====== PURCHASE ESIM OFFER ======")
+    const eSimPurchaseInput: DtoESimPurchaseMakeInput = {
+        transactionId: uuid.v4(), offerId: "ESIM-AFRICA-30D-10GB"
+    };
+    const eSimPurchasesPostBody = await zenditAPI.esimPurchasesPost(eSimPurchaseInput)
+    console.log(eSimPurchasesPostBody)
+
+    console.log("\n====== ESIM PURCHASE GET QR CODE ======")
+    const purchaseResponseJson = await zenditAPI.esimPurchasesTransactionIdQrcodeGet(eSimPurchasesPostBody.transactionId, "json");
+    console.log(purchaseResponseJson.imageBase64)
 
     ///
     /// Transactions
