@@ -4,6 +4,7 @@
 import * as runtime from '../runtime';
 import type {
   DtoBalanceResponse,
+  DtoESIMPlansResponse,
   DtoESimOffer,
   DtoESimOffersResponse,
   DtoESimPurchase,
@@ -30,6 +31,8 @@ import type {
 import {
     DtoBalanceResponseFromJSON,
     DtoBalanceResponseToJSON,
+    DtoESIMPlansResponseFromJSON,
+    DtoESIMPlansResponseToJSON,
     DtoESimOfferFromJSON,
     DtoESimOfferToJSON,
     DtoESimOffersResponseFromJSON,
@@ -75,6 +78,10 @@ import {
     DtoVoucherPurchasesResponseFromJSON,
     DtoVoucherPurchasesResponseToJSON,
 } from '../models/index';
+
+export interface EsimIccIdPlansGetRequest {
+    iccId: string;
+}
 
 export interface EsimOffersGetRequest {
     limit: number;
@@ -209,6 +216,40 @@ export class ZenditApi extends runtime.BaseAPI {
      */
     async balanceGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoBalanceResponse> {
         const response = await this.balanceGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get list of eSim plans
+     */
+    async esimIccIdPlansGetRaw(requestParameters: EsimIccIdPlansGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESIMPlansResponse>> {
+        if (requestParameters.iccId === null || requestParameters.iccId === undefined) {
+            throw new runtime.RequiredError('iccId','Required parameter requestParameters.iccId was null or undefined when calling esimIccIdPlansGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/esim/{iccId}/plans`.replace(`{${"iccId"}}`, encodeURIComponent(String(requestParameters.iccId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoESIMPlansResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get list of eSim plans
+     */
+    async esimIccIdPlansGet(iccId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESIMPlansResponse> {
+        const response = await this.esimIccIdPlansGetRaw({ iccId: iccId }, initOverrides);
         return await response.value();
     }
 

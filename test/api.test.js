@@ -128,3 +128,21 @@ test('esimPurchasesTransactionIdQrcodeGet should return qrcode in different form
         expect(purchaseResponse.type).toBe("image/png");
     }
 });
+
+test('esimPurchasesPost plans', async () => {
+    const response = await zenditAPI.esimPurchasesGet(10, 0);
+    if (response.list.length > 0) {
+        const purchase = response.list[0];
+        let iccid = purchase.confirmation.iccid;
+
+        const purchasePlan = await zenditAPI.esimPurchasesPost({
+            offerId: "ESIM-AFRICA-30D-10GB",
+            transactionId: uuid.v4(),
+            iccid: iccid,
+        });
+        expect(purchasePlan.status).toBe("ACCEPTED");
+
+        const plans = await zenditAPI.esimIccIdPlansGet(iccid);
+        expect(plans.list).toBeDefined();
+    }
+});
