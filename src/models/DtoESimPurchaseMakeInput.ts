@@ -12,6 +12,12 @@ export interface DtoESimPurchaseMakeInput {
      * @type {string}
      * @memberof DtoESimPurchaseMakeInput
      */
+    iccid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DtoESimPurchaseMakeInput
+     */
     offerId: string;
     /**
      * 
@@ -42,6 +48,7 @@ export function DtoESimPurchaseMakeInputFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
+        'iccid': !exists(json, 'iccid') ? undefined : json['iccid'],
         'offerId': json['offerId'],
         'transactionId': json['transactionId'],
     };
@@ -56,6 +63,7 @@ export function DtoESimPurchaseMakeInputToJSON(value?: DtoESimPurchaseMakeInput 
     }
     return {
         
+        'iccid': value.iccid,
         'offerId': value.offerId,
         'transactionId': value.transactionId,
     };

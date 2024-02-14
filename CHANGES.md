@@ -1,6 +1,10 @@
 zendit-node changelog
 =====================
 
+# [2024-02-05] Version 1.4.0
+
+- **eSIM plans**: Added functions for purchasing and fetching eSIM plans.
+
 # [2024-01-18] Version 1.3.1
 
 - **Custom User-Agent**: To improve traceability, we've added a custom User-Agent to our SDK's HTTP requests.
