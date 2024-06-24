@@ -19,7 +19,7 @@ test('topupsPurchasesGet should return list purchases', async () => {
 });
 
 test('topupsPurchasesTransactionIdGet should return purchase', async () => {
-    const response = await zenditAPI.topupsPurchasesGet(10, 0);
+    const response = await zenditAPI.topupsPurchasesGet(1, 0);
     if (response.list.length > 0) {
         const purchase = response.list[0];
         let purchaseID = purchase.transactionId;
@@ -75,7 +75,7 @@ test('vouchersPurchasesGet should return list purchases', async () => {
 });
 
 test('transactionsGet should return transaction', async () => {
-    const response = await zenditAPI.transactionsGet(10, 0);
+    const response = await zenditAPI.transactionsGet(1, 0);
     expect(response.list).toBeDefined();
 
     const transactionId = response.list[0].transactionId;
@@ -102,7 +102,7 @@ test('esimPurchasesGet should return list purchases', async () => {
 });
 
 test('esimPurchasesTransactionIdGet should return purchase', async () => {
-    const response = await zenditAPI.esimPurchasesGet(10, 0);
+    const response = await zenditAPI.esimPurchasesGet(1, 0);
     if (response.list.length > 0) {
         const purchase = response.list[0];
         let purchaseID = purchase.transactionId;
@@ -113,12 +113,10 @@ test('esimPurchasesTransactionIdGet should return purchase', async () => {
 });
 
 test('esimPurchasesTransactionIdQrcodeGet should return qrcode in different formats', async () => {
-    const response = await zenditAPI.esimPurchasesGet(10, 0);
+    const response = await zenditAPI.esimPurchasesGet(1, 0);
     if (response.list.length > 0) {
         const purchase = response.list[0];
         let purchaseID = purchase.transactionId;
-
-        await delay(3000);
 
         const purchaseResponse = await zenditAPI.esimPurchasesTransactionIdQrcodeGet(purchaseID, "blob");
         expect(purchaseResponse.type).toBe("image/png");
@@ -132,7 +130,7 @@ test('esimPurchasesTransactionIdQrcodeGet should return qrcode in different form
 });
 
 test('esimPurchasesPost plans', async () => {
-    const response = await zenditAPI.esimPurchasesGet(10, 0);
+    const response = await zenditAPI.esimPurchasesGet(1, 0);
     if (response.list.length > 0) {
         const purchase = response.list[0];
         let iccid = purchase.confirmation.iccid;
@@ -148,7 +146,3 @@ test('esimPurchasesPost plans', async () => {
         expect(plans.list).toBeDefined();
     }
 });
-
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}

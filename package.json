@@ -20,7 +20,7 @@
     "prepare": "npm run build",
     "clean": "rm -Rf node_modules/ *.js",
     "build": "tsc",
-    "test": "jest",
+    "test": "jest --runInBand",
     "postpublish": "npm run publish-npm",
     "publish-npm": "npm publish --access public --ignore-scripts --@zenditplatform:registry='https://registry.npmjs.org'"
   },
