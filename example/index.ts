@@ -100,7 +100,9 @@ const examples = async () => {
     const eSimPurchasesPostBody = await zenditAPI.esimPurchasesPost(eSimPurchaseInput)
     console.log(eSimPurchasesPostBody)
 
-    console.log("\n====== ESIM PURCHASE GET QR CODE ======")
+    console.log("\n====== WAITING 8 seconds to ESIM transaction completion ======")
+    await delay(8000);
+    console.log("\n====== ESIM PURCHASE GET QR CODE (Base64) ======")
     const purchaseResponseJson = await zenditAPI.esimPurchasesTransactionIdQrcodeGet(eSimPurchasesPostBody.transactionId, "json");
     console.log(purchaseResponseJson.imageBase64)
 
@@ -121,3 +123,6 @@ const examples = async () => {
 
 examples();
 
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
