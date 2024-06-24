@@ -2,7 +2,8 @@ import * as uuid from "uuid";
 import * as dotenv from "dotenv"
 import {
     ZenditApi, DtoTransaction, DtoVoucherOffer, DtoTopupPurchase, DtoPurchaseValue, DtoVoucherPurchaseInput,
-    DtoValueType, DtoVoucherField, DtoTopupPurchaseMakeInput, DtoTopupSender, DtoESimOffer, DtoESimPurchaseMakeInput
+    DtoValueType, DtoVoucherField, DtoTopupPurchaseMakeInput, DtoTopupSender, DtoESimOffer, DtoESimPurchaseMakeInput,
+    DtoTransactionStatus,
 } from "@zenditplatform/zendit-sdk";
 
 dotenv.config()
@@ -100,8 +101,8 @@ const examples = async () => {
     const eSimPurchasesPostBody = await zenditAPI.esimPurchasesPost(eSimPurchaseInput)
     console.log(eSimPurchasesPostBody)
 
-    console.log("\n====== WAITING 8 seconds to ESIM transaction completion ======")
-    await delay(8000);
+    console.log("\n====== WAITING for completion of ESIM transaction ======")
+    await waitForTransactionStatus(eSimPurchasesPostBody.transactionId, DtoTransactionStatus.TransactionStatusDone)
     console.log("\n====== ESIM PURCHASE GET QR CODE (Base64) ======")
     const purchaseResponseJson = await zenditAPI.esimPurchasesTransactionIdQrcodeGet(eSimPurchasesPostBody.transactionId, "json");
     console.log(purchaseResponseJson.imageBase64)
@@ -123,6 +124,12 @@ const examples = async () => {
 
 examples();
 
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+const waitForTransactionStatus = async (transactionId, status) => {
+    let transaction = await zenditAPI.transactionsTransactionIdGet(transactionId);
+    while (transaction.status !== status) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        transaction = await zenditAPI.transactionsTransactionIdGet(transactionId);
+    }
+
+    return true;
 }

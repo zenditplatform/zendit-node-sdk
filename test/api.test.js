@@ -1,5 +1,6 @@
 const api = require('./../dist/src/apis/api')
 const uuid = require('uuid')
+const {DtoTransactionStatus} = require("../dist/src");
 
 const zenditAPI = new api.ZenditApi(process.env.ZENDIT_API_KEY);
 
@@ -118,6 +119,8 @@ test('esimPurchasesTransactionIdQrcodeGet should return qrcode in different form
         const purchase = response.list[0];
         let purchaseID = purchase.transactionId;
 
+        await waitForTransactionStatus(purchaseID, DtoTransactionStatus.TransactionStatusDone);
+
         const purchaseResponse = await zenditAPI.esimPurchasesTransactionIdQrcodeGet(purchaseID, "blob");
         expect(purchaseResponse.type).toBe("image/png");
 
@@ -125,12 +128,14 @@ test('esimPurchasesTransactionIdQrcodeGet should return qrcode in different form
         expect(purchaseResponseJson.imageBase64).toBeDefined();
 
         const purchaseResponseBlobImplicit = await zenditAPI.esimPurchasesTransactionIdQrcodeGet(purchaseID);
-        expect(purchaseResponse.type).toBe("image/png");
+        expect(purchaseResponseBlobImplicit.type).toBe("image/png");
     }
 });
 
 test('esimPurchasesPost plans', async () => {
-    const response = await zenditAPI.esimPurchasesGet(1, 0);
+    let response = await zenditAPI.esimPurchasesGet(1, 0);
+    await waitForTransactionStatus(response.list[0].transactionId, DtoTransactionStatus.TransactionStatusDone);
+    response = await zenditAPI.esimPurchasesGet(1, 0);
     if (response.list.length > 0) {
         const purchase = response.list[0];
         let iccid = purchase.confirmation.iccid;
@@ -146,3 +151,14 @@ test('esimPurchasesPost plans', async () => {
         expect(plans.list).toBeDefined();
     }
 });
+
+
+const waitForTransactionStatus = async (transactionId, status) => {
+    let transaction = await zenditAPI.transactionsTransactionIdGet(transactionId);
+    while (transaction.status !== status) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        transaction = await zenditAPI.transactionsTransactionIdGet(transactionId);
+    }
+
+    return true;
+}
