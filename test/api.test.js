@@ -118,6 +118,8 @@ test('esimPurchasesTransactionIdQrcodeGet should return qrcode in different form
         const purchase = response.list[0];
         let purchaseID = purchase.transactionId;
 
+        await delay(3000);
+
         const purchaseResponse = await zenditAPI.esimPurchasesTransactionIdQrcodeGet(purchaseID, "blob");
         expect(purchaseResponse.type).toBe("image/png");
 
@@ -146,3 +148,7 @@ test('esimPurchasesPost plans', async () => {
         expect(plans.list).toBeDefined();
     }
 });
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
