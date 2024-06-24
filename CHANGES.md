@@ -1,6 +1,10 @@
 zendit-node changelog
 =====================
 
+# [2024-06-24] Version 1.4.1
+
+- **example**: Minor fix in the example code.
+
 # [2024-02-05] Version 1.4.0
 
 - **eSIM plans**: Added functions for purchasing and fetching eSIM plans.
