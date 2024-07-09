@@ -1,7 +1,33 @@
+<div align="center">
+
+<a href="https://zendit.io/">
+    <img alt="zendit" src="https://zendit.io/wp-content/uploads/2023/03/logo_notext.svg" width="150">
+</a>
+
 # Zendit SDK for Node.js
 
-The Zendit SDK for Node.js allows developers to easily interact with the Zendit API using TypeScript. 
+The Zendit SDK for Node.js allows developers to easily interact with the Zendit API using TypeScript.<br>
 The SDK provides convenient methods for making API requests and handling responses, abstracting away the details of HTTP requests and JSON parsing.
+
+
+[![NPM version][npm-image]][npm-url] [![NPM size][npm-size-image]][npm-url]
+
+[![Documentation][documentation-image]][documentation-url] [![Twitter][twitter-image]][twitter-url] [![YouTube][youtube-image]][youtube-url] 
+
+
+[npm-image]: https://img.shields.io/npm/v/%40zenditplatform%2Fzendit-sdk
+[npm-url]: https://www.npmjs.com/package/@zenditplatform/zendit-sdk
+[npm-size-image]: https://img.shields.io/bundlephobia/minzip/%40zenditplatform%2Fzendit-sdk
+[documentation-image]: https://img.shields.io/badge/documentation-d94453
+[documentation-url]: https://developers.zendit.io/
+
+[youtube-image]: https://img.shields.io/youtube/views/ZFFpnXM7EKg
+[youtube-url]: https://www.youtube.com/@zenditplatform
+[twitter-image]: https://img.shields.io/twitter/follow/zenditplatform
+[twitter-url]: https://twitter.com/intent/follow?screen_name=zenditplatform
+
+</div>
+
 
 # Documentation
 The documentation for the Zendit API can be found [here][docs-link].
