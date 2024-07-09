@@ -12,7 +12,7 @@ The SDK provides convenient methods for making API requests and handling respons
 
 [![NPM version][npm-image]][npm-url] [![NPM size][npm-size-image]][npm-url]
 
-[![Documentation][documentation-image]][documentation-url] [![Twitter][twitter-image]][twitter-url] [![YouTube][youtube-image]][youtube-url] 
+[![Documentation][documentation-image]][documentation-url] [![Twitter][twitter-image]][twitter-url] [![Linkedin][linkedin-image]][linkedin-url] [![YouTube][youtube-image]][youtube-url] 
 
 
 [npm-image]: https://img.shields.io/npm/v/%40zenditplatform%2Fzendit-sdk
@@ -25,6 +25,8 @@ The SDK provides convenient methods for making API requests and handling respons
 [youtube-url]: https://www.youtube.com/@zenditplatform
 [twitter-image]: https://img.shields.io/twitter/follow/zenditplatform
 [twitter-url]: https://twitter.com/intent/follow?screen_name=zenditplatform
+[linkedin-image]: https://img.shields.io/badge/linkedin-0a66c2?style=flat&logo=linkedin
+[linkedin-url]: https://www.linkedin.com/company/zenditplatform/
 
 </div>
 
