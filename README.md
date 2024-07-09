@@ -21,7 +21,7 @@ The SDK provides convenient methods for making API requests and handling respons
 [documentation-image]: https://img.shields.io/badge/documentation-d94453
 [documentation-url]: https://developers.zendit.io/
 
-[youtube-image]: https://img.shields.io/youtube/views/ZFFpnXM7EKg
+[youtube-image]: https://img.shields.io/youtube/channel/views/UCfLhYz6-ovn3BTDD6uawk1w
 [youtube-url]: https://www.youtube.com/@zenditplatform
 [twitter-image]: https://img.shields.io/twitter/follow/zenditplatform
 [twitter-url]: https://twitter.com/intent/follow?screen_name=zenditplatform
