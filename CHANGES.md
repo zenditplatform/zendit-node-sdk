@@ -1,6 +1,10 @@
 zendit-node changelog
 =====================
 
+# [2024-10-30] Version 1.5.0
+
+- **Voucher offers**: Added new fields that identify delivery type.
+
 # [2024-06-24] Version 1.4.1
 
 - **example**: Minor fix in the example code.
