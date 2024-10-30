@@ -1,11 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DtoTransactionStatus } from './DtoTransactionStatus';
 import {
     DtoTransactionStatusFromJSON,
     DtoTransactionStatusFromJSONTyped,
     DtoTransactionStatusToJSON,
+    DtoTransactionStatusToJSONTyped,
 } from './DtoTransactionStatus';
 
 /**
@@ -28,15 +29,15 @@ export interface DtoESimPurchaseResponse {
     transactionId: string;
 }
 
+
+
 /**
  * Check if a given object implements the DtoESimPurchaseResponse interface.
  */
-export function instanceOfDtoESimPurchaseResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "status" in value;
-    isInstance = isInstance && "transactionId" in value;
-
-    return isInstance;
+export function instanceOfDtoESimPurchaseResponse(value: object): value is DtoESimPurchaseResponse {
+    if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    return true;
 }
 
 export function DtoESimPurchaseResponseFromJSON(json: any): DtoESimPurchaseResponse {
@@ -44,7 +45,7 @@ export function DtoESimPurchaseResponseFromJSON(json: any): DtoESimPurchaseRespo
 }
 
 export function DtoESimPurchaseResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESimPurchaseResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -54,17 +55,19 @@ export function DtoESimPurchaseResponseFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function DtoESimPurchaseResponseToJSON(value?: DtoESimPurchaseResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoESimPurchaseResponseToJSON(json: any): DtoESimPurchaseResponse {
+      return DtoESimPurchaseResponseToJSONTyped(json, false);
+  }
+
+  export function DtoESimPurchaseResponseToJSONTyped(value?: DtoESimPurchaseResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'status': DtoTransactionStatusToJSON(value.status),
-        'transactionId': value.transactionId,
+        'status': DtoTransactionStatusToJSON(value['status']),
+        'transactionId': value['transactionId'],
     };
 }
 

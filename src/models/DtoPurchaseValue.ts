@@ -1,11 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DtoValueType } from './DtoValueType';
 import {
     DtoValueTypeFromJSON,
     DtoValueTypeFromJSONTyped,
     DtoValueTypeToJSON,
+    DtoValueTypeToJSONTyped,
 } from './DtoValueType';
 
 /**
@@ -28,15 +29,15 @@ export interface DtoPurchaseValue {
     value: number;
 }
 
+
+
 /**
  * Check if a given object implements the DtoPurchaseValue interface.
  */
-export function instanceOfDtoPurchaseValue(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfDtoPurchaseValue(value: object): value is DtoPurchaseValue {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function DtoPurchaseValueFromJSON(json: any): DtoPurchaseValue {
@@ -44,7 +45,7 @@ export function DtoPurchaseValueFromJSON(json: any): DtoPurchaseValue {
 }
 
 export function DtoPurchaseValueFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoPurchaseValue {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -54,17 +55,19 @@ export function DtoPurchaseValueFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function DtoPurchaseValueToJSON(value?: DtoPurchaseValue | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoPurchaseValueToJSON(json: any): DtoPurchaseValue {
+      return DtoPurchaseValueToJSONTyped(json, false);
+  }
+
+  export function DtoPurchaseValueToJSONTyped(value?: DtoPurchaseValue | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': DtoValueTypeToJSON(value.type),
-        'value': value.value,
+        'type': DtoValueTypeToJSON(value['type']),
+        'value': value['value'],
     };
 }
 

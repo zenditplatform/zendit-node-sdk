@@ -1,11 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DtoTopupPurchase } from './DtoTopupPurchase';
 import {
     DtoTopupPurchaseFromJSON,
     DtoTopupPurchaseFromJSONTyped,
     DtoTopupPurchaseToJSON,
+    DtoTopupPurchaseToJSONTyped,
 } from './DtoTopupPurchase';
 
 /**
@@ -43,14 +44,12 @@ export interface DtoTopupPurchasesResponse {
 /**
  * Check if a given object implements the DtoTopupPurchasesResponse interface.
  */
-export function instanceOfDtoTopupPurchasesResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "limit" in value;
-    isInstance = isInstance && "list" in value;
-    isInstance = isInstance && "offset" in value;
-    isInstance = isInstance && "total" in value;
-
-    return isInstance;
+export function instanceOfDtoTopupPurchasesResponse(value: object): value is DtoTopupPurchasesResponse {
+    if (!('limit' in value) || value['limit'] === undefined) return false;
+    if (!('list' in value) || value['list'] === undefined) return false;
+    if (!('offset' in value) || value['offset'] === undefined) return false;
+    if (!('total' in value) || value['total'] === undefined) return false;
+    return true;
 }
 
 export function DtoTopupPurchasesResponseFromJSON(json: any): DtoTopupPurchasesResponse {
@@ -58,7 +57,7 @@ export function DtoTopupPurchasesResponseFromJSON(json: any): DtoTopupPurchasesR
 }
 
 export function DtoTopupPurchasesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoTopupPurchasesResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -70,19 +69,21 @@ export function DtoTopupPurchasesResponseFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function DtoTopupPurchasesResponseToJSON(value?: DtoTopupPurchasesResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoTopupPurchasesResponseToJSON(json: any): DtoTopupPurchasesResponse {
+      return DtoTopupPurchasesResponseToJSONTyped(json, false);
+  }
+
+  export function DtoTopupPurchasesResponseToJSONTyped(value?: DtoTopupPurchasesResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'limit': value.limit,
-        'list': ((value.list as Array<any>).map(DtoTopupPurchaseToJSON)),
-        'offset': value.offset,
-        'total': value.total,
+        'limit': value['limit'],
+        'list': ((value['list'] as Array<any>).map(DtoTopupPurchaseToJSON)),
+        'offset': value['offset'],
+        'total': value['total'],
     };
 }
 

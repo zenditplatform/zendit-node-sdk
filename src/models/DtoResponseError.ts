@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,13 +30,11 @@ export interface DtoResponseError {
 /**
  * Check if a given object implements the DtoResponseError interface.
  */
-export function instanceOfDtoResponseError(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "errorCode" in value;
-    isInstance = isInstance && "fields" in value;
-    isInstance = isInstance && "message" in value;
-
-    return isInstance;
+export function instanceOfDtoResponseError(value: object): value is DtoResponseError {
+    if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
+    if (!('fields' in value) || value['fields'] === undefined) return false;
+    if (!('message' in value) || value['message'] === undefined) return false;
+    return true;
 }
 
 export function DtoResponseErrorFromJSON(json: any): DtoResponseError {
@@ -44,7 +42,7 @@ export function DtoResponseErrorFromJSON(json: any): DtoResponseError {
 }
 
 export function DtoResponseErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoResponseError {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,18 +53,20 @@ export function DtoResponseErrorFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function DtoResponseErrorToJSON(value?: DtoResponseError | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoResponseErrorToJSON(json: any): DtoResponseError {
+      return DtoResponseErrorToJSONTyped(json, false);
+  }
+
+  export function DtoResponseErrorToJSONTyped(value?: DtoResponseError | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'errorCode': value.errorCode,
-        'fields': value.fields,
-        'message': value.message,
+        'errorCode': value['errorCode'],
+        'fields': value['fields'],
+        'message': value['message'],
     };
 }
 

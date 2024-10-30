@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,12 +30,10 @@ export interface DtoESimPurchaseMakeInput {
 /**
  * Check if a given object implements the DtoESimPurchaseMakeInput interface.
  */
-export function instanceOfDtoESimPurchaseMakeInput(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "offerId" in value;
-    isInstance = isInstance && "transactionId" in value;
-
-    return isInstance;
+export function instanceOfDtoESimPurchaseMakeInput(value: object): value is DtoESimPurchaseMakeInput {
+    if (!('offerId' in value) || value['offerId'] === undefined) return false;
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    return true;
 }
 
 export function DtoESimPurchaseMakeInputFromJSON(json: any): DtoESimPurchaseMakeInput {
@@ -43,29 +41,31 @@ export function DtoESimPurchaseMakeInputFromJSON(json: any): DtoESimPurchaseMake
 }
 
 export function DtoESimPurchaseMakeInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESimPurchaseMakeInput {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'iccid': !exists(json, 'iccid') ? undefined : json['iccid'],
+        'iccid': json['iccid'] == null ? undefined : json['iccid'],
         'offerId': json['offerId'],
         'transactionId': json['transactionId'],
     };
 }
 
-export function DtoESimPurchaseMakeInputToJSON(value?: DtoESimPurchaseMakeInput | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoESimPurchaseMakeInputToJSON(json: any): DtoESimPurchaseMakeInput {
+      return DtoESimPurchaseMakeInputToJSONTyped(json, false);
+  }
+
+  export function DtoESimPurchaseMakeInputToJSONTyped(value?: DtoESimPurchaseMakeInput | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'iccid': value.iccid,
-        'offerId': value.offerId,
-        'transactionId': value.transactionId,
+        'iccid': value['iccid'],
+        'offerId': value['offerId'],
+        'transactionId': value['transactionId'],
     };
 }
 

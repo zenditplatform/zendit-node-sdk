@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,13 +30,11 @@ export interface DtoError {
 /**
  * Check if a given object implements the DtoError interface.
  */
-export function instanceOfDtoError(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "code" in value;
-    isInstance = isInstance && "description" in value;
-    isInstance = isInstance && "message" in value;
-
-    return isInstance;
+export function instanceOfDtoError(value: object): value is DtoError {
+    if (!('code' in value) || value['code'] === undefined) return false;
+    if (!('description' in value) || value['description'] === undefined) return false;
+    if (!('message' in value) || value['message'] === undefined) return false;
+    return true;
 }
 
 export function DtoErrorFromJSON(json: any): DtoError {
@@ -44,7 +42,7 @@ export function DtoErrorFromJSON(json: any): DtoError {
 }
 
 export function DtoErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoError {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,18 +53,20 @@ export function DtoErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     };
 }
 
-export function DtoErrorToJSON(value?: DtoError | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoErrorToJSON(json: any): DtoError {
+      return DtoErrorToJSONTyped(json, false);
+  }
+
+  export function DtoErrorToJSONTyped(value?: DtoError | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'code': value.code,
-        'description': value.description,
-        'message': value.message,
+        'code': value['code'],
+        'description': value['description'],
+        'message': value['message'],
     };
 }
 

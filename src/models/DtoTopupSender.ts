@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -24,10 +24,8 @@ export interface DtoTopupSender {
 /**
  * Check if a given object implements the DtoTopupSender interface.
  */
-export function instanceOfDtoTopupSender(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfDtoTopupSender(value: object): value is DtoTopupSender {
+    return true;
 }
 
 export function DtoTopupSenderFromJSON(json: any): DtoTopupSender {
@@ -35,27 +33,29 @@ export function DtoTopupSenderFromJSON(json: any): DtoTopupSender {
 }
 
 export function DtoTopupSenderFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoTopupSender {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'country': !exists(json, 'country') ? undefined : json['country'],
-        'phoneNumber': !exists(json, 'phoneNumber') ? undefined : json['phoneNumber'],
+        'country': json['country'] == null ? undefined : json['country'],
+        'phoneNumber': json['phoneNumber'] == null ? undefined : json['phoneNumber'],
     };
 }
 
-export function DtoTopupSenderToJSON(value?: DtoTopupSender | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoTopupSenderToJSON(json: any): DtoTopupSender {
+      return DtoTopupSenderToJSONTyped(json, false);
+  }
+
+  export function DtoTopupSenderToJSONTyped(value?: DtoTopupSender | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'country': value.country,
-        'phoneNumber': value.phoneNumber,
+        'country': value['country'],
+        'phoneNumber': value['phoneNumber'],
     };
 }
 

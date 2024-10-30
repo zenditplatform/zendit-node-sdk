@@ -1,11 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DtoESimOffer } from './DtoESimOffer';
 import {
     DtoESimOfferFromJSON,
     DtoESimOfferFromJSONTyped,
     DtoESimOfferToJSON,
+    DtoESimOfferToJSONTyped,
 } from './DtoESimOffer';
 
 /**
@@ -43,14 +44,12 @@ export interface DtoESimOffersResponse {
 /**
  * Check if a given object implements the DtoESimOffersResponse interface.
  */
-export function instanceOfDtoESimOffersResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "limit" in value;
-    isInstance = isInstance && "list" in value;
-    isInstance = isInstance && "offset" in value;
-    isInstance = isInstance && "total" in value;
-
-    return isInstance;
+export function instanceOfDtoESimOffersResponse(value: object): value is DtoESimOffersResponse {
+    if (!('limit' in value) || value['limit'] === undefined) return false;
+    if (!('list' in value) || value['list'] === undefined) return false;
+    if (!('offset' in value) || value['offset'] === undefined) return false;
+    if (!('total' in value) || value['total'] === undefined) return false;
+    return true;
 }
 
 export function DtoESimOffersResponseFromJSON(json: any): DtoESimOffersResponse {
@@ -58,7 +57,7 @@ export function DtoESimOffersResponseFromJSON(json: any): DtoESimOffersResponse 
 }
 
 export function DtoESimOffersResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESimOffersResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -70,19 +69,21 @@ export function DtoESimOffersResponseFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function DtoESimOffersResponseToJSON(value?: DtoESimOffersResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoESimOffersResponseToJSON(json: any): DtoESimOffersResponse {
+      return DtoESimOffersResponseToJSONTyped(json, false);
+  }
+
+  export function DtoESimOffersResponseToJSONTyped(value?: DtoESimOffersResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'limit': value.limit,
-        'list': ((value.list as Array<any>).map(DtoESimOfferToJSON)),
-        'offset': value.offset,
-        'total': value.total,
+        'limit': value['limit'],
+        'list': ((value['list'] as Array<any>).map(DtoESimOfferToJSON)),
+        'offset': value['offset'],
+        'total': value['total'],
     };
 }
 

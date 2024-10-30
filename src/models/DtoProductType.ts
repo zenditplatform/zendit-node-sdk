@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-
 /**
  * 
  * @export
@@ -9,11 +8,22 @@ export const DtoProductType = {
     ProductTypeTopup: 'TOPUP',
     ProductTypeESIM: 'ESIM',
     ProductTypeVoucher: 'VOUCHER',
-    ProductTypeRechargeSandbox: 'RECHARGE_SANDBOX',
-    ProductTypeRechargeWithCreditCard: 'RECHARGE_WITH_CREDIT_CARD'
+    ProductTypeWalletRecharge: 'WALLET_RECHARGE',
+    ProductTypeRefund: 'REFUND'
 } as const;
 export type DtoProductType = typeof DtoProductType[keyof typeof DtoProductType];
 
+
+export function instanceOfDtoProductType(value: any): boolean {
+    for (const key in DtoProductType) {
+        if (Object.prototype.hasOwnProperty.call(DtoProductType, key)) {
+            if (DtoProductType[key as keyof typeof DtoProductType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function DtoProductTypeFromJSON(json: any): DtoProductType {
     return DtoProductTypeFromJSONTyped(json, false);
@@ -25,5 +35,9 @@ export function DtoProductTypeFromJSONTyped(json: any, ignoreDiscriminator: bool
 
 export function DtoProductTypeToJSON(value?: DtoProductType | null): any {
     return value as any;
+}
+
+export function DtoProductTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): DtoProductType {
+    return value as DtoProductType;
 }
 

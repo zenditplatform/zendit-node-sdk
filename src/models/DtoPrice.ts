@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -60,11 +60,9 @@ export interface DtoPrice {
 /**
  * Check if a given object implements the DtoPrice interface.
  */
-export function instanceOfDtoPrice(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "currency" in value;
-
-    return isInstance;
+export function instanceOfDtoPrice(value: object): value is DtoPrice {
+    if (!('currency' in value) || value['currency'] === undefined) return false;
+    return true;
 }
 
 export function DtoPriceFromJSON(json: any): DtoPrice {
@@ -72,39 +70,41 @@ export function DtoPriceFromJSON(json: any): DtoPrice {
 }
 
 export function DtoPriceFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoPrice {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'currency': json['currency'],
-        'fixed': !exists(json, 'fixed') ? undefined : json['fixed'],
-        'fx': !exists(json, 'fx') ? undefined : json['fx'],
-        'margin': !exists(json, 'margin') ? undefined : json['margin'],
-        'max': !exists(json, 'max') ? undefined : json['max'],
-        'min': !exists(json, 'min') ? undefined : json['min'],
-        'suggestedFixed': !exists(json, 'suggestedFixed') ? undefined : json['suggestedFixed'],
-        'suggestedFx': !exists(json, 'suggestedFx') ? undefined : json['suggestedFx'],
+        'fixed': json['fixed'] == null ? undefined : json['fixed'],
+        'fx': json['fx'] == null ? undefined : json['fx'],
+        'margin': json['margin'] == null ? undefined : json['margin'],
+        'max': json['max'] == null ? undefined : json['max'],
+        'min': json['min'] == null ? undefined : json['min'],
+        'suggestedFixed': json['suggestedFixed'] == null ? undefined : json['suggestedFixed'],
+        'suggestedFx': json['suggestedFx'] == null ? undefined : json['suggestedFx'],
     };
 }
 
-export function DtoPriceToJSON(value?: DtoPrice | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoPriceToJSON(json: any): DtoPrice {
+      return DtoPriceToJSONTyped(json, false);
+  }
+
+  export function DtoPriceToJSONTyped(value?: DtoPrice | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'currency': value.currency,
-        'fixed': value.fixed,
-        'fx': value.fx,
-        'margin': value.margin,
-        'max': value.max,
-        'min': value.min,
-        'suggestedFixed': value.suggestedFixed,
-        'suggestedFx': value.suggestedFx,
+        'currency': value['currency'],
+        'fixed': value['fixed'],
+        'fx': value['fx'],
+        'margin': value['margin'],
+        'max': value['max'],
+        'min': value['min'],
+        'suggestedFixed': value['suggestedFixed'],
+        'suggestedFx': value['suggestedFx'],
     };
 }
 

@@ -1,59 +1,68 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { DtoVoucherField } from './DtoVoucherField';
+import {
+    DtoVoucherFieldFromJSON,
+    DtoVoucherFieldFromJSONTyped,
+    DtoVoucherFieldToJSON,
+    DtoVoucherFieldToJSONTyped,
+} from './DtoVoucherField';
+import type { DtoPriceType } from './DtoPriceType';
+import {
+    DtoPriceTypeFromJSON,
+    DtoPriceTypeFromJSONTyped,
+    DtoPriceTypeToJSON,
+    DtoPriceTypeToJSONTyped,
+} from './DtoPriceType';
+import type { DtoPurchaseValue } from './DtoPurchaseValue';
+import {
+    DtoPurchaseValueFromJSON,
+    DtoPurchaseValueFromJSONTyped,
+    DtoPurchaseValueToJSON,
+    DtoPurchaseValueToJSONTyped,
+} from './DtoPurchaseValue';
 import type { DtoConfirmation } from './DtoConfirmation';
 import {
     DtoConfirmationFromJSON,
     DtoConfirmationFromJSONTyped,
     DtoConfirmationToJSON,
+    DtoConfirmationToJSONTyped,
 } from './DtoConfirmation';
 import type { DtoError } from './DtoError';
 import {
     DtoErrorFromJSON,
     DtoErrorFromJSONTyped,
     DtoErrorToJSON,
+    DtoErrorToJSONTyped,
 } from './DtoError';
-import type { DtoPriceType } from './DtoPriceType';
-import {
-    DtoPriceTypeFromJSON,
-    DtoPriceTypeFromJSONTyped,
-    DtoPriceTypeToJSON,
-} from './DtoPriceType';
-import type { DtoProductType } from './DtoProductType';
-import {
-    DtoProductTypeFromJSON,
-    DtoProductTypeFromJSONTyped,
-    DtoProductTypeToJSON,
-} from './DtoProductType';
-import type { DtoPurchaseValue } from './DtoPurchaseValue';
-import {
-    DtoPurchaseValueFromJSON,
-    DtoPurchaseValueFromJSONTyped,
-    DtoPurchaseValueToJSON,
-} from './DtoPurchaseValue';
 import type { DtoTransactionLogItem } from './DtoTransactionLogItem';
 import {
     DtoTransactionLogItemFromJSON,
     DtoTransactionLogItemFromJSONTyped,
     DtoTransactionLogItemToJSON,
+    DtoTransactionLogItemToJSONTyped,
 } from './DtoTransactionLogItem';
+import type { DtoProductType } from './DtoProductType';
+import {
+    DtoProductTypeFromJSON,
+    DtoProductTypeFromJSONTyped,
+    DtoProductTypeToJSON,
+    DtoProductTypeToJSONTyped,
+} from './DtoProductType';
 import type { DtoTransactionStatus } from './DtoTransactionStatus';
 import {
     DtoTransactionStatusFromJSON,
     DtoTransactionStatusFromJSONTyped,
     DtoTransactionStatusToJSON,
+    DtoTransactionStatusToJSONTyped,
 } from './DtoTransactionStatus';
-import type { DtoVoucherField } from './DtoVoucherField';
-import {
-    DtoVoucherFieldFromJSON,
-    DtoVoucherFieldFromJSONTyped,
-    DtoVoucherFieldToJSON,
-} from './DtoVoucherField';
 import type { DtoVoucherReceipt } from './DtoVoucherReceipt';
 import {
     DtoVoucherReceiptFromJSON,
     DtoVoucherReceiptFromJSONTyped,
     DtoVoucherReceiptToJSON,
+    DtoVoucherReceiptToJSONTyped,
 } from './DtoVoucherReceipt';
 
 /**
@@ -68,6 +77,12 @@ export interface DtoVoucherPurchase {
      * @memberof DtoVoucherPurchase
      */
     brand: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DtoVoucherPurchase
+     */
+    brandName: string;
     /**
      * 
      * @type {DtoConfirmation}
@@ -214,33 +229,34 @@ export interface DtoVoucherPurchase {
     value?: DtoPurchaseValue;
 }
 
+
+
 /**
  * Check if a given object implements the DtoVoucherPurchase interface.
  */
-export function instanceOfDtoVoucherPurchase(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "brand" in value;
-    isInstance = isInstance && "cost" in value;
-    isInstance = isInstance && "costCurrency" in value;
-    isInstance = isInstance && "country" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "fields" in value;
-    isInstance = isInstance && "log" in value;
-    isInstance = isInstance && "notes" in value;
-    isInstance = isInstance && "offerId" in value;
-    isInstance = isInstance && "price" in value;
-    isInstance = isInstance && "priceCurrency" in value;
-    isInstance = isInstance && "priceType" in value;
-    isInstance = isInstance && "productType" in value;
-    isInstance = isInstance && "send" in value;
-    isInstance = isInstance && "sendCurrency" in value;
-    isInstance = isInstance && "shortNotes" in value;
-    isInstance = isInstance && "status" in value;
-    isInstance = isInstance && "subTypes" in value;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "updatedAt" in value;
-
-    return isInstance;
+export function instanceOfDtoVoucherPurchase(value: object): value is DtoVoucherPurchase {
+    if (!('brand' in value) || value['brand'] === undefined) return false;
+    if (!('brandName' in value) || value['brandName'] === undefined) return false;
+    if (!('cost' in value) || value['cost'] === undefined) return false;
+    if (!('costCurrency' in value) || value['costCurrency'] === undefined) return false;
+    if (!('country' in value) || value['country'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('fields' in value) || value['fields'] === undefined) return false;
+    if (!('log' in value) || value['log'] === undefined) return false;
+    if (!('notes' in value) || value['notes'] === undefined) return false;
+    if (!('offerId' in value) || value['offerId'] === undefined) return false;
+    if (!('price' in value) || value['price'] === undefined) return false;
+    if (!('priceCurrency' in value) || value['priceCurrency'] === undefined) return false;
+    if (!('priceType' in value) || value['priceType'] === undefined) return false;
+    if (!('productType' in value) || value['productType'] === undefined) return false;
+    if (!('send' in value) || value['send'] === undefined) return false;
+    if (!('sendCurrency' in value) || value['sendCurrency'] === undefined) return false;
+    if (!('shortNotes' in value) || value['shortNotes'] === undefined) return false;
+    if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('subTypes' in value) || value['subTypes'] === undefined) return false;
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
+    return true;
 }
 
 export function DtoVoucherPurchaseFromJSON(json: any): DtoVoucherPurchase {
@@ -248,18 +264,19 @@ export function DtoVoucherPurchaseFromJSON(json: any): DtoVoucherPurchase {
 }
 
 export function DtoVoucherPurchaseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoVoucherPurchase {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'brand': json['brand'],
-        'confirmation': !exists(json, 'confirmation') ? undefined : DtoConfirmationFromJSON(json['confirmation']),
+        'brandName': json['brandName'],
+        'confirmation': json['confirmation'] == null ? undefined : DtoConfirmationFromJSON(json['confirmation']),
         'cost': json['cost'],
         'costCurrency': json['costCurrency'],
         'country': json['country'],
         'createdAt': json['createdAt'],
-        'error': !exists(json, 'error') ? undefined : DtoErrorFromJSON(json['error']),
+        'error': json['error'] == null ? undefined : DtoErrorFromJSON(json['error']),
         'fields': ((json['fields'] as Array<any>).map(DtoVoucherFieldFromJSON)),
         'log': ((json['log'] as Array<any>).map(DtoTransactionLogItemFromJSON)),
         'notes': json['notes'],
@@ -268,8 +285,8 @@ export function DtoVoucherPurchaseFromJSONTyped(json: any, ignoreDiscriminator: 
         'priceCurrency': json['priceCurrency'],
         'priceType': DtoPriceTypeFromJSON(json['priceType']),
         'productType': DtoProductTypeFromJSON(json['productType']),
-        'receipt': !exists(json, 'receipt') ? undefined : DtoVoucherReceiptFromJSON(json['receipt']),
-        'regions': !exists(json, 'regions') ? undefined : json['regions'],
+        'receipt': json['receipt'] == null ? undefined : DtoVoucherReceiptFromJSON(json['receipt']),
+        'regions': json['regions'] == null ? undefined : json['regions'],
         'send': json['send'],
         'sendCurrency': json['sendCurrency'],
         'shortNotes': json['shortNotes'],
@@ -277,44 +294,47 @@ export function DtoVoucherPurchaseFromJSONTyped(json: any, ignoreDiscriminator: 
         'subTypes': json['subTypes'],
         'transactionId': json['transactionId'],
         'updatedAt': json['updatedAt'],
-        'value': !exists(json, 'value') ? undefined : DtoPurchaseValueFromJSON(json['value']),
+        'value': json['value'] == null ? undefined : DtoPurchaseValueFromJSON(json['value']),
     };
 }
 
-export function DtoVoucherPurchaseToJSON(value?: DtoVoucherPurchase | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoVoucherPurchaseToJSON(json: any): DtoVoucherPurchase {
+      return DtoVoucherPurchaseToJSONTyped(json, false);
+  }
+
+  export function DtoVoucherPurchaseToJSONTyped(value?: DtoVoucherPurchase | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'brand': value.brand,
-        'confirmation': DtoConfirmationToJSON(value.confirmation),
-        'cost': value.cost,
-        'costCurrency': value.costCurrency,
-        'country': value.country,
-        'createdAt': value.createdAt,
-        'error': DtoErrorToJSON(value.error),
-        'fields': ((value.fields as Array<any>).map(DtoVoucherFieldToJSON)),
-        'log': ((value.log as Array<any>).map(DtoTransactionLogItemToJSON)),
-        'notes': value.notes,
-        'offerId': value.offerId,
-        'price': value.price,
-        'priceCurrency': value.priceCurrency,
-        'priceType': DtoPriceTypeToJSON(value.priceType),
-        'productType': DtoProductTypeToJSON(value.productType),
-        'receipt': DtoVoucherReceiptToJSON(value.receipt),
-        'regions': value.regions,
-        'send': value.send,
-        'sendCurrency': value.sendCurrency,
-        'shortNotes': value.shortNotes,
-        'status': DtoTransactionStatusToJSON(value.status),
-        'subTypes': value.subTypes,
-        'transactionId': value.transactionId,
-        'updatedAt': value.updatedAt,
-        'value': DtoPurchaseValueToJSON(value.value),
+        'brand': value['brand'],
+        'brandName': value['brandName'],
+        'confirmation': DtoConfirmationToJSON(value['confirmation']),
+        'cost': value['cost'],
+        'costCurrency': value['costCurrency'],
+        'country': value['country'],
+        'createdAt': value['createdAt'],
+        'error': DtoErrorToJSON(value['error']),
+        'fields': ((value['fields'] as Array<any>).map(DtoVoucherFieldToJSON)),
+        'log': ((value['log'] as Array<any>).map(DtoTransactionLogItemToJSON)),
+        'notes': value['notes'],
+        'offerId': value['offerId'],
+        'price': value['price'],
+        'priceCurrency': value['priceCurrency'],
+        'priceType': DtoPriceTypeToJSON(value['priceType']),
+        'productType': DtoProductTypeToJSON(value['productType']),
+        'receipt': DtoVoucherReceiptToJSON(value['receipt']),
+        'regions': value['regions'],
+        'send': value['send'],
+        'sendCurrency': value['sendCurrency'],
+        'shortNotes': value['shortNotes'],
+        'status': DtoTransactionStatusToJSON(value['status']),
+        'subTypes': value['subTypes'],
+        'transactionId': value['transactionId'],
+        'updatedAt': value['updatedAt'],
+        'value': DtoPurchaseValueToJSON(value['value']),
     };
 }
 

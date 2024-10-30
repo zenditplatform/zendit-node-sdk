@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -18,11 +18,9 @@ export interface DtoESimQRCode {
 /**
  * Check if a given object implements the DtoESimQRCode interface.
  */
-export function instanceOfDtoESimQRCode(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "imageBase64" in value;
-
-    return isInstance;
+export function instanceOfDtoESimQRCode(value: object): value is DtoESimQRCode {
+    if (!('imageBase64' in value) || value['imageBase64'] === undefined) return false;
+    return true;
 }
 
 export function DtoESimQRCodeFromJSON(json: any): DtoESimQRCode {
@@ -30,7 +28,7 @@ export function DtoESimQRCodeFromJSON(json: any): DtoESimQRCode {
 }
 
 export function DtoESimQRCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESimQRCode {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -39,16 +37,18 @@ export function DtoESimQRCodeFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function DtoESimQRCodeToJSON(value?: DtoESimQRCode | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoESimQRCodeToJSON(json: any): DtoESimQRCode {
+      return DtoESimQRCodeToJSONTyped(json, false);
+  }
+
+  export function DtoESimQRCodeToJSONTyped(value?: DtoESimQRCode | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'imageBase64': value.imageBase64,
+        'imageBase64': value['imageBase64'],
     };
 }
 

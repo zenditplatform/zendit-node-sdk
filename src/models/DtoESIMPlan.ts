@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -71,16 +71,14 @@ export type DtoESIMPlanStatusEnum = typeof DtoESIMPlanStatusEnum[keyof typeof Dt
 /**
  * Check if a given object implements the DtoESIMPlan interface.
  */
-export function instanceOfDtoESIMPlan(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "description" in value;
-    isInstance = isInstance && "iccid" in value;
-    isInstance = isInstance && "initialDataGB" in value;
-    isInstance = isInstance && "offerId" in value;
-    isInstance = isInstance && "remainingDataGB" in value;
-    isInstance = isInstance && "status" in value;
-
-    return isInstance;
+export function instanceOfDtoESIMPlan(value: object): value is DtoESIMPlan {
+    if (!('description' in value) || value['description'] === undefined) return false;
+    if (!('iccid' in value) || value['iccid'] === undefined) return false;
+    if (!('initialDataGB' in value) || value['initialDataGB'] === undefined) return false;
+    if (!('offerId' in value) || value['offerId'] === undefined) return false;
+    if (!('remainingDataGB' in value) || value['remainingDataGB'] === undefined) return false;
+    if (!('status' in value) || value['status'] === undefined) return false;
+    return true;
 }
 
 export function DtoESIMPlanFromJSON(json: any): DtoESIMPlan {
@@ -88,39 +86,41 @@ export function DtoESIMPlanFromJSON(json: any): DtoESIMPlan {
 }
 
 export function DtoESIMPlanFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESIMPlan {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'description': json['description'],
-        'endAt': !exists(json, 'endAt') ? undefined : json['endAt'],
+        'endAt': json['endAt'] == null ? undefined : json['endAt'],
         'iccid': json['iccid'],
         'initialDataGB': json['initialDataGB'],
         'offerId': json['offerId'],
         'remainingDataGB': json['remainingDataGB'],
-        'startAt': !exists(json, 'startAt') ? undefined : json['startAt'],
+        'startAt': json['startAt'] == null ? undefined : json['startAt'],
         'status': json['status'],
     };
 }
 
-export function DtoESIMPlanToJSON(value?: DtoESIMPlan | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoESIMPlanToJSON(json: any): DtoESIMPlan {
+      return DtoESIMPlanToJSONTyped(json, false);
+  }
+
+  export function DtoESIMPlanToJSONTyped(value?: DtoESIMPlan | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'description': value.description,
-        'endAt': value.endAt,
-        'iccid': value.iccid,
-        'initialDataGB': value.initialDataGB,
-        'offerId': value.offerId,
-        'remainingDataGB': value.remainingDataGB,
-        'startAt': value.startAt,
-        'status': value.status,
+        'description': value['description'],
+        'endAt': value['endAt'],
+        'iccid': value['iccid'],
+        'initialDataGB': value['initialDataGB'],
+        'offerId': value['offerId'],
+        'remainingDataGB': value['remainingDataGB'],
+        'startAt': value['startAt'],
+        'status': value['status'],
     };
 }
 

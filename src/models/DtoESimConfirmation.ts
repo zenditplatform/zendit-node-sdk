@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,15 +42,13 @@ export interface DtoESimConfirmation {
 /**
  * Check if a given object implements the DtoESimConfirmation interface.
  */
-export function instanceOfDtoESimConfirmation(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "activationCode" in value;
-    isInstance = isInstance && "externalReferenceId" in value;
-    isInstance = isInstance && "iccid" in value;
-    isInstance = isInstance && "redemptionInstructions" in value;
-    isInstance = isInstance && "smdpAddress" in value;
-
-    return isInstance;
+export function instanceOfDtoESimConfirmation(value: object): value is DtoESimConfirmation {
+    if (!('activationCode' in value) || value['activationCode'] === undefined) return false;
+    if (!('externalReferenceId' in value) || value['externalReferenceId'] === undefined) return false;
+    if (!('iccid' in value) || value['iccid'] === undefined) return false;
+    if (!('redemptionInstructions' in value) || value['redemptionInstructions'] === undefined) return false;
+    if (!('smdpAddress' in value) || value['smdpAddress'] === undefined) return false;
+    return true;
 }
 
 export function DtoESimConfirmationFromJSON(json: any): DtoESimConfirmation {
@@ -58,7 +56,7 @@ export function DtoESimConfirmationFromJSON(json: any): DtoESimConfirmation {
 }
 
 export function DtoESimConfirmationFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESimConfirmation {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -71,20 +69,22 @@ export function DtoESimConfirmationFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function DtoESimConfirmationToJSON(value?: DtoESimConfirmation | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoESimConfirmationToJSON(json: any): DtoESimConfirmation {
+      return DtoESimConfirmationToJSONTyped(json, false);
+  }
+
+  export function DtoESimConfirmationToJSONTyped(value?: DtoESimConfirmation | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'activationCode': value.activationCode,
-        'externalReferenceId': value.externalReferenceId,
-        'iccid': value.iccid,
-        'redemptionInstructions': value.redemptionInstructions,
-        'smdpAddress': value.smdpAddress,
+        'activationCode': value['activationCode'],
+        'externalReferenceId': value['externalReferenceId'],
+        'iccid': value['iccid'],
+        'redemptionInstructions': value['redemptionInstructions'],
+        'smdpAddress': value['smdpAddress'],
     };
 }
 

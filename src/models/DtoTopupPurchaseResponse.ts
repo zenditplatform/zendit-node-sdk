@@ -1,11 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DtoTransactionStatus } from './DtoTransactionStatus';
 import {
     DtoTransactionStatusFromJSON,
     DtoTransactionStatusFromJSONTyped,
     DtoTransactionStatusToJSON,
+    DtoTransactionStatusToJSONTyped,
 } from './DtoTransactionStatus';
 
 /**
@@ -28,15 +29,15 @@ export interface DtoTopupPurchaseResponse {
     transactionId: string;
 }
 
+
+
 /**
  * Check if a given object implements the DtoTopupPurchaseResponse interface.
  */
-export function instanceOfDtoTopupPurchaseResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "status" in value;
-    isInstance = isInstance && "transactionId" in value;
-
-    return isInstance;
+export function instanceOfDtoTopupPurchaseResponse(value: object): value is DtoTopupPurchaseResponse {
+    if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    return true;
 }
 
 export function DtoTopupPurchaseResponseFromJSON(json: any): DtoTopupPurchaseResponse {
@@ -44,7 +45,7 @@ export function DtoTopupPurchaseResponseFromJSON(json: any): DtoTopupPurchaseRes
 }
 
 export function DtoTopupPurchaseResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoTopupPurchaseResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -54,17 +55,19 @@ export function DtoTopupPurchaseResponseFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function DtoTopupPurchaseResponseToJSON(value?: DtoTopupPurchaseResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoTopupPurchaseResponseToJSON(json: any): DtoTopupPurchaseResponse {
+      return DtoTopupPurchaseResponseToJSONTyped(json, false);
+  }
+
+  export function DtoTopupPurchaseResponseToJSONTyped(value?: DtoTopupPurchaseResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'status': DtoTransactionStatusToJSON(value.status),
-        'transactionId': value.transactionId,
+        'status': DtoTransactionStatusToJSON(value['status']),
+        'transactionId': value['transactionId'],
     };
 }
 
