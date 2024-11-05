@@ -1,11 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DtoTopupOffer } from './DtoTopupOffer';
 import {
     DtoTopupOfferFromJSON,
     DtoTopupOfferFromJSONTyped,
     DtoTopupOfferToJSON,
+    DtoTopupOfferToJSONTyped,
 } from './DtoTopupOffer';
 
 /**
@@ -43,14 +44,12 @@ export interface DtoTopupOffersResponse {
 /**
  * Check if a given object implements the DtoTopupOffersResponse interface.
  */
-export function instanceOfDtoTopupOffersResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "limit" in value;
-    isInstance = isInstance && "list" in value;
-    isInstance = isInstance && "offset" in value;
-    isInstance = isInstance && "total" in value;
-
-    return isInstance;
+export function instanceOfDtoTopupOffersResponse(value: object): value is DtoTopupOffersResponse {
+    if (!('limit' in value) || value['limit'] === undefined) return false;
+    if (!('list' in value) || value['list'] === undefined) return false;
+    if (!('offset' in value) || value['offset'] === undefined) return false;
+    if (!('total' in value) || value['total'] === undefined) return false;
+    return true;
 }
 
 export function DtoTopupOffersResponseFromJSON(json: any): DtoTopupOffersResponse {
@@ -58,7 +57,7 @@ export function DtoTopupOffersResponseFromJSON(json: any): DtoTopupOffersRespons
 }
 
 export function DtoTopupOffersResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoTopupOffersResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -70,19 +69,21 @@ export function DtoTopupOffersResponseFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function DtoTopupOffersResponseToJSON(value?: DtoTopupOffersResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoTopupOffersResponseToJSON(json: any): DtoTopupOffersResponse {
+      return DtoTopupOffersResponseToJSONTyped(json, false);
+  }
+
+  export function DtoTopupOffersResponseToJSONTyped(value?: DtoTopupOffersResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'limit': value.limit,
-        'list': ((value.list as Array<any>).map(DtoTopupOfferToJSON)),
-        'offset': value.offset,
-        'total': value.total,
+        'limit': value['limit'],
+        'list': ((value['list'] as Array<any>).map(DtoTopupOfferToJSON)),
+        'offset': value['offset'],
+        'total': value['total'],
     };
 }
 

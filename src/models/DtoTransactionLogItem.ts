@@ -1,11 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DtoTransactionStatus } from './DtoTransactionStatus';
 import {
     DtoTransactionStatusFromJSON,
     DtoTransactionStatusFromJSONTyped,
     DtoTransactionStatusToJSON,
+    DtoTransactionStatusToJSONTyped,
 } from './DtoTransactionStatus';
 
 /**
@@ -34,16 +35,16 @@ export interface DtoTransactionLogItem {
     statusMessage: string;
 }
 
+
+
 /**
  * Check if a given object implements the DtoTransactionLogItem interface.
  */
-export function instanceOfDtoTransactionLogItem(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "dateTime" in value;
-    isInstance = isInstance && "status" in value;
-    isInstance = isInstance && "statusMessage" in value;
-
-    return isInstance;
+export function instanceOfDtoTransactionLogItem(value: object): value is DtoTransactionLogItem {
+    if (!('dateTime' in value) || value['dateTime'] === undefined) return false;
+    if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('statusMessage' in value) || value['statusMessage'] === undefined) return false;
+    return true;
 }
 
 export function DtoTransactionLogItemFromJSON(json: any): DtoTransactionLogItem {
@@ -51,7 +52,7 @@ export function DtoTransactionLogItemFromJSON(json: any): DtoTransactionLogItem 
 }
 
 export function DtoTransactionLogItemFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoTransactionLogItem {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -62,18 +63,20 @@ export function DtoTransactionLogItemFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function DtoTransactionLogItemToJSON(value?: DtoTransactionLogItem | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoTransactionLogItemToJSON(json: any): DtoTransactionLogItem {
+      return DtoTransactionLogItemToJSONTyped(json, false);
+  }
+
+  export function DtoTransactionLogItemToJSONTyped(value?: DtoTransactionLogItem | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'dateTime': value.dateTime,
-        'status': DtoTransactionStatusToJSON(value.status),
-        'statusMessage': value.statusMessage,
+        'dateTime': value['dateTime'],
+        'status': DtoTransactionStatusToJSON(value['status']),
+        'statusMessage': value['statusMessage'],
     };
 }
 

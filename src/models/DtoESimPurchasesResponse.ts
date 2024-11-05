@@ -1,11 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DtoESimPurchase } from './DtoESimPurchase';
 import {
     DtoESimPurchaseFromJSON,
     DtoESimPurchaseFromJSONTyped,
     DtoESimPurchaseToJSON,
+    DtoESimPurchaseToJSONTyped,
 } from './DtoESimPurchase';
 
 /**
@@ -43,14 +44,12 @@ export interface DtoESimPurchasesResponse {
 /**
  * Check if a given object implements the DtoESimPurchasesResponse interface.
  */
-export function instanceOfDtoESimPurchasesResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "limit" in value;
-    isInstance = isInstance && "list" in value;
-    isInstance = isInstance && "offset" in value;
-    isInstance = isInstance && "total" in value;
-
-    return isInstance;
+export function instanceOfDtoESimPurchasesResponse(value: object): value is DtoESimPurchasesResponse {
+    if (!('limit' in value) || value['limit'] === undefined) return false;
+    if (!('list' in value) || value['list'] === undefined) return false;
+    if (!('offset' in value) || value['offset'] === undefined) return false;
+    if (!('total' in value) || value['total'] === undefined) return false;
+    return true;
 }
 
 export function DtoESimPurchasesResponseFromJSON(json: any): DtoESimPurchasesResponse {
@@ -58,7 +57,7 @@ export function DtoESimPurchasesResponseFromJSON(json: any): DtoESimPurchasesRes
 }
 
 export function DtoESimPurchasesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESimPurchasesResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -70,19 +69,21 @@ export function DtoESimPurchasesResponseFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function DtoESimPurchasesResponseToJSON(value?: DtoESimPurchasesResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoESimPurchasesResponseToJSON(json: any): DtoESimPurchasesResponse {
+      return DtoESimPurchasesResponseToJSONTyped(json, false);
+  }
+
+  export function DtoESimPurchasesResponseToJSONTyped(value?: DtoESimPurchasesResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'limit': value.limit,
-        'list': ((value.list as Array<any>).map(DtoESimPurchaseToJSON)),
-        'offset': value.offset,
-        'total': value.total,
+        'limit': value['limit'],
+        'list': ((value['list'] as Array<any>).map(DtoESimPurchaseToJSON)),
+        'offset': value['offset'],
+        'total': value['total'],
     };
 }
 

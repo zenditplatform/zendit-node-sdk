@@ -1,11 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DtoVoucherOffer } from './DtoVoucherOffer';
 import {
     DtoVoucherOfferFromJSON,
     DtoVoucherOfferFromJSONTyped,
     DtoVoucherOfferToJSON,
+    DtoVoucherOfferToJSONTyped,
 } from './DtoVoucherOffer';
 
 /**
@@ -43,14 +44,12 @@ export interface DtoVoucherOffersResponse {
 /**
  * Check if a given object implements the DtoVoucherOffersResponse interface.
  */
-export function instanceOfDtoVoucherOffersResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "limit" in value;
-    isInstance = isInstance && "list" in value;
-    isInstance = isInstance && "offset" in value;
-    isInstance = isInstance && "total" in value;
-
-    return isInstance;
+export function instanceOfDtoVoucherOffersResponse(value: object): value is DtoVoucherOffersResponse {
+    if (!('limit' in value) || value['limit'] === undefined) return false;
+    if (!('list' in value) || value['list'] === undefined) return false;
+    if (!('offset' in value) || value['offset'] === undefined) return false;
+    if (!('total' in value) || value['total'] === undefined) return false;
+    return true;
 }
 
 export function DtoVoucherOffersResponseFromJSON(json: any): DtoVoucherOffersResponse {
@@ -58,7 +57,7 @@ export function DtoVoucherOffersResponseFromJSON(json: any): DtoVoucherOffersRes
 }
 
 export function DtoVoucherOffersResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoVoucherOffersResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -70,19 +69,21 @@ export function DtoVoucherOffersResponseFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function DtoVoucherOffersResponseToJSON(value?: DtoVoucherOffersResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoVoucherOffersResponseToJSON(json: any): DtoVoucherOffersResponse {
+      return DtoVoucherOffersResponseToJSONTyped(json, false);
+  }
+
+  export function DtoVoucherOffersResponseToJSONTyped(value?: DtoVoucherOffersResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'limit': value.limit,
-        'list': ((value.list as Array<any>).map(DtoVoucherOfferToJSON)),
-        'offset': value.offset,
-        'total': value.total,
+        'limit': value['limit'],
+        'list': ((value['list'] as Array<any>).map(DtoVoucherOfferToJSON)),
+        'offset': value['offset'],
+        'total': value['total'],
     };
 }
 

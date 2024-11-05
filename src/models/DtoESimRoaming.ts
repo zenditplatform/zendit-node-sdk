@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -24,12 +24,10 @@ export interface DtoESimRoaming {
 /**
  * Check if a given object implements the DtoESimRoaming interface.
  */
-export function instanceOfDtoESimRoaming(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "country" in value;
-    isInstance = isInstance && "dataSpeeds" in value;
-
-    return isInstance;
+export function instanceOfDtoESimRoaming(value: object): value is DtoESimRoaming {
+    if (!('country' in value) || value['country'] === undefined) return false;
+    if (!('dataSpeeds' in value) || value['dataSpeeds'] === undefined) return false;
+    return true;
 }
 
 export function DtoESimRoamingFromJSON(json: any): DtoESimRoaming {
@@ -37,7 +35,7 @@ export function DtoESimRoamingFromJSON(json: any): DtoESimRoaming {
 }
 
 export function DtoESimRoamingFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESimRoaming {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -47,17 +45,19 @@ export function DtoESimRoamingFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function DtoESimRoamingToJSON(value?: DtoESimRoaming | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoESimRoamingToJSON(json: any): DtoESimRoaming {
+      return DtoESimRoamingToJSONTyped(json, false);
+  }
+
+  export function DtoESimRoamingToJSONTyped(value?: DtoESimRoaming | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'country': value.country,
-        'dataSpeeds': value.dataSpeeds,
+        'country': value['country'],
+        'dataSpeeds': value['dataSpeeds'],
     };
 }
 

@@ -1,32 +1,33 @@
 /* tslint:disable */
 /* eslint-disable */
-
 import * as runtime from '../runtime';
 import type {
-  DtoBalanceResponse,
-  DtoESIMPlansResponse,
-  DtoESimOffer,
-  DtoESimOffersResponse,
-  DtoESimPurchase,
-  DtoESimPurchaseMakeInput,
-  DtoESimPurchaseResponse,
-  DtoESimPurchasesResponse,
-  DtoESimQRCode,
-  DtoResponseError,
-  DtoTopupOffer,
-  DtoTopupOffersResponse,
-  DtoTopupPurchase,
-  DtoTopupPurchaseMakeInput,
-  DtoTopupPurchaseResponse,
-  DtoTopupPurchasesResponse,
-  DtoTransaction,
-  DtoTransactionsResponse,
-  DtoVoucherOffer,
-  DtoVoucherOffersResponse,
-  DtoVoucherPurchase,
-  DtoVoucherPurchaseInput,
-  DtoVoucherPurchaseResponse,
-  DtoVoucherPurchasesResponse,
+    DtoBalanceResponse,
+    DtoESIMPlansResponse,
+    DtoESimOffer,
+    DtoESimOffersResponse,
+    DtoESimPurchase,
+    DtoESimPurchaseMakeInput,
+    DtoESimPurchaseResponse,
+    DtoESimPurchasesResponse,
+    DtoPhoneNumberLookupResponse,
+    DtoReportTransactions,
+    DtoReportTransactionsPeriod,
+    DtoResponseError,
+    DtoTopupOffer,
+    DtoTopupOffersResponse,
+    DtoTopupPurchase,
+    DtoTopupPurchaseMakeInput,
+    DtoTopupPurchaseResponse,
+    DtoTopupPurchasesResponse,
+    DtoTransaction,
+    DtoTransactionsResponse,
+    DtoVoucherOffer,
+    DtoVoucherOffersResponse,
+    DtoVoucherPurchase,
+    DtoVoucherPurchaseInput,
+    DtoVoucherPurchaseResponse,
+    DtoVoucherPurchasesResponse, DtoESimQRCode,
 } from '../models/index';
 import {
     DtoBalanceResponseFromJSON,
@@ -45,8 +46,12 @@ import {
     DtoESimPurchaseResponseToJSON,
     DtoESimPurchasesResponseFromJSON,
     DtoESimPurchasesResponseToJSON,
-    DtoESimQRCodeFromJSON,
-    DtoESimQRCodeToJSON,
+    DtoPhoneNumberLookupResponseFromJSON,
+    DtoPhoneNumberLookupResponseToJSON,
+    DtoReportTransactionsFromJSON,
+    DtoReportTransactionsToJSON,
+    DtoReportTransactionsPeriodFromJSON,
+    DtoReportTransactionsPeriodToJSON,
     DtoResponseErrorFromJSON,
     DtoResponseErrorToJSON,
     DtoTopupOfferFromJSON,
@@ -88,7 +93,7 @@ export interface EsimOffersGetRequest {
     offset: number;
     brand?: string;
     country?: string;
-    regions?: string;
+    regions?: EsimOffersGetRegionsEnum;
     subType?: string;
 }
 
@@ -115,12 +120,29 @@ export interface EsimPurchasesTransactionIdQrcodeGetRequest {
     transactionId: string;
 }
 
+export interface ReportsTransactionsPostRequest {
+    data: DtoReportTransactionsPeriod;
+}
+
+export interface ReportsTransactionsReportIdFileGetRequest {
+    reportId: string;
+    file: string;
+}
+
+export interface ReportsTransactionsReportIdGetRequest {
+    reportId: string;
+}
+
+export interface ToolsPhonenumberlookupMsisdnGetRequest {
+    msisdn: string;
+}
+
 export interface TopupsOffersGetRequest {
     limit: number;
     offset: number;
     brand?: string;
     country?: string;
-    regions?: string;
+    regions?: TopupsOffersGetRegionsEnum;
     subType?: string;
 }
 
@@ -147,7 +169,7 @@ export interface TransactionsGetRequest {
     limit: number;
     offset: number;
     createdAt?: string;
-    productType?: string;
+    productType?: TransactionsGetProductTypeEnum;
     status?: TransactionsGetStatusEnum;
     type?: TransactionsGetTypeEnum;
 }
@@ -161,7 +183,7 @@ export interface VouchersOffersGetRequest {
     offset: number;
     brand?: string;
     country?: string;
-    regions?: string;
+    regions?: VouchersOffersGetRegionsEnum;
     subType?: string;
 }
 
@@ -198,7 +220,7 @@ export class ZenditApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
@@ -223,8 +245,11 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get list of eSim plans
      */
     async esimIccIdPlansGetRaw(requestParameters: EsimIccIdPlansGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESIMPlansResponse>> {
-        if (requestParameters.iccId === null || requestParameters.iccId === undefined) {
-            throw new runtime.RequiredError('iccId','Required parameter requestParameters.iccId was null or undefined when calling esimIccIdPlansGet.');
+        if (requestParameters['iccId'] == null) {
+            throw new runtime.RequiredError(
+                'iccId',
+                'Required parameter "iccId" was null or undefined when calling esimIccIdPlansGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -232,11 +257,11 @@ export class ZenditApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
-            path: `/esim/{iccId}/plans`.replace(`{${"iccId"}}`, encodeURIComponent(String(requestParameters.iccId))),
+            path: `/esim/{iccId}/plans`.replace(`{${"iccId"}}`, encodeURIComponent(String(requestParameters['iccId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -257,44 +282,50 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get list of eSIM offers
      */
     async esimOffersGetRaw(requestParameters: EsimOffersGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESimOffersResponse>> {
-        if (requestParameters.limit === null || requestParameters.limit === undefined) {
-            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling esimOffersGet.');
+        if (requestParameters['limit'] == null) {
+            throw new runtime.RequiredError(
+                'limit',
+                'Required parameter "limit" was null or undefined when calling esimOffersGet().'
+            );
         }
 
-        if (requestParameters.offset === null || requestParameters.offset === undefined) {
-            throw new runtime.RequiredError('offset','Required parameter requestParameters.offset was null or undefined when calling esimOffersGet.');
+        if (requestParameters['offset'] == null) {
+            throw new runtime.RequiredError(
+                'offset',
+                'Required parameter "offset" was null or undefined when calling esimOffersGet().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['_limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['_limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['_offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['_offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.brand !== undefined) {
-            queryParameters['brand'] = requestParameters.brand;
+        if (requestParameters['brand'] != null) {
+            queryParameters['brand'] = requestParameters['brand'];
         }
 
-        if (requestParameters.country !== undefined) {
-            queryParameters['country'] = requestParameters.country;
+        if (requestParameters['country'] != null) {
+            queryParameters['country'] = requestParameters['country'];
         }
 
-        if (requestParameters.regions !== undefined) {
-            queryParameters['regions'] = requestParameters.regions;
+        if (requestParameters['regions'] != null) {
+            queryParameters['regions'] = requestParameters['regions'];
         }
 
-        if (requestParameters.subType !== undefined) {
-            queryParameters['subType'] = requestParameters.subType;
+        if (requestParameters['subType'] != null) {
+            queryParameters['subType'] = requestParameters['subType'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
@@ -310,7 +341,7 @@ export class ZenditApi extends runtime.BaseAPI {
     /**
      * Get list of eSIM offers
      */
-    async esimOffersGet(limit: number, offset: number, brand?: string, country?: string, regions?: string, subType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimOffersResponse> {
+    async esimOffersGet(limit: number, offset: number, brand?: string, country?: string, regions?: EsimOffersGetRegionsEnum, subType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimOffersResponse> {
         const response = await this.esimOffersGetRaw({ limit: limit, offset: offset, brand: brand, country: country, regions: regions, subType: subType }, initOverrides);
         return await response.value();
     }
@@ -319,8 +350,11 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get an eSIM offer by the offer ID
      */
     async esimOffersOfferIdGetRaw(requestParameters: EsimOffersOfferIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESimOffer>> {
-        if (requestParameters.offerId === null || requestParameters.offerId === undefined) {
-            throw new runtime.RequiredError('offerId','Required parameter requestParameters.offerId was null or undefined when calling esimOffersOfferIdGet.');
+        if (requestParameters['offerId'] == null) {
+            throw new runtime.RequiredError(
+                'offerId',
+                'Required parameter "offerId" was null or undefined when calling esimOffersOfferIdGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -328,11 +362,11 @@ export class ZenditApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
-            path: `/esim/offers/{offerId}`.replace(`{${"offerId"}}`, encodeURIComponent(String(requestParameters.offerId))),
+            path: `/esim/offers/{offerId}`.replace(`{${"offerId"}}`, encodeURIComponent(String(requestParameters['offerId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -353,36 +387,42 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get list of eSim transactions
      */
     async esimPurchasesGetRaw(requestParameters: EsimPurchasesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESimPurchasesResponse>> {
-        if (requestParameters.limit === null || requestParameters.limit === undefined) {
-            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling esimPurchasesGet.');
+        if (requestParameters['limit'] == null) {
+            throw new runtime.RequiredError(
+                'limit',
+                'Required parameter "limit" was null or undefined when calling esimPurchasesGet().'
+            );
         }
 
-        if (requestParameters.offset === null || requestParameters.offset === undefined) {
-            throw new runtime.RequiredError('offset','Required parameter requestParameters.offset was null or undefined when calling esimPurchasesGet.');
+        if (requestParameters['offset'] == null) {
+            throw new runtime.RequiredError(
+                'offset',
+                'Required parameter "offset" was null or undefined when calling esimPurchasesGet().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['_limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['_limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['_offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['_offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.createdAt !== undefined) {
-            queryParameters['createdAt'] = requestParameters.createdAt;
+        if (requestParameters['createdAt'] != null) {
+            queryParameters['createdAt'] = requestParameters['createdAt'];
         }
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
@@ -407,8 +447,11 @@ export class ZenditApi extends runtime.BaseAPI {
      * Create transaction for purchase
      */
     async esimPurchasesPostRaw(requestParameters: EsimPurchasesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESimPurchaseResponse>> {
-        if (requestParameters.data === null || requestParameters.data === undefined) {
-            throw new runtime.RequiredError('data','Required parameter requestParameters.data was null or undefined when calling esimPurchasesPost.');
+        if (requestParameters['data'] == null) {
+            throw new runtime.RequiredError(
+                'data',
+                'Required parameter "data" was null or undefined when calling esimPurchasesPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -418,7 +461,7 @@ export class ZenditApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
@@ -426,7 +469,7 @@ export class ZenditApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: DtoESimPurchaseMakeInputToJSON(requestParameters.data),
+            body: DtoESimPurchaseMakeInputToJSON(requestParameters['data']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => DtoESimPurchaseResponseFromJSON(jsonValue));
@@ -444,8 +487,11 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get eSim transaction by id
      */
     async esimPurchasesTransactionIdGetRaw(requestParameters: EsimPurchasesTransactionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESimPurchase>> {
-        if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
-            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling esimPurchasesTransactionIdGet.');
+        if (requestParameters['transactionId'] == null) {
+            throw new runtime.RequiredError(
+                'transactionId',
+                'Required parameter "transactionId" was null or undefined when calling esimPurchasesTransactionIdGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -453,11 +499,11 @@ export class ZenditApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
-            path: `/esim/purchases/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters.transactionId))),
+            path: `/esim/purchases/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters['transactionId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -487,7 +533,7 @@ export class ZenditApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         if (responseType === 'json') {
@@ -508,6 +554,9 @@ export class ZenditApi extends runtime.BaseAPI {
         return new runtime.BlobApiResponse(response);
     }
 
+    /**
+     * Get eSim QR code by transaction id
+     */
     async esimPurchasesTransactionIdQrcodeGet(transactionId: string, responseType: "blob", initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>
     async esimPurchasesTransactionIdQrcodeGet(transactionId: string, responseType: "json", initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimQRCode>
     async esimPurchasesTransactionIdQrcodeGet(transactionId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>
@@ -518,47 +567,211 @@ export class ZenditApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get list of topup offers
+     * Requests transactions reports
      */
-    async topupsOffersGetRaw(requestParameters: TopupsOffersGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoTopupOffersResponse>> {
-        if (requestParameters.limit === null || requestParameters.limit === undefined) {
-            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling topupsOffersGet.');
-        }
-
-        if (requestParameters.offset === null || requestParameters.offset === undefined) {
-            throw new runtime.RequiredError('offset','Required parameter requestParameters.offset was null or undefined when calling topupsOffersGet.');
+    async reportsTransactionsPostRaw(requestParameters: ReportsTransactionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoReportTransactions>> {
+        if (requestParameters['data'] == null) {
+            throw new runtime.RequiredError(
+                'data',
+                'Required parameter "data" was null or undefined when calling reportsTransactionsPost().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['_limit'] = requestParameters.limit;
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['_offset'] = requestParameters.offset;
+        const response = await this.request({
+            path: `/reports/transactions`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: DtoReportTransactionsPeriodToJSON(requestParameters['data']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoReportTransactionsFromJSON(jsonValue));
+    }
+
+    /**
+     * Requests transactions reports
+     */
+    async reportsTransactionsPost(data: DtoReportTransactionsPeriod, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoReportTransactions> {
+        const response = await this.reportsTransactionsPostRaw({ data: data }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Download report file
+     */
+    async reportsTransactionsReportIdFileGetRaw(requestParameters: ReportsTransactionsReportIdFileGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+        if (requestParameters['reportId'] == null) {
+            throw new runtime.RequiredError(
+                'reportId',
+                'Required parameter "reportId" was null or undefined when calling reportsTransactionsReportIdFileGet().'
+            );
         }
 
-        if (requestParameters.brand !== undefined) {
-            queryParameters['brand'] = requestParameters.brand;
+        if (requestParameters['file'] == null) {
+            throw new runtime.RequiredError(
+                'file',
+                'Required parameter "file" was null or undefined when calling reportsTransactionsReportIdFileGet().'
+            );
         }
 
-        if (requestParameters.country !== undefined) {
-            queryParameters['country'] = requestParameters.country;
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
-        if (requestParameters.regions !== undefined) {
-            queryParameters['regions'] = requestParameters.regions;
+        const response = await this.request({
+            path: `/reports/transactions/{reportId}/{file}`.replace(`{${"reportId"}}`, encodeURIComponent(String(requestParameters['reportId']))).replace(`{${"file"}}`, encodeURIComponent(String(requestParameters['file']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Download report file
+     */
+    async reportsTransactionsReportIdFileGet(reportId: string, file: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
+        const response = await this.reportsTransactionsReportIdFileGetRaw({ reportId: reportId, file: file }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get transactions report by ID
+     */
+    async reportsTransactionsReportIdGetRaw(requestParameters: ReportsTransactionsReportIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoReportTransactions>> {
+        if (requestParameters['reportId'] == null) {
+            throw new runtime.RequiredError(
+                'reportId',
+                'Required parameter "reportId" was null or undefined when calling reportsTransactionsReportIdGet().'
+            );
         }
 
-        if (requestParameters.subType !== undefined) {
-            queryParameters['subType'] = requestParameters.subType;
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/reports/transactions/{reportId}`.replace(`{${"reportId"}}`, encodeURIComponent(String(requestParameters['reportId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoReportTransactionsFromJSON(jsonValue));
+    }
+
+    /**
+     * Get transactions report by ID
+     */
+    async reportsTransactionsReportIdGet(reportId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoReportTransactions> {
+        const response = await this.reportsTransactionsReportIdGetRaw({ reportId: reportId }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get phone number info
+     */
+    async toolsPhonenumberlookupMsisdnGetRaw(requestParameters: ToolsPhonenumberlookupMsisdnGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoPhoneNumberLookupResponse>> {
+        if (requestParameters['msisdn'] == null) {
+            throw new runtime.RequiredError(
+                'msisdn',
+                'Required parameter "msisdn" was null or undefined when calling toolsPhonenumberlookupMsisdnGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/tools/phonenumberlookup/{msisdn}`.replace(`{${"msisdn"}}`, encodeURIComponent(String(requestParameters['msisdn']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoPhoneNumberLookupResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get phone number info
+     */
+    async toolsPhonenumberlookupMsisdnGet(msisdn: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoPhoneNumberLookupResponse> {
+        const response = await this.toolsPhonenumberlookupMsisdnGetRaw({ msisdn: msisdn }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get list of topup offers
+     */
+    async topupsOffersGetRaw(requestParameters: TopupsOffersGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoTopupOffersResponse>> {
+        if (requestParameters['limit'] == null) {
+            throw new runtime.RequiredError(
+                'limit',
+                'Required parameter "limit" was null or undefined when calling topupsOffersGet().'
+            );
+        }
+
+        if (requestParameters['offset'] == null) {
+            throw new runtime.RequiredError(
+                'offset',
+                'Required parameter "offset" was null or undefined when calling topupsOffersGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['_limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['offset'] != null) {
+            queryParameters['_offset'] = requestParameters['offset'];
+        }
+
+        if (requestParameters['brand'] != null) {
+            queryParameters['brand'] = requestParameters['brand'];
+        }
+
+        if (requestParameters['country'] != null) {
+            queryParameters['country'] = requestParameters['country'];
+        }
+
+        if (requestParameters['regions'] != null) {
+            queryParameters['regions'] = requestParameters['regions'];
+        }
+
+        if (requestParameters['subType'] != null) {
+            queryParameters['subType'] = requestParameters['subType'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
@@ -574,7 +787,7 @@ export class ZenditApi extends runtime.BaseAPI {
     /**
      * Get list of topup offers
      */
-    async topupsOffersGet(limit: number, offset: number, brand?: string, country?: string, regions?: string, subType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoTopupOffersResponse> {
+    async topupsOffersGet(limit: number, offset: number, brand?: string, country?: string, regions?: TopupsOffersGetRegionsEnum, subType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoTopupOffersResponse> {
         const response = await this.topupsOffersGetRaw({ limit: limit, offset: offset, brand: brand, country: country, regions: regions, subType: subType }, initOverrides);
         return await response.value();
     }
@@ -583,8 +796,11 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get a topup offer by the offer ID
      */
     async topupsOffersOfferIdGetRaw(requestParameters: TopupsOffersOfferIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoTopupOffer>> {
-        if (requestParameters.offerId === null || requestParameters.offerId === undefined) {
-            throw new runtime.RequiredError('offerId','Required parameter requestParameters.offerId was null or undefined when calling topupsOffersOfferIdGet.');
+        if (requestParameters['offerId'] == null) {
+            throw new runtime.RequiredError(
+                'offerId',
+                'Required parameter "offerId" was null or undefined when calling topupsOffersOfferIdGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -592,11 +808,11 @@ export class ZenditApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
-            path: `/topups/offers/{offerId}`.replace(`{${"offerId"}}`, encodeURIComponent(String(requestParameters.offerId))),
+            path: `/topups/offers/{offerId}`.replace(`{${"offerId"}}`, encodeURIComponent(String(requestParameters['offerId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -617,36 +833,42 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get list of topup transactions
      */
     async topupsPurchasesGetRaw(requestParameters: TopupsPurchasesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoTopupPurchasesResponse>> {
-        if (requestParameters.limit === null || requestParameters.limit === undefined) {
-            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling topupsPurchasesGet.');
+        if (requestParameters['limit'] == null) {
+            throw new runtime.RequiredError(
+                'limit',
+                'Required parameter "limit" was null or undefined when calling topupsPurchasesGet().'
+            );
         }
 
-        if (requestParameters.offset === null || requestParameters.offset === undefined) {
-            throw new runtime.RequiredError('offset','Required parameter requestParameters.offset was null or undefined when calling topupsPurchasesGet.');
+        if (requestParameters['offset'] == null) {
+            throw new runtime.RequiredError(
+                'offset',
+                'Required parameter "offset" was null or undefined when calling topupsPurchasesGet().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['_limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['_limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['_offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['_offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.createdAt !== undefined) {
-            queryParameters['createdAt'] = requestParameters.createdAt;
+        if (requestParameters['createdAt'] != null) {
+            queryParameters['createdAt'] = requestParameters['createdAt'];
         }
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
@@ -671,8 +893,11 @@ export class ZenditApi extends runtime.BaseAPI {
      * Create transaction for purchase
      */
     async topupsPurchasesPostRaw(requestParameters: TopupsPurchasesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoTopupPurchaseResponse>> {
-        if (requestParameters.data === null || requestParameters.data === undefined) {
-            throw new runtime.RequiredError('data','Required parameter requestParameters.data was null or undefined when calling topupsPurchasesPost.');
+        if (requestParameters['data'] == null) {
+            throw new runtime.RequiredError(
+                'data',
+                'Required parameter "data" was null or undefined when calling topupsPurchasesPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -682,7 +907,7 @@ export class ZenditApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
@@ -690,7 +915,7 @@ export class ZenditApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: DtoTopupPurchaseMakeInputToJSON(requestParameters.data),
+            body: DtoTopupPurchaseMakeInputToJSON(requestParameters['data']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => DtoTopupPurchaseResponseFromJSON(jsonValue));
@@ -708,8 +933,11 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get topup transaction by id
      */
     async topupsPurchasesTransactionIdGetRaw(requestParameters: TopupsPurchasesTransactionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoTopupPurchase>> {
-        if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
-            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling topupsPurchasesTransactionIdGet.');
+        if (requestParameters['transactionId'] == null) {
+            throw new runtime.RequiredError(
+                'transactionId',
+                'Required parameter "transactionId" was null or undefined when calling topupsPurchasesTransactionIdGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -717,11 +945,11 @@ export class ZenditApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
-            path: `/topups/purchases/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters.transactionId))),
+            path: `/topups/purchases/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters['transactionId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -742,44 +970,50 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get list of transactions
      */
     async transactionsGetRaw(requestParameters: TransactionsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoTransactionsResponse>> {
-        if (requestParameters.limit === null || requestParameters.limit === undefined) {
-            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling transactionsGet.');
+        if (requestParameters['limit'] == null) {
+            throw new runtime.RequiredError(
+                'limit',
+                'Required parameter "limit" was null or undefined when calling transactionsGet().'
+            );
         }
 
-        if (requestParameters.offset === null || requestParameters.offset === undefined) {
-            throw new runtime.RequiredError('offset','Required parameter requestParameters.offset was null or undefined when calling transactionsGet.');
+        if (requestParameters['offset'] == null) {
+            throw new runtime.RequiredError(
+                'offset',
+                'Required parameter "offset" was null or undefined when calling transactionsGet().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['_limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['_limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['_offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['_offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.createdAt !== undefined) {
-            queryParameters['createdAt'] = requestParameters.createdAt;
+        if (requestParameters['createdAt'] != null) {
+            queryParameters['createdAt'] = requestParameters['createdAt'];
         }
 
-        if (requestParameters.productType !== undefined) {
-            queryParameters['productType'] = requestParameters.productType;
+        if (requestParameters['productType'] != null) {
+            queryParameters['productType'] = requestParameters['productType'];
         }
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.type !== undefined) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
@@ -795,7 +1029,7 @@ export class ZenditApi extends runtime.BaseAPI {
     /**
      * Get list of transactions
      */
-    async transactionsGet(limit: number, offset: number, createdAt?: string, productType?: string, status?: TransactionsGetStatusEnum, type?: TransactionsGetTypeEnum, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoTransactionsResponse> {
+    async transactionsGet(limit: number, offset: number, createdAt?: string, productType?: TransactionsGetProductTypeEnum, status?: TransactionsGetStatusEnum, type?: TransactionsGetTypeEnum, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoTransactionsResponse> {
         const response = await this.transactionsGetRaw({ limit: limit, offset: offset, createdAt: createdAt, productType: productType, status: status, type: type }, initOverrides);
         return await response.value();
     }
@@ -804,8 +1038,11 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get transaction by id
      */
     async transactionsTransactionIdGetRaw(requestParameters: TransactionsTransactionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoTransaction>> {
-        if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
-            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling transactionsTransactionIdGet.');
+        if (requestParameters['transactionId'] == null) {
+            throw new runtime.RequiredError(
+                'transactionId',
+                'Required parameter "transactionId" was null or undefined when calling transactionsTransactionIdGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -813,11 +1050,11 @@ export class ZenditApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
-            path: `/transactions/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters.transactionId))),
+            path: `/transactions/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters['transactionId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -838,44 +1075,50 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get list of voucher offers
      */
     async vouchersOffersGetRaw(requestParameters: VouchersOffersGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoVoucherOffersResponse>> {
-        if (requestParameters.limit === null || requestParameters.limit === undefined) {
-            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling vouchersOffersGet.');
+        if (requestParameters['limit'] == null) {
+            throw new runtime.RequiredError(
+                'limit',
+                'Required parameter "limit" was null or undefined when calling vouchersOffersGet().'
+            );
         }
 
-        if (requestParameters.offset === null || requestParameters.offset === undefined) {
-            throw new runtime.RequiredError('offset','Required parameter requestParameters.offset was null or undefined when calling vouchersOffersGet.');
+        if (requestParameters['offset'] == null) {
+            throw new runtime.RequiredError(
+                'offset',
+                'Required parameter "offset" was null or undefined when calling vouchersOffersGet().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['_limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['_limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['_offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['_offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.brand !== undefined) {
-            queryParameters['brand'] = requestParameters.brand;
+        if (requestParameters['brand'] != null) {
+            queryParameters['brand'] = requestParameters['brand'];
         }
 
-        if (requestParameters.country !== undefined) {
-            queryParameters['country'] = requestParameters.country;
+        if (requestParameters['country'] != null) {
+            queryParameters['country'] = requestParameters['country'];
         }
 
-        if (requestParameters.regions !== undefined) {
-            queryParameters['regions'] = requestParameters.regions;
+        if (requestParameters['regions'] != null) {
+            queryParameters['regions'] = requestParameters['regions'];
         }
 
-        if (requestParameters.subType !== undefined) {
-            queryParameters['subType'] = requestParameters.subType;
+        if (requestParameters['subType'] != null) {
+            queryParameters['subType'] = requestParameters['subType'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
@@ -891,7 +1134,7 @@ export class ZenditApi extends runtime.BaseAPI {
     /**
      * Get list of voucher offers
      */
-    async vouchersOffersGet(limit: number, offset: number, brand?: string, country?: string, regions?: string, subType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoVoucherOffersResponse> {
+    async vouchersOffersGet(limit: number, offset: number, brand?: string, country?: string, regions?: VouchersOffersGetRegionsEnum, subType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoVoucherOffersResponse> {
         const response = await this.vouchersOffersGetRaw({ limit: limit, offset: offset, brand: brand, country: country, regions: regions, subType: subType }, initOverrides);
         return await response.value();
     }
@@ -900,8 +1143,11 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get a voucher offer by the offer ID
      */
     async vouchersOffersOfferIdGetRaw(requestParameters: VouchersOffersOfferIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoVoucherOffer>> {
-        if (requestParameters.offerId === null || requestParameters.offerId === undefined) {
-            throw new runtime.RequiredError('offerId','Required parameter requestParameters.offerId was null or undefined when calling vouchersOffersOfferIdGet.');
+        if (requestParameters['offerId'] == null) {
+            throw new runtime.RequiredError(
+                'offerId',
+                'Required parameter "offerId" was null or undefined when calling vouchersOffersOfferIdGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -909,11 +1155,11 @@ export class ZenditApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
-            path: `/vouchers/offers/{offerId}`.replace(`{${"offerId"}}`, encodeURIComponent(String(requestParameters.offerId))),
+            path: `/vouchers/offers/{offerId}`.replace(`{${"offerId"}}`, encodeURIComponent(String(requestParameters['offerId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -934,36 +1180,42 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get list of transactions
      */
     async vouchersPurchasesGetRaw(requestParameters: VouchersPurchasesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoVoucherPurchasesResponse>> {
-        if (requestParameters.limit === null || requestParameters.limit === undefined) {
-            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling vouchersPurchasesGet.');
+        if (requestParameters['limit'] == null) {
+            throw new runtime.RequiredError(
+                'limit',
+                'Required parameter "limit" was null or undefined when calling vouchersPurchasesGet().'
+            );
         }
 
-        if (requestParameters.offset === null || requestParameters.offset === undefined) {
-            throw new runtime.RequiredError('offset','Required parameter requestParameters.offset was null or undefined when calling vouchersPurchasesGet.');
+        if (requestParameters['offset'] == null) {
+            throw new runtime.RequiredError(
+                'offset',
+                'Required parameter "offset" was null or undefined when calling vouchersPurchasesGet().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['_limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['_limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['_offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['_offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.createdAt !== undefined) {
-            queryParameters['createdAt'] = requestParameters.createdAt;
+        if (requestParameters['createdAt'] != null) {
+            queryParameters['createdAt'] = requestParameters['createdAt'];
         }
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
@@ -988,8 +1240,11 @@ export class ZenditApi extends runtime.BaseAPI {
      * Create transaction for purchase
      */
     async vouchersPurchasesPostRaw(requestParameters: VouchersPurchasesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoVoucherPurchaseResponse>> {
-        if (requestParameters.data === null || requestParameters.data === undefined) {
-            throw new runtime.RequiredError('data','Required parameter requestParameters.data was null or undefined when calling vouchersPurchasesPost.');
+        if (requestParameters['data'] == null) {
+            throw new runtime.RequiredError(
+                'data',
+                'Required parameter "data" was null or undefined when calling vouchersPurchasesPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -999,7 +1254,7 @@ export class ZenditApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
@@ -1007,7 +1262,7 @@ export class ZenditApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: DtoVoucherPurchaseInputToJSON(requestParameters.data),
+            body: DtoVoucherPurchaseInputToJSON(requestParameters['data']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => DtoVoucherPurchaseResponseFromJSON(jsonValue));
@@ -1025,8 +1280,11 @@ export class ZenditApi extends runtime.BaseAPI {
      * Get purchase transaction by id
      */
     async vouchersPurchasesTransactionIdGetRaw(requestParameters: VouchersPurchasesTransactionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoVoucherPurchase>> {
-        if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
-            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling vouchersPurchasesTransactionIdGet.');
+        if (requestParameters['transactionId'] == null) {
+            throw new runtime.RequiredError(
+                'transactionId',
+                'Required parameter "transactionId" was null or undefined when calling vouchersPurchasesTransactionIdGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1034,11 +1292,11 @@ export class ZenditApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
         }
 
         const response = await this.request({
-            path: `/vouchers/purchases/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters.transactionId))),
+            path: `/vouchers/purchases/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters['transactionId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1060,6 +1318,25 @@ export class ZenditApi extends runtime.BaseAPI {
 /**
  * @export
  */
+export const EsimOffersGetRegionsEnum = {
+    RegionAfrica: 'Africa',
+    RegionAsia: 'Asia',
+    RegionCaribbean: 'Caribbean',
+    RegionCentralAmerica: 'Central America',
+    RegionEasternEurope: 'Eastern Europe',
+    RegionGlobal: 'Global',
+    RegionMiddleEastAndNorthAfrica: 'Middle East and North Africa',
+    RegionNorthAmerica: 'North America',
+    RegionOceania: 'Oceania',
+    RegionSouthAmerica: 'South America',
+    RegionSouthAsia: 'South Asia',
+    RegionSoutheastAsia: 'Southeast Asia',
+    RegionWesternEurope: 'Western Europe'
+} as const;
+export type EsimOffersGetRegionsEnum = typeof EsimOffersGetRegionsEnum[keyof typeof EsimOffersGetRegionsEnum];
+/**
+ * @export
+ */
 export const EsimPurchasesGetStatusEnum = {
     TransactionStatusAccepted: 'ACCEPTED',
     TransactionStatusPending: 'PENDING',
@@ -1072,6 +1349,25 @@ export type EsimPurchasesGetStatusEnum = typeof EsimPurchasesGetStatusEnum[keyof
 /**
  * @export
  */
+export const TopupsOffersGetRegionsEnum = {
+    RegionAfrica: 'Africa',
+    RegionAsia: 'Asia',
+    RegionCaribbean: 'Caribbean',
+    RegionCentralAmerica: 'Central America',
+    RegionEasternEurope: 'Eastern Europe',
+    RegionGlobal: 'Global',
+    RegionMiddleEastAndNorthAfrica: 'Middle East and North Africa',
+    RegionNorthAmerica: 'North America',
+    RegionOceania: 'Oceania',
+    RegionSouthAmerica: 'South America',
+    RegionSouthAsia: 'South Asia',
+    RegionSoutheastAsia: 'Southeast Asia',
+    RegionWesternEurope: 'Western Europe'
+} as const;
+export type TopupsOffersGetRegionsEnum = typeof TopupsOffersGetRegionsEnum[keyof typeof TopupsOffersGetRegionsEnum];
+/**
+ * @export
+ */
 export const TopupsPurchasesGetStatusEnum = {
     TransactionStatusAccepted: 'ACCEPTED',
     TransactionStatusPending: 'PENDING',
@@ -1081,6 +1377,17 @@ export const TopupsPurchasesGetStatusEnum = {
     TransactionStatusFailed: 'FAILED'
 } as const;
 export type TopupsPurchasesGetStatusEnum = typeof TopupsPurchasesGetStatusEnum[keyof typeof TopupsPurchasesGetStatusEnum];
+/**
+ * @export
+ */
+export const TransactionsGetProductTypeEnum = {
+    ProductTypeTopup: 'TOPUP',
+    ProductTypeESIM: 'ESIM',
+    ProductTypeVoucher: 'VOUCHER',
+    ProductTypeWalletRecharge: 'WALLET_RECHARGE',
+    ProductTypeRefund: 'REFUND'
+} as const;
+export type TransactionsGetProductTypeEnum = typeof TransactionsGetProductTypeEnum[keyof typeof TransactionsGetProductTypeEnum];
 /**
  * @export
  */
@@ -1101,6 +1408,25 @@ export const TransactionsGetTypeEnum = {
     Debit: 'DEBIT'
 } as const;
 export type TransactionsGetTypeEnum = typeof TransactionsGetTypeEnum[keyof typeof TransactionsGetTypeEnum];
+/**
+ * @export
+ */
+export const VouchersOffersGetRegionsEnum = {
+    RegionAfrica: 'Africa',
+    RegionAsia: 'Asia',
+    RegionCaribbean: 'Caribbean',
+    RegionCentralAmerica: 'Central America',
+    RegionEasternEurope: 'Eastern Europe',
+    RegionGlobal: 'Global',
+    RegionMiddleEastAndNorthAfrica: 'Middle East and North Africa',
+    RegionNorthAmerica: 'North America',
+    RegionOceania: 'Oceania',
+    RegionSouthAmerica: 'South America',
+    RegionSouthAsia: 'South Asia',
+    RegionSoutheastAsia: 'Southeast Asia',
+    RegionWesternEurope: 'Western Europe'
+} as const;
+export type VouchersOffersGetRegionsEnum = typeof VouchersOffersGetRegionsEnum[keyof typeof VouchersOffersGetRegionsEnum];
 /**
  * @export
  */

@@ -1,35 +1,40 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DtoError } from './DtoError';
 import {
     DtoErrorFromJSON,
     DtoErrorFromJSONTyped,
     DtoErrorToJSON,
+    DtoErrorToJSONTyped,
 } from './DtoError';
-import type { DtoProductType } from './DtoProductType';
-import {
-    DtoProductTypeFromJSON,
-    DtoProductTypeFromJSONTyped,
-    DtoProductTypeToJSON,
-} from './DtoProductType';
 import type { DtoTransactionLogItem } from './DtoTransactionLogItem';
 import {
     DtoTransactionLogItemFromJSON,
     DtoTransactionLogItemFromJSONTyped,
     DtoTransactionLogItemToJSON,
+    DtoTransactionLogItemToJSONTyped,
 } from './DtoTransactionLogItem';
+import type { DtoProductType } from './DtoProductType';
+import {
+    DtoProductTypeFromJSON,
+    DtoProductTypeFromJSONTyped,
+    DtoProductTypeToJSON,
+    DtoProductTypeToJSONTyped,
+} from './DtoProductType';
 import type { DtoTransactionStatus } from './DtoTransactionStatus';
 import {
     DtoTransactionStatusFromJSON,
     DtoTransactionStatusFromJSONTyped,
     DtoTransactionStatusToJSON,
+    DtoTransactionStatusToJSONTyped,
 } from './DtoTransactionStatus';
 import type { DtoTransactionType } from './DtoTransactionType';
 import {
     DtoTransactionTypeFromJSON,
     DtoTransactionTypeFromJSONTyped,
     DtoTransactionTypeToJSON,
+    DtoTransactionTypeToJSONTyped,
 } from './DtoTransactionType';
 
 /**
@@ -100,22 +105,22 @@ export interface DtoTransaction {
     updatedAt: string;
 }
 
+
+
 /**
  * Check if a given object implements the DtoTransaction interface.
  */
-export function instanceOfDtoTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "currency" in value;
-    isInstance = isInstance && "log" in value;
-    isInstance = isInstance && "productType" in value;
-    isInstance = isInstance && "status" in value;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "updatedAt" in value;
-
-    return isInstance;
+export function instanceOfDtoTransaction(value: object): value is DtoTransaction {
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('currency' in value) || value['currency'] === undefined) return false;
+    if (!('log' in value) || value['log'] === undefined) return false;
+    if (!('productType' in value) || value['productType'] === undefined) return false;
+    if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
+    return true;
 }
 
 export function DtoTransactionFromJSON(json: any): DtoTransaction {
@@ -123,7 +128,7 @@ export function DtoTransactionFromJSON(json: any): DtoTransaction {
 }
 
 export function DtoTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -131,7 +136,7 @@ export function DtoTransactionFromJSONTyped(json: any, ignoreDiscriminator: bool
         'amount': json['amount'],
         'createdAt': json['createdAt'],
         'currency': json['currency'],
-        'error': !exists(json, 'error') ? undefined : DtoErrorFromJSON(json['error']),
+        'error': json['error'] == null ? undefined : DtoErrorFromJSON(json['error']),
         'log': ((json['log'] as Array<any>).map(DtoTransactionLogItemFromJSON)),
         'productType': DtoProductTypeFromJSON(json['productType']),
         'status': DtoTransactionStatusFromJSON(json['status']),
@@ -141,25 +146,27 @@ export function DtoTransactionFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function DtoTransactionToJSON(value?: DtoTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoTransactionToJSON(json: any): DtoTransaction {
+      return DtoTransactionToJSONTyped(json, false);
+  }
+
+  export function DtoTransactionToJSONTyped(value?: DtoTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'amount': value.amount,
-        'createdAt': value.createdAt,
-        'currency': value.currency,
-        'error': DtoErrorToJSON(value.error),
-        'log': ((value.log as Array<any>).map(DtoTransactionLogItemToJSON)),
-        'productType': DtoProductTypeToJSON(value.productType),
-        'status': DtoTransactionStatusToJSON(value.status),
-        'transactionId': value.transactionId,
-        'type': DtoTransactionTypeToJSON(value.type),
-        'updatedAt': value.updatedAt,
+        'amount': value['amount'],
+        'createdAt': value['createdAt'],
+        'currency': value['currency'],
+        'error': DtoErrorToJSON(value['error']),
+        'log': ((value['log'] as Array<any>).map(DtoTransactionLogItemToJSON)),
+        'productType': DtoProductTypeToJSON(value['productType']),
+        'status': DtoTransactionStatusToJSON(value['status']),
+        'transactionId': value['transactionId'],
+        'type': DtoTransactionTypeToJSON(value['type']),
+        'updatedAt': value['updatedAt'],
     };
 }
 

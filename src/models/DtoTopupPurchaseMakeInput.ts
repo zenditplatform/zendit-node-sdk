@@ -1,17 +1,19 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DtoPurchaseValue } from './DtoPurchaseValue';
 import {
     DtoPurchaseValueFromJSON,
     DtoPurchaseValueFromJSONTyped,
     DtoPurchaseValueToJSON,
+    DtoPurchaseValueToJSONTyped,
 } from './DtoPurchaseValue';
 import type { DtoTopupSender } from './DtoTopupSender';
 import {
     DtoTopupSenderFromJSON,
     DtoTopupSenderFromJSONTyped,
     DtoTopupSenderToJSON,
+    DtoTopupSenderToJSONTyped,
 } from './DtoTopupSender';
 
 /**
@@ -55,13 +57,11 @@ export interface DtoTopupPurchaseMakeInput {
 /**
  * Check if a given object implements the DtoTopupPurchaseMakeInput interface.
  */
-export function instanceOfDtoTopupPurchaseMakeInput(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "offerId" in value;
-    isInstance = isInstance && "recipientPhoneNumber" in value;
-    isInstance = isInstance && "transactionId" in value;
-
-    return isInstance;
+export function instanceOfDtoTopupPurchaseMakeInput(value: object): value is DtoTopupPurchaseMakeInput {
+    if (!('offerId' in value) || value['offerId'] === undefined) return false;
+    if (!('recipientPhoneNumber' in value) || value['recipientPhoneNumber'] === undefined) return false;
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    return true;
 }
 
 export function DtoTopupPurchaseMakeInputFromJSON(json: any): DtoTopupPurchaseMakeInput {
@@ -69,33 +69,35 @@ export function DtoTopupPurchaseMakeInputFromJSON(json: any): DtoTopupPurchaseMa
 }
 
 export function DtoTopupPurchaseMakeInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoTopupPurchaseMakeInput {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'offerId': json['offerId'],
         'recipientPhoneNumber': json['recipientPhoneNumber'],
-        'sender': !exists(json, 'sender') ? undefined : DtoTopupSenderFromJSON(json['sender']),
+        'sender': json['sender'] == null ? undefined : DtoTopupSenderFromJSON(json['sender']),
         'transactionId': json['transactionId'],
-        'value': !exists(json, 'value') ? undefined : DtoPurchaseValueFromJSON(json['value']),
+        'value': json['value'] == null ? undefined : DtoPurchaseValueFromJSON(json['value']),
     };
 }
 
-export function DtoTopupPurchaseMakeInputToJSON(value?: DtoTopupPurchaseMakeInput | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoTopupPurchaseMakeInputToJSON(json: any): DtoTopupPurchaseMakeInput {
+      return DtoTopupPurchaseMakeInputToJSONTyped(json, false);
+  }
+
+  export function DtoTopupPurchaseMakeInputToJSONTyped(value?: DtoTopupPurchaseMakeInput | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'offerId': value.offerId,
-        'recipientPhoneNumber': value.recipientPhoneNumber,
-        'sender': DtoTopupSenderToJSON(value.sender),
-        'transactionId': value.transactionId,
-        'value': DtoPurchaseValueToJSON(value.value),
+        'offerId': value['offerId'],
+        'recipientPhoneNumber': value['recipientPhoneNumber'],
+        'sender': DtoTopupSenderToJSON(value['sender']),
+        'transactionId': value['transactionId'],
+        'value': DtoPurchaseValueToJSON(value['value']),
     };
 }
 

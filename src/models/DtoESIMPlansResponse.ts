@@ -1,11 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DtoESIMPlan } from './DtoESIMPlan';
 import {
     DtoESIMPlanFromJSON,
     DtoESIMPlanFromJSONTyped,
     DtoESIMPlanToJSON,
+    DtoESIMPlanToJSONTyped,
 } from './DtoESIMPlan';
 
 /**
@@ -31,12 +32,10 @@ export interface DtoESIMPlansResponse {
 /**
  * Check if a given object implements the DtoESIMPlansResponse interface.
  */
-export function instanceOfDtoESIMPlansResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "list" in value;
-    isInstance = isInstance && "total" in value;
-
-    return isInstance;
+export function instanceOfDtoESIMPlansResponse(value: object): value is DtoESIMPlansResponse {
+    if (!('list' in value) || value['list'] === undefined) return false;
+    if (!('total' in value) || value['total'] === undefined) return false;
+    return true;
 }
 
 export function DtoESIMPlansResponseFromJSON(json: any): DtoESIMPlansResponse {
@@ -44,7 +43,7 @@ export function DtoESIMPlansResponseFromJSON(json: any): DtoESIMPlansResponse {
 }
 
 export function DtoESIMPlansResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESIMPlansResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -54,17 +53,19 @@ export function DtoESIMPlansResponseFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function DtoESIMPlansResponseToJSON(value?: DtoESIMPlansResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoESIMPlansResponseToJSON(json: any): DtoESIMPlansResponse {
+      return DtoESIMPlansResponseToJSONTyped(json, false);
+  }
+
+  export function DtoESIMPlansResponseToJSONTyped(value?: DtoESIMPlansResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'list': ((value.list as Array<any>).map(DtoESIMPlanToJSON)),
-        'total': value.total,
+        'list': ((value['list'] as Array<any>).map(DtoESIMPlanToJSON)),
+        'total': value['total'],
     };
 }
 

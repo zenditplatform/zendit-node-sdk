@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,11 +42,9 @@ export interface DtoCost {
 /**
  * Check if a given object implements the DtoCost interface.
  */
-export function instanceOfDtoCost(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "currency" in value;
-
-    return isInstance;
+export function instanceOfDtoCost(value: object): value is DtoCost {
+    if (!('currency' in value) || value['currency'] === undefined) return false;
+    return true;
 }
 
 export function DtoCostFromJSON(json: any): DtoCost {
@@ -54,33 +52,35 @@ export function DtoCostFromJSON(json: any): DtoCost {
 }
 
 export function DtoCostFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoCost {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'currency': json['currency'],
-        'fixed': !exists(json, 'fixed') ? undefined : json['fixed'],
-        'fx': !exists(json, 'fx') ? undefined : json['fx'],
-        'max': !exists(json, 'max') ? undefined : json['max'],
-        'min': !exists(json, 'min') ? undefined : json['min'],
+        'fixed': json['fixed'] == null ? undefined : json['fixed'],
+        'fx': json['fx'] == null ? undefined : json['fx'],
+        'max': json['max'] == null ? undefined : json['max'],
+        'min': json['min'] == null ? undefined : json['min'],
     };
 }
 
-export function DtoCostToJSON(value?: DtoCost | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoCostToJSON(json: any): DtoCost {
+      return DtoCostToJSONTyped(json, false);
+  }
+
+  export function DtoCostToJSONTyped(value?: DtoCost | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'currency': value.currency,
-        'fixed': value.fixed,
-        'fx': value.fx,
-        'max': value.max,
-        'min': value.min,
+        'currency': value['currency'],
+        'fixed': value['fixed'],
+        'fx': value['fx'],
+        'max': value['max'],
+        'min': value['min'],
     };
 }
 

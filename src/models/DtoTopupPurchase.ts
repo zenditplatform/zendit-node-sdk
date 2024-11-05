@@ -1,54 +1,62 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { DtoPriceType } from './DtoPriceType';
+import {
+    DtoPriceTypeFromJSON,
+    DtoPriceTypeFromJSONTyped,
+    DtoPriceTypeToJSON,
+    DtoPriceTypeToJSONTyped,
+} from './DtoPriceType';
+import type { DtoPurchaseValue } from './DtoPurchaseValue';
+import {
+    DtoPurchaseValueFromJSON,
+    DtoPurchaseValueFromJSONTyped,
+    DtoPurchaseValueToJSON,
+    DtoPurchaseValueToJSONTyped,
+} from './DtoPurchaseValue';
 import type { DtoConfirmation } from './DtoConfirmation';
 import {
     DtoConfirmationFromJSON,
     DtoConfirmationFromJSONTyped,
     DtoConfirmationToJSON,
+    DtoConfirmationToJSONTyped,
 } from './DtoConfirmation';
 import type { DtoError } from './DtoError';
 import {
     DtoErrorFromJSON,
     DtoErrorFromJSONTyped,
     DtoErrorToJSON,
+    DtoErrorToJSONTyped,
 } from './DtoError';
-import type { DtoPriceType } from './DtoPriceType';
-import {
-    DtoPriceTypeFromJSON,
-    DtoPriceTypeFromJSONTyped,
-    DtoPriceTypeToJSON,
-} from './DtoPriceType';
-import type { DtoProductType } from './DtoProductType';
-import {
-    DtoProductTypeFromJSON,
-    DtoProductTypeFromJSONTyped,
-    DtoProductTypeToJSON,
-} from './DtoProductType';
-import type { DtoPurchaseValue } from './DtoPurchaseValue';
-import {
-    DtoPurchaseValueFromJSON,
-    DtoPurchaseValueFromJSONTyped,
-    DtoPurchaseValueToJSON,
-} from './DtoPurchaseValue';
-import type { DtoTopupSender } from './DtoTopupSender';
-import {
-    DtoTopupSenderFromJSON,
-    DtoTopupSenderFromJSONTyped,
-    DtoTopupSenderToJSON,
-} from './DtoTopupSender';
 import type { DtoTransactionLogItem } from './DtoTransactionLogItem';
 import {
     DtoTransactionLogItemFromJSON,
     DtoTransactionLogItemFromJSONTyped,
     DtoTransactionLogItemToJSON,
+    DtoTransactionLogItemToJSONTyped,
 } from './DtoTransactionLogItem';
+import type { DtoProductType } from './DtoProductType';
+import {
+    DtoProductTypeFromJSON,
+    DtoProductTypeFromJSONTyped,
+    DtoProductTypeToJSON,
+    DtoProductTypeToJSONTyped,
+} from './DtoProductType';
 import type { DtoTransactionStatus } from './DtoTransactionStatus';
 import {
     DtoTransactionStatusFromJSON,
     DtoTransactionStatusFromJSONTyped,
     DtoTransactionStatusToJSON,
+    DtoTransactionStatusToJSONTyped,
 } from './DtoTransactionStatus';
+import type { DtoTopupSender } from './DtoTopupSender';
+import {
+    DtoTopupSenderFromJSON,
+    DtoTopupSenderFromJSONTyped,
+    DtoTopupSenderToJSON,
+    DtoTopupSenderToJSONTyped,
+} from './DtoTopupSender';
 
 /**
  * 
@@ -62,6 +70,12 @@ export interface DtoTopupPurchase {
      * @memberof DtoTopupPurchase
      */
     brand: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DtoTopupPurchase
+     */
+    brandName: string;
     /**
      * 
      * @type {DtoConfirmation}
@@ -250,41 +264,42 @@ export interface DtoTopupPurchase {
     voiceUnlimited: boolean;
 }
 
+
+
 /**
  * Check if a given object implements the DtoTopupPurchase interface.
  */
-export function instanceOfDtoTopupPurchase(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "brand" in value;
-    isInstance = isInstance && "cost" in value;
-    isInstance = isInstance && "costCurrency" in value;
-    isInstance = isInstance && "country" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "dataGB" in value;
-    isInstance = isInstance && "dataUnlimited" in value;
-    isInstance = isInstance && "durationDays" in value;
-    isInstance = isInstance && "log" in value;
-    isInstance = isInstance && "notes" in value;
-    isInstance = isInstance && "offerId" in value;
-    isInstance = isInstance && "price" in value;
-    isInstance = isInstance && "priceCurrency" in value;
-    isInstance = isInstance && "priceType" in value;
-    isInstance = isInstance && "productType" in value;
-    isInstance = isInstance && "recipientPhoneNumber" in value;
-    isInstance = isInstance && "send" in value;
-    isInstance = isInstance && "sendCurrency" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "shortNotes" in value;
-    isInstance = isInstance && "smsNumber" in value;
-    isInstance = isInstance && "smsUnlimited" in value;
-    isInstance = isInstance && "status" in value;
-    isInstance = isInstance && "subTypes" in value;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "updatedAt" in value;
-    isInstance = isInstance && "voiceMinutes" in value;
-    isInstance = isInstance && "voiceUnlimited" in value;
-
-    return isInstance;
+export function instanceOfDtoTopupPurchase(value: object): value is DtoTopupPurchase {
+    if (!('brand' in value) || value['brand'] === undefined) return false;
+    if (!('brandName' in value) || value['brandName'] === undefined) return false;
+    if (!('cost' in value) || value['cost'] === undefined) return false;
+    if (!('costCurrency' in value) || value['costCurrency'] === undefined) return false;
+    if (!('country' in value) || value['country'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('dataGB' in value) || value['dataGB'] === undefined) return false;
+    if (!('dataUnlimited' in value) || value['dataUnlimited'] === undefined) return false;
+    if (!('durationDays' in value) || value['durationDays'] === undefined) return false;
+    if (!('log' in value) || value['log'] === undefined) return false;
+    if (!('notes' in value) || value['notes'] === undefined) return false;
+    if (!('offerId' in value) || value['offerId'] === undefined) return false;
+    if (!('price' in value) || value['price'] === undefined) return false;
+    if (!('priceCurrency' in value) || value['priceCurrency'] === undefined) return false;
+    if (!('priceType' in value) || value['priceType'] === undefined) return false;
+    if (!('productType' in value) || value['productType'] === undefined) return false;
+    if (!('recipientPhoneNumber' in value) || value['recipientPhoneNumber'] === undefined) return false;
+    if (!('send' in value) || value['send'] === undefined) return false;
+    if (!('sendCurrency' in value) || value['sendCurrency'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('shortNotes' in value) || value['shortNotes'] === undefined) return false;
+    if (!('smsNumber' in value) || value['smsNumber'] === undefined) return false;
+    if (!('smsUnlimited' in value) || value['smsUnlimited'] === undefined) return false;
+    if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('subTypes' in value) || value['subTypes'] === undefined) return false;
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
+    if (!('voiceMinutes' in value) || value['voiceMinutes'] === undefined) return false;
+    if (!('voiceUnlimited' in value) || value['voiceUnlimited'] === undefined) return false;
+    return true;
 }
 
 export function DtoTopupPurchaseFromJSON(json: any): DtoTopupPurchase {
@@ -292,13 +307,14 @@ export function DtoTopupPurchaseFromJSON(json: any): DtoTopupPurchase {
 }
 
 export function DtoTopupPurchaseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoTopupPurchase {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'brand': json['brand'],
-        'confirmation': !exists(json, 'confirmation') ? undefined : DtoConfirmationFromJSON(json['confirmation']),
+        'brandName': json['brandName'],
+        'confirmation': json['confirmation'] == null ? undefined : DtoConfirmationFromJSON(json['confirmation']),
         'cost': json['cost'],
         'costCurrency': json['costCurrency'],
         'country': json['country'],
@@ -306,7 +322,7 @@ export function DtoTopupPurchaseFromJSONTyped(json: any, ignoreDiscriminator: bo
         'dataGB': json['dataGB'],
         'dataUnlimited': json['dataUnlimited'],
         'durationDays': json['durationDays'],
-        'error': !exists(json, 'error') ? undefined : DtoErrorFromJSON(json['error']),
+        'error': json['error'] == null ? undefined : DtoErrorFromJSON(json['error']),
         'log': ((json['log'] as Array<any>).map(DtoTransactionLogItemFromJSON)),
         'notes': json['notes'],
         'offerId': json['offerId'],
@@ -315,7 +331,7 @@ export function DtoTopupPurchaseFromJSONTyped(json: any, ignoreDiscriminator: bo
         'priceType': DtoPriceTypeFromJSON(json['priceType']),
         'productType': DtoProductTypeFromJSON(json['productType']),
         'recipientPhoneNumber': json['recipientPhoneNumber'],
-        'regions': !exists(json, 'regions') ? undefined : json['regions'],
+        'regions': json['regions'] == null ? undefined : json['regions'],
         'send': json['send'],
         'sendCurrency': json['sendCurrency'],
         'sender': DtoTopupSenderFromJSON(json['sender']),
@@ -326,53 +342,56 @@ export function DtoTopupPurchaseFromJSONTyped(json: any, ignoreDiscriminator: bo
         'subTypes': json['subTypes'],
         'transactionId': json['transactionId'],
         'updatedAt': json['updatedAt'],
-        'value': !exists(json, 'value') ? undefined : DtoPurchaseValueFromJSON(json['value']),
+        'value': json['value'] == null ? undefined : DtoPurchaseValueFromJSON(json['value']),
         'voiceMinutes': json['voiceMinutes'],
         'voiceUnlimited': json['voiceUnlimited'],
     };
 }
 
-export function DtoTopupPurchaseToJSON(value?: DtoTopupPurchase | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoTopupPurchaseToJSON(json: any): DtoTopupPurchase {
+      return DtoTopupPurchaseToJSONTyped(json, false);
+  }
+
+  export function DtoTopupPurchaseToJSONTyped(value?: DtoTopupPurchase | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'brand': value.brand,
-        'confirmation': DtoConfirmationToJSON(value.confirmation),
-        'cost': value.cost,
-        'costCurrency': value.costCurrency,
-        'country': value.country,
-        'createdAt': value.createdAt,
-        'dataGB': value.dataGB,
-        'dataUnlimited': value.dataUnlimited,
-        'durationDays': value.durationDays,
-        'error': DtoErrorToJSON(value.error),
-        'log': ((value.log as Array<any>).map(DtoTransactionLogItemToJSON)),
-        'notes': value.notes,
-        'offerId': value.offerId,
-        'price': value.price,
-        'priceCurrency': value.priceCurrency,
-        'priceType': DtoPriceTypeToJSON(value.priceType),
-        'productType': DtoProductTypeToJSON(value.productType),
-        'recipientPhoneNumber': value.recipientPhoneNumber,
-        'regions': value.regions,
-        'send': value.send,
-        'sendCurrency': value.sendCurrency,
-        'sender': DtoTopupSenderToJSON(value.sender),
-        'shortNotes': value.shortNotes,
-        'smsNumber': value.smsNumber,
-        'smsUnlimited': value.smsUnlimited,
-        'status': DtoTransactionStatusToJSON(value.status),
-        'subTypes': value.subTypes,
-        'transactionId': value.transactionId,
-        'updatedAt': value.updatedAt,
-        'value': DtoPurchaseValueToJSON(value.value),
-        'voiceMinutes': value.voiceMinutes,
-        'voiceUnlimited': value.voiceUnlimited,
+        'brand': value['brand'],
+        'brandName': value['brandName'],
+        'confirmation': DtoConfirmationToJSON(value['confirmation']),
+        'cost': value['cost'],
+        'costCurrency': value['costCurrency'],
+        'country': value['country'],
+        'createdAt': value['createdAt'],
+        'dataGB': value['dataGB'],
+        'dataUnlimited': value['dataUnlimited'],
+        'durationDays': value['durationDays'],
+        'error': DtoErrorToJSON(value['error']),
+        'log': ((value['log'] as Array<any>).map(DtoTransactionLogItemToJSON)),
+        'notes': value['notes'],
+        'offerId': value['offerId'],
+        'price': value['price'],
+        'priceCurrency': value['priceCurrency'],
+        'priceType': DtoPriceTypeToJSON(value['priceType']),
+        'productType': DtoProductTypeToJSON(value['productType']),
+        'recipientPhoneNumber': value['recipientPhoneNumber'],
+        'regions': value['regions'],
+        'send': value['send'],
+        'sendCurrency': value['sendCurrency'],
+        'sender': DtoTopupSenderToJSON(value['sender']),
+        'shortNotes': value['shortNotes'],
+        'smsNumber': value['smsNumber'],
+        'smsUnlimited': value['smsUnlimited'],
+        'status': DtoTransactionStatusToJSON(value['status']),
+        'subTypes': value['subTypes'],
+        'transactionId': value['transactionId'],
+        'updatedAt': value['updatedAt'],
+        'value': DtoPurchaseValueToJSON(value['value']),
+        'voiceMinutes': value['voiceMinutes'],
+        'voiceUnlimited': value['voiceUnlimited'],
     };
 }
 

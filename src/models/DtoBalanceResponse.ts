@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -24,12 +24,10 @@ export interface DtoBalanceResponse {
 /**
  * Check if a given object implements the DtoBalanceResponse interface.
  */
-export function instanceOfDtoBalanceResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "availableBalance" in value;
-    isInstance = isInstance && "currency" in value;
-
-    return isInstance;
+export function instanceOfDtoBalanceResponse(value: object): value is DtoBalanceResponse {
+    if (!('availableBalance' in value) || value['availableBalance'] === undefined) return false;
+    if (!('currency' in value) || value['currency'] === undefined) return false;
+    return true;
 }
 
 export function DtoBalanceResponseFromJSON(json: any): DtoBalanceResponse {
@@ -37,7 +35,7 @@ export function DtoBalanceResponseFromJSON(json: any): DtoBalanceResponse {
 }
 
 export function DtoBalanceResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoBalanceResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -47,17 +45,19 @@ export function DtoBalanceResponseFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function DtoBalanceResponseToJSON(value?: DtoBalanceResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoBalanceResponseToJSON(json: any): DtoBalanceResponse {
+      return DtoBalanceResponseToJSONTyped(json, false);
+  }
+
+  export function DtoBalanceResponseToJSONTyped(value?: DtoBalanceResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'availableBalance': value.availableBalance,
-        'currency': value.currency,
+        'availableBalance': value['availableBalance'],
+        'currency': value['currency'],
     };
 }
 

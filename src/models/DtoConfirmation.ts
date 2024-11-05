@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,13 +30,11 @@ export interface DtoConfirmation {
 /**
  * Check if a given object implements the DtoConfirmation interface.
  */
-export function instanceOfDtoConfirmation(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "confirmationNumber" in value;
-    isInstance = isInstance && "externalReferenceId" in value;
-    isInstance = isInstance && "transactionTime" in value;
-
-    return isInstance;
+export function instanceOfDtoConfirmation(value: object): value is DtoConfirmation {
+    if (!('confirmationNumber' in value) || value['confirmationNumber'] === undefined) return false;
+    if (!('externalReferenceId' in value) || value['externalReferenceId'] === undefined) return false;
+    if (!('transactionTime' in value) || value['transactionTime'] === undefined) return false;
+    return true;
 }
 
 export function DtoConfirmationFromJSON(json: any): DtoConfirmation {
@@ -44,7 +42,7 @@ export function DtoConfirmationFromJSON(json: any): DtoConfirmation {
 }
 
 export function DtoConfirmationFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoConfirmation {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,18 +53,20 @@ export function DtoConfirmationFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function DtoConfirmationToJSON(value?: DtoConfirmation | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoConfirmationToJSON(json: any): DtoConfirmation {
+      return DtoConfirmationToJSONTyped(json, false);
+  }
+
+  export function DtoConfirmationToJSONTyped(value?: DtoConfirmation | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'confirmationNumber': value.confirmationNumber,
-        'externalReferenceId': value.externalReferenceId,
-        'transactionTime': value.transactionTime,
+        'confirmationNumber': value['confirmationNumber'],
+        'externalReferenceId': value['externalReferenceId'],
+        'transactionTime': value['transactionTime'],
     };
 }
 

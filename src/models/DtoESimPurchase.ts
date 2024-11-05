@@ -1,54 +1,62 @@
 /* tslint:disable */
 /* eslint-disable */
-import { exists, mapValues } from '../runtime';
-import type { DtoESimConfirmation } from './DtoESimConfirmation';
-import {
-    DtoESimConfirmationFromJSON,
-    DtoESimConfirmationFromJSONTyped,
-    DtoESimConfirmationToJSON,
-} from './DtoESimConfirmation';
-import type { DtoESimRoaming } from './DtoESimRoaming';
-import {
-    DtoESimRoamingFromJSON,
-    DtoESimRoamingFromJSONTyped,
-    DtoESimRoamingToJSON,
-} from './DtoESimRoaming';
-import type { DtoError } from './DtoError';
-import {
-    DtoErrorFromJSON,
-    DtoErrorFromJSONTyped,
-    DtoErrorToJSON,
-} from './DtoError';
+import { mapValues } from '../runtime';
 import type { DtoPriceType } from './DtoPriceType';
 import {
     DtoPriceTypeFromJSON,
     DtoPriceTypeFromJSONTyped,
     DtoPriceTypeToJSON,
+    DtoPriceTypeToJSONTyped,
 } from './DtoPriceType';
-import type { DtoProductType } from './DtoProductType';
-import {
-    DtoProductTypeFromJSON,
-    DtoProductTypeFromJSONTyped,
-    DtoProductTypeToJSON,
-} from './DtoProductType';
 import type { DtoPurchaseValue } from './DtoPurchaseValue';
 import {
     DtoPurchaseValueFromJSON,
     DtoPurchaseValueFromJSONTyped,
     DtoPurchaseValueToJSON,
+    DtoPurchaseValueToJSONTyped,
 } from './DtoPurchaseValue';
+import type { DtoESimConfirmation } from './DtoESimConfirmation';
+import {
+    DtoESimConfirmationFromJSON,
+    DtoESimConfirmationFromJSONTyped,
+    DtoESimConfirmationToJSON,
+    DtoESimConfirmationToJSONTyped,
+} from './DtoESimConfirmation';
+import type { DtoError } from './DtoError';
+import {
+    DtoErrorFromJSON,
+    DtoErrorFromJSONTyped,
+    DtoErrorToJSON,
+    DtoErrorToJSONTyped,
+} from './DtoError';
 import type { DtoTransactionLogItem } from './DtoTransactionLogItem';
 import {
     DtoTransactionLogItemFromJSON,
     DtoTransactionLogItemFromJSONTyped,
     DtoTransactionLogItemToJSON,
+    DtoTransactionLogItemToJSONTyped,
 } from './DtoTransactionLogItem';
+import type { DtoProductType } from './DtoProductType';
+import {
+    DtoProductTypeFromJSON,
+    DtoProductTypeFromJSONTyped,
+    DtoProductTypeToJSON,
+    DtoProductTypeToJSONTyped,
+} from './DtoProductType';
 import type { DtoTransactionStatus } from './DtoTransactionStatus';
 import {
     DtoTransactionStatusFromJSON,
     DtoTransactionStatusFromJSONTyped,
     DtoTransactionStatusToJSON,
+    DtoTransactionStatusToJSONTyped,
 } from './DtoTransactionStatus';
+import type { DtoESimRoaming } from './DtoESimRoaming';
+import {
+    DtoESimRoamingFromJSON,
+    DtoESimRoamingFromJSONTyped,
+    DtoESimRoamingToJSON,
+    DtoESimRoamingToJSONTyped,
+} from './DtoESimRoaming';
 
 /**
  * 
@@ -62,6 +70,12 @@ export interface DtoESimPurchase {
      * @memberof DtoESimPurchase
      */
     brand: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DtoESimPurchase
+     */
+    brandName: string;
     /**
      * 
      * @type {DtoESimConfirmation}
@@ -238,40 +252,41 @@ export interface DtoESimPurchase {
     voiceUnlimited: boolean;
 }
 
+
+
 /**
  * Check if a given object implements the DtoESimPurchase interface.
  */
-export function instanceOfDtoESimPurchase(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "brand" in value;
-    isInstance = isInstance && "cost" in value;
-    isInstance = isInstance && "costCurrency" in value;
-    isInstance = isInstance && "country" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "dataGB" in value;
-    isInstance = isInstance && "dataSpeeds" in value;
-    isInstance = isInstance && "dataUnlimited" in value;
-    isInstance = isInstance && "durationDays" in value;
-    isInstance = isInstance && "log" in value;
-    isInstance = isInstance && "notes" in value;
-    isInstance = isInstance && "offerId" in value;
-    isInstance = isInstance && "price" in value;
-    isInstance = isInstance && "priceCurrency" in value;
-    isInstance = isInstance && "priceType" in value;
-    isInstance = isInstance && "productType" in value;
-    isInstance = isInstance && "regions" in value;
-    isInstance = isInstance && "roaming" in value;
-    isInstance = isInstance && "shortNotes" in value;
-    isInstance = isInstance && "smsNumber" in value;
-    isInstance = isInstance && "smsUnlimited" in value;
-    isInstance = isInstance && "status" in value;
-    isInstance = isInstance && "subTypes" in value;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "updatedAt" in value;
-    isInstance = isInstance && "voiceMinutes" in value;
-    isInstance = isInstance && "voiceUnlimited" in value;
-
-    return isInstance;
+export function instanceOfDtoESimPurchase(value: object): value is DtoESimPurchase {
+    if (!('brand' in value) || value['brand'] === undefined) return false;
+    if (!('brandName' in value) || value['brandName'] === undefined) return false;
+    if (!('cost' in value) || value['cost'] === undefined) return false;
+    if (!('costCurrency' in value) || value['costCurrency'] === undefined) return false;
+    if (!('country' in value) || value['country'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('dataGB' in value) || value['dataGB'] === undefined) return false;
+    if (!('dataSpeeds' in value) || value['dataSpeeds'] === undefined) return false;
+    if (!('dataUnlimited' in value) || value['dataUnlimited'] === undefined) return false;
+    if (!('durationDays' in value) || value['durationDays'] === undefined) return false;
+    if (!('log' in value) || value['log'] === undefined) return false;
+    if (!('notes' in value) || value['notes'] === undefined) return false;
+    if (!('offerId' in value) || value['offerId'] === undefined) return false;
+    if (!('price' in value) || value['price'] === undefined) return false;
+    if (!('priceCurrency' in value) || value['priceCurrency'] === undefined) return false;
+    if (!('priceType' in value) || value['priceType'] === undefined) return false;
+    if (!('productType' in value) || value['productType'] === undefined) return false;
+    if (!('regions' in value) || value['regions'] === undefined) return false;
+    if (!('roaming' in value) || value['roaming'] === undefined) return false;
+    if (!('shortNotes' in value) || value['shortNotes'] === undefined) return false;
+    if (!('smsNumber' in value) || value['smsNumber'] === undefined) return false;
+    if (!('smsUnlimited' in value) || value['smsUnlimited'] === undefined) return false;
+    if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('subTypes' in value) || value['subTypes'] === undefined) return false;
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
+    if (!('voiceMinutes' in value) || value['voiceMinutes'] === undefined) return false;
+    if (!('voiceUnlimited' in value) || value['voiceUnlimited'] === undefined) return false;
+    return true;
 }
 
 export function DtoESimPurchaseFromJSON(json: any): DtoESimPurchase {
@@ -279,13 +294,14 @@ export function DtoESimPurchaseFromJSON(json: any): DtoESimPurchase {
 }
 
 export function DtoESimPurchaseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESimPurchase {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'brand': json['brand'],
-        'confirmation': !exists(json, 'confirmation') ? undefined : DtoESimConfirmationFromJSON(json['confirmation']),
+        'brandName': json['brandName'],
+        'confirmation': json['confirmation'] == null ? undefined : DtoESimConfirmationFromJSON(json['confirmation']),
         'cost': json['cost'],
         'costCurrency': json['costCurrency'],
         'country': json['country'],
@@ -294,7 +310,7 @@ export function DtoESimPurchaseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'dataSpeeds': json['dataSpeeds'],
         'dataUnlimited': json['dataUnlimited'],
         'durationDays': json['durationDays'],
-        'error': !exists(json, 'error') ? undefined : DtoErrorFromJSON(json['error']),
+        'error': json['error'] == null ? undefined : DtoErrorFromJSON(json['error']),
         'log': ((json['log'] as Array<any>).map(DtoTransactionLogItemFromJSON)),
         'notes': json['notes'],
         'offerId': json['offerId'],
@@ -311,51 +327,54 @@ export function DtoESimPurchaseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'subTypes': json['subTypes'],
         'transactionId': json['transactionId'],
         'updatedAt': json['updatedAt'],
-        'value': !exists(json, 'value') ? undefined : DtoPurchaseValueFromJSON(json['value']),
+        'value': json['value'] == null ? undefined : DtoPurchaseValueFromJSON(json['value']),
         'voiceMinutes': json['voiceMinutes'],
         'voiceUnlimited': json['voiceUnlimited'],
     };
 }
 
-export function DtoESimPurchaseToJSON(value?: DtoESimPurchase | null): any {
-    if (value === undefined) {
-        return undefined;
+  export function DtoESimPurchaseToJSON(json: any): DtoESimPurchase {
+      return DtoESimPurchaseToJSONTyped(json, false);
+  }
+
+  export function DtoESimPurchaseToJSONTyped(value?: DtoESimPurchase | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'brand': value.brand,
-        'confirmation': DtoESimConfirmationToJSON(value.confirmation),
-        'cost': value.cost,
-        'costCurrency': value.costCurrency,
-        'country': value.country,
-        'createdAt': value.createdAt,
-        'dataGB': value.dataGB,
-        'dataSpeeds': value.dataSpeeds,
-        'dataUnlimited': value.dataUnlimited,
-        'durationDays': value.durationDays,
-        'error': DtoErrorToJSON(value.error),
-        'log': ((value.log as Array<any>).map(DtoTransactionLogItemToJSON)),
-        'notes': value.notes,
-        'offerId': value.offerId,
-        'price': value.price,
-        'priceCurrency': value.priceCurrency,
-        'priceType': DtoPriceTypeToJSON(value.priceType),
-        'productType': DtoProductTypeToJSON(value.productType),
-        'regions': value.regions,
-        'roaming': ((value.roaming as Array<any>).map(DtoESimRoamingToJSON)),
-        'shortNotes': value.shortNotes,
-        'smsNumber': value.smsNumber,
-        'smsUnlimited': value.smsUnlimited,
-        'status': DtoTransactionStatusToJSON(value.status),
-        'subTypes': value.subTypes,
-        'transactionId': value.transactionId,
-        'updatedAt': value.updatedAt,
-        'value': DtoPurchaseValueToJSON(value.value),
-        'voiceMinutes': value.voiceMinutes,
-        'voiceUnlimited': value.voiceUnlimited,
+        'brand': value['brand'],
+        'brandName': value['brandName'],
+        'confirmation': DtoESimConfirmationToJSON(value['confirmation']),
+        'cost': value['cost'],
+        'costCurrency': value['costCurrency'],
+        'country': value['country'],
+        'createdAt': value['createdAt'],
+        'dataGB': value['dataGB'],
+        'dataSpeeds': value['dataSpeeds'],
+        'dataUnlimited': value['dataUnlimited'],
+        'durationDays': value['durationDays'],
+        'error': DtoErrorToJSON(value['error']),
+        'log': ((value['log'] as Array<any>).map(DtoTransactionLogItemToJSON)),
+        'notes': value['notes'],
+        'offerId': value['offerId'],
+        'price': value['price'],
+        'priceCurrency': value['priceCurrency'],
+        'priceType': DtoPriceTypeToJSON(value['priceType']),
+        'productType': DtoProductTypeToJSON(value['productType']),
+        'regions': value['regions'],
+        'roaming': ((value['roaming'] as Array<any>).map(DtoESimRoamingToJSON)),
+        'shortNotes': value['shortNotes'],
+        'smsNumber': value['smsNumber'],
+        'smsUnlimited': value['smsUnlimited'],
+        'status': DtoTransactionStatusToJSON(value['status']),
+        'subTypes': value['subTypes'],
+        'transactionId': value['transactionId'],
+        'updatedAt': value['updatedAt'],
+        'value': DtoPurchaseValueToJSON(value['value']),
+        'voiceMinutes': value['voiceMinutes'],
+        'voiceUnlimited': value['voiceUnlimited'],
     };
 }
 
