@@ -298,11 +298,11 @@ export function DtoVoucherPurchaseFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-  export function DtoVoucherPurchaseToJSON(json: any): DtoVoucherPurchase {
-      return DtoVoucherPurchaseToJSONTyped(json, false);
-  }
+export function DtoVoucherPurchaseToJSON(json: any): DtoVoucherPurchase {
+    return DtoVoucherPurchaseToJSONTyped(json, false);
+}
 
-  export function DtoVoucherPurchaseToJSONTyped(value?: DtoVoucherPurchase | null, ignoreDiscriminator: boolean = false): any {
+export function DtoVoucherPurchaseToJSONTyped(value?: DtoVoucherPurchase | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

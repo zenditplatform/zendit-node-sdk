@@ -82,11 +82,11 @@ export function DtoTopupPurchaseMakeInputFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-  export function DtoTopupPurchaseMakeInputToJSON(json: any): DtoTopupPurchaseMakeInput {
-      return DtoTopupPurchaseMakeInputToJSONTyped(json, false);
-  }
+export function DtoTopupPurchaseMakeInputToJSON(json: any): DtoTopupPurchaseMakeInput {
+    return DtoTopupPurchaseMakeInputToJSONTyped(json, false);
+}
 
-  export function DtoTopupPurchaseMakeInputToJSONTyped(value?: DtoTopupPurchaseMakeInput | null, ignoreDiscriminator: boolean = false): any {
+export function DtoTopupPurchaseMakeInputToJSONTyped(value?: DtoTopupPurchaseMakeInput | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

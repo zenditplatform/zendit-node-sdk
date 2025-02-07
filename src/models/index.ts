@@ -1,6 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './DtoBalanceResponse';
+export * from './DtoBrandInfo';
+export * from './DtoBrandsResponse';
 export * from './DtoConfirmation';
 export * from './DtoCost';
 export * from './DtoESIMPlan';
@@ -15,17 +17,22 @@ export * from './DtoESimPurchasesResponse';
 export * from './DtoESimQRCode';
 export * from './DtoESimRoaming';
 export * from './DtoError';
+export * from './DtoInputMask';
+export * from './DtoOfferBrand';
 export * from './DtoPhoneNumberLookupResponse';
 export * from './DtoPrice';
 export * from './DtoPriceType';
 export * from './DtoProductType';
 export * from './DtoPurchaseValue';
+export * from './DtoRedemptionInstruction';
+export * from './DtoRedemptionInstructionInfo';
 export * from './DtoRegion';
 export * from './DtoReportFile';
 export * from './DtoReportLogItem';
 export * from './DtoReportStatus';
 export * from './DtoReportTransactions';
 export * from './DtoReportTransactionsPeriod';
+export * from './DtoRequiredFieldLabel';
 export * from './DtoResponseError';
 export * from './DtoTopupOffer';
 export * from './DtoTopupOffersResponse';

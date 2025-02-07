@@ -65,11 +65,11 @@ export function DtoZendFromJSONTyped(json: any, ignoreDiscriminator: boolean): D
     };
 }
 
-  export function DtoZendToJSON(json: any): DtoZend {
-      return DtoZendToJSONTyped(json, false);
-  }
+export function DtoZendToJSON(json: any): DtoZend {
+    return DtoZendToJSONTyped(json, false);
+}
 
-  export function DtoZendToJSONTyped(value?: DtoZend | null, ignoreDiscriminator: boolean = false): any {
+export function DtoZendToJSONTyped(value?: DtoZend | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

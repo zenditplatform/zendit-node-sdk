@@ -69,11 +69,11 @@ export function DtoPhoneNumberLookupResponseFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-  export function DtoPhoneNumberLookupResponseToJSON(json: any): DtoPhoneNumberLookupResponse {
-      return DtoPhoneNumberLookupResponseToJSONTyped(json, false);
-  }
+export function DtoPhoneNumberLookupResponseToJSON(json: any): DtoPhoneNumberLookupResponse {
+    return DtoPhoneNumberLookupResponseToJSONTyped(json, false);
+}
 
-  export function DtoPhoneNumberLookupResponseToJSONTyped(value?: DtoPhoneNumberLookupResponse | null, ignoreDiscriminator: boolean = false): any {
+export function DtoPhoneNumberLookupResponseToJSONTyped(value?: DtoPhoneNumberLookupResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

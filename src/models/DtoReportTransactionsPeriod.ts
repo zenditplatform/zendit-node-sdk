@@ -45,11 +45,11 @@ export function DtoReportTransactionsPeriodFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-  export function DtoReportTransactionsPeriodToJSON(json: any): DtoReportTransactionsPeriod {
-      return DtoReportTransactionsPeriodToJSONTyped(json, false);
-  }
+export function DtoReportTransactionsPeriodToJSON(json: any): DtoReportTransactionsPeriod {
+    return DtoReportTransactionsPeriodToJSONTyped(json, false);
+}
 
-  export function DtoReportTransactionsPeriodToJSONTyped(value?: DtoReportTransactionsPeriod | null, ignoreDiscriminator: boolean = false): any {
+export function DtoReportTransactionsPeriodToJSONTyped(value?: DtoReportTransactionsPeriod | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

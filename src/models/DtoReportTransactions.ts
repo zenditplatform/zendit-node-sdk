@@ -129,11 +129,11 @@ export function DtoReportTransactionsFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-  export function DtoReportTransactionsToJSON(json: any): DtoReportTransactions {
-      return DtoReportTransactionsToJSONTyped(json, false);
-  }
+export function DtoReportTransactionsToJSON(json: any): DtoReportTransactions {
+    return DtoReportTransactionsToJSONTyped(json, false);
+}
 
-  export function DtoReportTransactionsToJSONTyped(value?: DtoReportTransactions | null, ignoreDiscriminator: boolean = false): any {
+export function DtoReportTransactionsToJSONTyped(value?: DtoReportTransactions | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

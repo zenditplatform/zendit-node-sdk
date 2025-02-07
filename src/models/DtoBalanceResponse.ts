@@ -45,11 +45,11 @@ export function DtoBalanceResponseFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-  export function DtoBalanceResponseToJSON(json: any): DtoBalanceResponse {
-      return DtoBalanceResponseToJSONTyped(json, false);
-  }
+export function DtoBalanceResponseToJSON(json: any): DtoBalanceResponse {
+    return DtoBalanceResponseToJSONTyped(json, false);
+}
 
-  export function DtoBalanceResponseToJSONTyped(value?: DtoBalanceResponse | null, ignoreDiscriminator: boolean = false): any {
+export function DtoBalanceResponseToJSONTyped(value?: DtoBalanceResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

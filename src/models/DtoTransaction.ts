@@ -146,11 +146,11 @@ export function DtoTransactionFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-  export function DtoTransactionToJSON(json: any): DtoTransaction {
-      return DtoTransactionToJSONTyped(json, false);
-  }
+export function DtoTransactionToJSON(json: any): DtoTransaction {
+    return DtoTransactionToJSONTyped(json, false);
+}
 
-  export function DtoTransactionToJSONTyped(value?: DtoTransaction | null, ignoreDiscriminator: boolean = false): any {
+export function DtoTransactionToJSONTyped(value?: DtoTransaction | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

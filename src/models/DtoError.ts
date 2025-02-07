@@ -53,11 +53,11 @@ export function DtoErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     };
 }
 
-  export function DtoErrorToJSON(json: any): DtoError {
-      return DtoErrorToJSONTyped(json, false);
-  }
+export function DtoErrorToJSON(json: any): DtoError {
+    return DtoErrorToJSONTyped(json, false);
+}
 
-  export function DtoErrorToJSONTyped(value?: DtoError | null, ignoreDiscriminator: boolean = false): any {
+export function DtoErrorToJSONTyped(value?: DtoError | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

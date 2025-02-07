@@ -259,11 +259,11 @@ export function DtoESimOfferFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-  export function DtoESimOfferToJSON(json: any): DtoESimOffer {
-      return DtoESimOfferToJSONTyped(json, false);
-  }
+export function DtoESimOfferToJSON(json: any): DtoESimOffer {
+    return DtoESimOfferToJSONTyped(json, false);
+}
 
-  export function DtoESimOfferToJSONTyped(value?: DtoESimOffer | null, ignoreDiscriminator: boolean = false): any {
+export function DtoESimOfferToJSONTyped(value?: DtoESimOffer | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

@@ -102,11 +102,11 @@ export function DtoESIMPlanFromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-  export function DtoESIMPlanToJSON(json: any): DtoESIMPlan {
-      return DtoESIMPlanToJSONTyped(json, false);
-  }
+export function DtoESIMPlanToJSON(json: any): DtoESIMPlan {
+    return DtoESIMPlanToJSONTyped(json, false);
+}
 
-  export function DtoESIMPlanToJSONTyped(value?: DtoESIMPlan | null, ignoreDiscriminator: boolean = false): any {
+export function DtoESIMPlanToJSONTyped(value?: DtoESIMPlan | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

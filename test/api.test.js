@@ -152,6 +152,16 @@ test('esimPurchasesPost plans', async () => {
     }
 });
 
+test('brands', async () => {
+    let response = await zenditAPI.brandsGet(10, 0);
+    expect(response.list).toBeDefined();
+});
+
+test('specific brand', async () => {
+    let brands = await zenditAPI.brandsGet(1, 0);
+    let brand = await zenditAPI.brandsBrandGet(brands.list[0].brand, 0);
+    expect(brand.brand).toBeDefined();
+});
 
 const waitForTransactionStatus = async (transactionId, status) => {
     let transaction = await zenditAPI.transactionsTransactionIdGet(transactionId);

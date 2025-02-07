@@ -45,11 +45,11 @@ export function DtoVoucherFieldFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-  export function DtoVoucherFieldToJSON(json: any): DtoVoucherField {
-      return DtoVoucherFieldToJSONTyped(json, false);
-  }
+export function DtoVoucherFieldToJSON(json: any): DtoVoucherField {
+    return DtoVoucherFieldToJSONTyped(json, false);
+}
 
-  export function DtoVoucherFieldToJSONTyped(value?: DtoVoucherField | null, ignoreDiscriminator: boolean = false): any {
+export function DtoVoucherFieldToJSONTyped(value?: DtoVoucherField | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

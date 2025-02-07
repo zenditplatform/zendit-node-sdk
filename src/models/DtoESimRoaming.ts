@@ -45,11 +45,11 @@ export function DtoESimRoamingFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-  export function DtoESimRoamingToJSON(json: any): DtoESimRoaming {
-      return DtoESimRoamingToJSONTyped(json, false);
-  }
+export function DtoESimRoamingToJSON(json: any): DtoESimRoaming {
+    return DtoESimRoamingToJSONTyped(json, false);
+}
 
-  export function DtoESimRoamingToJSONTyped(value?: DtoESimRoaming | null, ignoreDiscriminator: boolean = false): any {
+export function DtoESimRoamingToJSONTyped(value?: DtoESimRoaming | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

@@ -86,11 +86,11 @@ export function DtoPriceFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     };
 }
 
-  export function DtoPriceToJSON(json: any): DtoPrice {
-      return DtoPriceToJSONTyped(json, false);
-  }
+export function DtoPriceToJSON(json: any): DtoPrice {
+    return DtoPriceToJSONTyped(json, false);
+}
 
-  export function DtoPriceToJSONTyped(value?: DtoPrice | null, ignoreDiscriminator: boolean = false): any {
+export function DtoPriceToJSONTyped(value?: DtoPrice | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

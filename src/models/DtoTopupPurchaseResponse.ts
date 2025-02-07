@@ -55,11 +55,11 @@ export function DtoTopupPurchaseResponseFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-  export function DtoTopupPurchaseResponseToJSON(json: any): DtoTopupPurchaseResponse {
-      return DtoTopupPurchaseResponseToJSONTyped(json, false);
-  }
+export function DtoTopupPurchaseResponseToJSON(json: any): DtoTopupPurchaseResponse {
+    return DtoTopupPurchaseResponseToJSONTyped(json, false);
+}
 
-  export function DtoTopupPurchaseResponseToJSONTyped(value?: DtoTopupPurchaseResponse | null, ignoreDiscriminator: boolean = false): any {
+export function DtoTopupPurchaseResponseToJSONTyped(value?: DtoTopupPurchaseResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

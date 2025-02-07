@@ -251,11 +251,11 @@ export function DtoTopupOfferFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-  export function DtoTopupOfferToJSON(json: any): DtoTopupOffer {
-      return DtoTopupOfferToJSONTyped(json, false);
-  }
+export function DtoTopupOfferToJSON(json: any): DtoTopupOffer {
+    return DtoTopupOfferToJSONTyped(json, false);
+}
 
-  export function DtoTopupOfferToJSONTyped(value?: DtoTopupOffer | null, ignoreDiscriminator: boolean = false): any {
+export function DtoTopupOfferToJSONTyped(value?: DtoTopupOffer | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

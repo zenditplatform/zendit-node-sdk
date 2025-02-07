@@ -53,11 +53,11 @@ export function DtoConfirmationFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-  export function DtoConfirmationToJSON(json: any): DtoConfirmation {
-      return DtoConfirmationToJSONTyped(json, false);
-  }
+export function DtoConfirmationToJSON(json: any): DtoConfirmation {
+    return DtoConfirmationToJSONTyped(json, false);
+}
 
-  export function DtoConfirmationToJSONTyped(value?: DtoConfirmation | null, ignoreDiscriminator: boolean = false): any {
+export function DtoConfirmationToJSONTyped(value?: DtoConfirmation | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

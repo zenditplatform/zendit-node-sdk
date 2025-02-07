@@ -63,11 +63,11 @@ export function DtoTransactionLogItemFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-  export function DtoTransactionLogItemToJSON(json: any): DtoTransactionLogItem {
-      return DtoTransactionLogItemToJSONTyped(json, false);
-  }
+export function DtoTransactionLogItemToJSON(json: any): DtoTransactionLogItem {
+    return DtoTransactionLogItemToJSONTyped(json, false);
+}
 
-  export function DtoTransactionLogItemToJSONTyped(value?: DtoTransactionLogItem | null, ignoreDiscriminator: boolean = false): any {
+export function DtoTransactionLogItemToJSONTyped(value?: DtoTransactionLogItem | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

@@ -53,11 +53,11 @@ export function DtoESIMPlansResponseFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-  export function DtoESIMPlansResponseToJSON(json: any): DtoESIMPlansResponse {
-      return DtoESIMPlansResponseToJSONTyped(json, false);
-  }
+export function DtoESIMPlansResponseToJSON(json: any): DtoESIMPlansResponse {
+    return DtoESIMPlansResponseToJSONTyped(json, false);
+}
 
-  export function DtoESIMPlansResponseToJSONTyped(value?: DtoESIMPlansResponse | null, ignoreDiscriminator: boolean = false): any {
+export function DtoESIMPlansResponseToJSONTyped(value?: DtoESIMPlansResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

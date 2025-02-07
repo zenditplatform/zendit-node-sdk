@@ -75,11 +75,11 @@ export function DtoVoucherPurchaseInputFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-  export function DtoVoucherPurchaseInputToJSON(json: any): DtoVoucherPurchaseInput {
-      return DtoVoucherPurchaseInputToJSONTyped(json, false);
-  }
+export function DtoVoucherPurchaseInputToJSON(json: any): DtoVoucherPurchaseInput {
+    return DtoVoucherPurchaseInputToJSONTyped(json, false);
+}
 
-  export function DtoVoucherPurchaseInputToJSONTyped(value?: DtoVoucherPurchaseInput | null, ignoreDiscriminator: boolean = false): any {
+export function DtoVoucherPurchaseInputToJSONTyped(value?: DtoVoucherPurchaseInput | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
