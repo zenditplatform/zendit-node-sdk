@@ -211,11 +211,11 @@ export function DtoVoucherOfferFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-  export function DtoVoucherOfferToJSON(json: any): DtoVoucherOffer {
-      return DtoVoucherOfferToJSONTyped(json, false);
-  }
+export function DtoVoucherOfferToJSON(json: any): DtoVoucherOffer {
+    return DtoVoucherOfferToJSONTyped(json, false);
+}
 
-  export function DtoVoucherOfferToJSONTyped(value?: DtoVoucherOffer | null, ignoreDiscriminator: boolean = false): any {
+export function DtoVoucherOfferToJSONTyped(value?: DtoVoucherOffer | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

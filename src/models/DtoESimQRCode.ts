@@ -37,11 +37,11 @@ export function DtoESimQRCodeFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-  export function DtoESimQRCodeToJSON(json: any): DtoESimQRCode {
-      return DtoESimQRCodeToJSONTyped(json, false);
-  }
+export function DtoESimQRCodeToJSON(json: any): DtoESimQRCode {
+    return DtoESimQRCodeToJSONTyped(json, false);
+}
 
-  export function DtoESimQRCodeToJSONTyped(value?: DtoESimQRCode | null, ignoreDiscriminator: boolean = false): any {
+export function DtoESimQRCodeToJSONTyped(value?: DtoESimQRCode | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

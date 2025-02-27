@@ -333,11 +333,11 @@ export function DtoESimPurchaseFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-  export function DtoESimPurchaseToJSON(json: any): DtoESimPurchase {
-      return DtoESimPurchaseToJSONTyped(json, false);
-  }
+export function DtoESimPurchaseToJSON(json: any): DtoESimPurchase {
+    return DtoESimPurchaseToJSONTyped(json, false);
+}
 
-  export function DtoESimPurchaseToJSONTyped(value?: DtoESimPurchase | null, ignoreDiscriminator: boolean = false): any {
+export function DtoESimPurchaseToJSONTyped(value?: DtoESimPurchase | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

@@ -43,11 +43,11 @@ export function DtoTopupSenderFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-  export function DtoTopupSenderToJSON(json: any): DtoTopupSender {
-      return DtoTopupSenderToJSONTyped(json, false);
-  }
+export function DtoTopupSenderToJSON(json: any): DtoTopupSender {
+    return DtoTopupSenderToJSONTyped(json, false);
+}
 
-  export function DtoTopupSenderToJSONTyped(value?: DtoTopupSender | null, ignoreDiscriminator: boolean = false): any {
+export function DtoTopupSenderToJSONTyped(value?: DtoTopupSender | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

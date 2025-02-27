@@ -69,11 +69,11 @@ export function DtoESimPurchasesResponseFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-  export function DtoESimPurchasesResponseToJSON(json: any): DtoESimPurchasesResponse {
-      return DtoESimPurchasesResponseToJSONTyped(json, false);
-  }
+export function DtoESimPurchasesResponseToJSON(json: any): DtoESimPurchasesResponse {
+    return DtoESimPurchasesResponseToJSONTyped(json, false);
+}
 
-  export function DtoESimPurchasesResponseToJSONTyped(value?: DtoESimPurchasesResponse | null, ignoreDiscriminator: boolean = false): any {
+export function DtoESimPurchasesResponseToJSONTyped(value?: DtoESimPurchasesResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

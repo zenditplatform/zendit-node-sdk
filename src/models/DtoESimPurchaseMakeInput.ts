@@ -52,11 +52,11 @@ export function DtoESimPurchaseMakeInputFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-  export function DtoESimPurchaseMakeInputToJSON(json: any): DtoESimPurchaseMakeInput {
-      return DtoESimPurchaseMakeInputToJSONTyped(json, false);
-  }
+export function DtoESimPurchaseMakeInputToJSON(json: any): DtoESimPurchaseMakeInput {
+    return DtoESimPurchaseMakeInputToJSONTyped(json, false);
+}
 
-  export function DtoESimPurchaseMakeInputToJSONTyped(value?: DtoESimPurchaseMakeInput | null, ignoreDiscriminator: boolean = false): any {
+export function DtoESimPurchaseMakeInputToJSONTyped(value?: DtoESimPurchaseMakeInput | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

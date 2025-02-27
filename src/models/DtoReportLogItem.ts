@@ -63,11 +63,11 @@ export function DtoReportLogItemFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-  export function DtoReportLogItemToJSON(json: any): DtoReportLogItem {
-      return DtoReportLogItemToJSONTyped(json, false);
-  }
+export function DtoReportLogItemToJSON(json: any): DtoReportLogItem {
+    return DtoReportLogItemToJSONTyped(json, false);
+}
 
-  export function DtoReportLogItemToJSONTyped(value?: DtoReportLogItem | null, ignoreDiscriminator: boolean = false): any {
+export function DtoReportLogItemToJSONTyped(value?: DtoReportLogItem | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

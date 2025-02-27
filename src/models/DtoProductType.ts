@@ -9,7 +9,8 @@ export const DtoProductType = {
     ProductTypeESIM: 'ESIM',
     ProductTypeVoucher: 'VOUCHER',
     ProductTypeWalletRecharge: 'WALLET_RECHARGE',
-    ProductTypeRefund: 'REFUND'
+    ProductTypeRefund: 'REFUND',
+    ProductTypeBulkCheckout: 'BULK_CHECKOUT'
 } as const;
 export type DtoProductType = typeof DtoProductType[keyof typeof DtoProductType];
 

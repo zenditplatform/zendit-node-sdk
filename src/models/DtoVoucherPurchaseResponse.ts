@@ -55,11 +55,11 @@ export function DtoVoucherPurchaseResponseFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-  export function DtoVoucherPurchaseResponseToJSON(json: any): DtoVoucherPurchaseResponse {
-      return DtoVoucherPurchaseResponseToJSONTyped(json, false);
-  }
+export function DtoVoucherPurchaseResponseToJSON(json: any): DtoVoucherPurchaseResponse {
+    return DtoVoucherPurchaseResponseToJSONTyped(json, false);
+}
 
-  export function DtoVoucherPurchaseResponseToJSONTyped(value?: DtoVoucherPurchaseResponse | null, ignoreDiscriminator: boolean = false): any {
+export function DtoVoucherPurchaseResponseToJSONTyped(value?: DtoVoucherPurchaseResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

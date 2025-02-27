@@ -348,11 +348,11 @@ export function DtoTopupPurchaseFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-  export function DtoTopupPurchaseToJSON(json: any): DtoTopupPurchase {
-      return DtoTopupPurchaseToJSONTyped(json, false);
-  }
+export function DtoTopupPurchaseToJSON(json: any): DtoTopupPurchase {
+    return DtoTopupPurchaseToJSONTyped(json, false);
+}
 
-  export function DtoTopupPurchaseToJSONTyped(value?: DtoTopupPurchase | null, ignoreDiscriminator: boolean = false): any {
+export function DtoTopupPurchaseToJSONTyped(value?: DtoTopupPurchase | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

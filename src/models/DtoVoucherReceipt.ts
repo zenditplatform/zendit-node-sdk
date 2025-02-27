@@ -141,11 +141,11 @@ export function DtoVoucherReceiptFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-  export function DtoVoucherReceiptToJSON(json: any): DtoVoucherReceipt {
-      return DtoVoucherReceiptToJSONTyped(json, false);
-  }
+export function DtoVoucherReceiptToJSON(json: any): DtoVoucherReceipt {
+    return DtoVoucherReceiptToJSONTyped(json, false);
+}
 
-  export function DtoVoucherReceiptToJSONTyped(value?: DtoVoucherReceipt | null, ignoreDiscriminator: boolean = false): any {
+export function DtoVoucherReceiptToJSONTyped(value?: DtoVoucherReceipt | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

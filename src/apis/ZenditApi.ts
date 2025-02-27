@@ -1,37 +1,45 @@
+import type {DtoESimQRCode} from '../models/index';
 /* tslint:disable */
 /* eslint-disable */
 import * as runtime from '../runtime';
 import type {
-    DtoBalanceResponse,
-    DtoESIMPlansResponse,
-    DtoESimOffer,
-    DtoESimOffersResponse,
-    DtoESimPurchase,
-    DtoESimPurchaseMakeInput,
-    DtoESimPurchaseResponse,
-    DtoESimPurchasesResponse,
-    DtoPhoneNumberLookupResponse,
-    DtoReportTransactions,
-    DtoReportTransactionsPeriod,
-    DtoResponseError,
-    DtoTopupOffer,
-    DtoTopupOffersResponse,
-    DtoTopupPurchase,
-    DtoTopupPurchaseMakeInput,
-    DtoTopupPurchaseResponse,
-    DtoTopupPurchasesResponse,
-    DtoTransaction,
-    DtoTransactionsResponse,
-    DtoVoucherOffer,
-    DtoVoucherOffersResponse,
-    DtoVoucherPurchase,
-    DtoVoucherPurchaseInput,
-    DtoVoucherPurchaseResponse,
-    DtoVoucherPurchasesResponse, DtoESimQRCode,
+  DtoBalanceResponse,
+  DtoBrandInfo,
+  DtoBrandsResponse,
+  DtoESIMPlansResponse,
+  DtoESimOffer,
+  DtoESimOffersResponse,
+  DtoESimPurchase,
+  DtoESimPurchaseMakeInput,
+  DtoESimPurchaseResponse,
+  DtoESimPurchasesResponse,
+  DtoPhoneNumberLookupResponse,
+  DtoRedemptionInstructionInfo,
+  DtoReportTransactions,
+  DtoReportTransactionsPeriod,
+  DtoResponseError,
+  DtoTopupOffer,
+  DtoTopupOffersResponse,
+  DtoTopupPurchase,
+  DtoTopupPurchaseMakeInput,
+  DtoTopupPurchaseResponse,
+  DtoTopupPurchasesResponse,
+  DtoTransaction,
+  DtoTransactionsResponse,
+  DtoVoucherOffer,
+  DtoVoucherOffersResponse,
+  DtoVoucherPurchase,
+  DtoVoucherPurchaseInput,
+  DtoVoucherPurchaseResponse,
+  DtoVoucherPurchasesResponse,
 } from '../models/index';
 import {
     DtoBalanceResponseFromJSON,
     DtoBalanceResponseToJSON,
+    DtoBrandInfoFromJSON,
+    DtoBrandInfoToJSON,
+    DtoBrandsResponseFromJSON,
+    DtoBrandsResponseToJSON,
     DtoESIMPlansResponseFromJSON,
     DtoESIMPlansResponseToJSON,
     DtoESimOfferFromJSON,
@@ -48,6 +56,8 @@ import {
     DtoESimPurchasesResponseToJSON,
     DtoPhoneNumberLookupResponseFromJSON,
     DtoPhoneNumberLookupResponseToJSON,
+    DtoRedemptionInstructionInfoFromJSON,
+    DtoRedemptionInstructionInfoToJSON,
     DtoReportTransactionsFromJSON,
     DtoReportTransactionsToJSON,
     DtoReportTransactionsPeriodFromJSON,
@@ -83,6 +93,23 @@ import {
     DtoVoucherPurchasesResponseFromJSON,
     DtoVoucherPurchasesResponseToJSON,
 } from '../models/index';
+
+export interface BrandsBrandGetRequest {
+    brand: string;
+}
+
+export interface BrandsBrandRedemptionInstructionsGetRequest {
+    brand: string;
+    country: string;
+    deliveryType: string;
+    language?: string;
+}
+
+export interface BrandsGetRequest {
+    limit: number;
+    offset: number;
+    country?: string;
+}
 
 export interface EsimIccIdPlansGetRequest {
     iccId: string;
@@ -238,6 +265,162 @@ export class ZenditApi extends runtime.BaseAPI {
      */
     async balanceGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoBalanceResponse> {
         const response = await this.balanceGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get a brand by the brand code
+     */
+    async brandsBrandGetRaw(requestParameters: BrandsBrandGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoBrandInfo>> {
+        if (requestParameters['brand'] == null) {
+            throw new runtime.RequiredError(
+                'brand',
+                'Required parameter "brand" was null or undefined when calling brandsBrandGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/brands/{brand}`.replace(`{${"brand"}}`, encodeURIComponent(String(requestParameters['brand']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoBrandInfoFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a brand by the brand code
+     */
+    async brandsBrandGet(brand: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoBrandInfo> {
+        const response = await this.brandsBrandGetRaw({ brand: brand }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get a brand redemption instruction by the brand code
+     */
+    async brandsBrandRedemptionInstructionsGetRaw(requestParameters: BrandsBrandRedemptionInstructionsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoRedemptionInstructionInfo>> {
+        if (requestParameters['brand'] == null) {
+            throw new runtime.RequiredError(
+                'brand',
+                'Required parameter "brand" was null or undefined when calling brandsBrandRedemptionInstructionsGet().'
+            );
+        }
+
+        if (requestParameters['country'] == null) {
+            throw new runtime.RequiredError(
+                'country',
+                'Required parameter "country" was null or undefined when calling brandsBrandRedemptionInstructionsGet().'
+            );
+        }
+
+        if (requestParameters['deliveryType'] == null) {
+            throw new runtime.RequiredError(
+                'deliveryType',
+                'Required parameter "deliveryType" was null or undefined when calling brandsBrandRedemptionInstructionsGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['country'] != null) {
+            queryParameters['country'] = requestParameters['country'];
+        }
+
+        if (requestParameters['deliveryType'] != null) {
+            queryParameters['deliveryType'] = requestParameters['deliveryType'];
+        }
+
+        if (requestParameters['language'] != null) {
+            queryParameters['language'] = requestParameters['language'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/brands/{brand}/redemptionInstructions`.replace(`{${"brand"}}`, encodeURIComponent(String(requestParameters['brand']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoRedemptionInstructionInfoFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a brand redemption instruction by the brand code
+     */
+    async brandsBrandRedemptionInstructionsGet(brand: string, country: string, deliveryType: string, language?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoRedemptionInstructionInfo> {
+        const response = await this.brandsBrandRedemptionInstructionsGetRaw({ brand: brand, country: country, deliveryType: deliveryType, language: language }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get list of brands
+     */
+    async brandsGetRaw(requestParameters: BrandsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoBrandsResponse>> {
+        if (requestParameters['limit'] == null) {
+            throw new runtime.RequiredError(
+                'limit',
+                'Required parameter "limit" was null or undefined when calling brandsGet().'
+            );
+        }
+
+        if (requestParameters['offset'] == null) {
+            throw new runtime.RequiredError(
+                'offset',
+                'Required parameter "offset" was null or undefined when calling brandsGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['_limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['offset'] != null) {
+            queryParameters['_offset'] = requestParameters['offset'];
+        }
+
+        if (requestParameters['country'] != null) {
+            queryParameters['country'] = requestParameters['country'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/brands`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoBrandsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get list of brands
+     */
+    async brandsGet(limit: number, offset: number, country?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoBrandsResponse> {
+        const response = await this.brandsGetRaw({ limit: limit, offset: offset, country: country }, initOverrides);
         return await response.value();
     }
 
@@ -523,9 +706,12 @@ export class ZenditApi extends runtime.BaseAPI {
     /**
      * Get eSim QR code by transaction id
      */
-    async esimPurchasesTransactionIdQrcodeGetRaw(requestParameters: EsimPurchasesTransactionIdQrcodeGetRequest, responseType?: "json" | "blob" | null, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob|DtoESimQRCode>> {
-        if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
-            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling esimPurchasesTransactionIdQrcodeGet.');
+     async esimPurchasesTransactionIdQrcodeGetRaw(requestParameters: EsimPurchasesTransactionIdQrcodeGetRequest, responseType?: "json" | "blob" | null, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob|DtoESimQRCode>> {
+        if (requestParameters['transactionId'] == null) {
+            throw new runtime.RequiredError(
+                'transactionId',
+                'Required parameter "transactionId" was null or undefined when calling esimPurchasesTransactionIdQrcodeGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -541,7 +727,7 @@ export class ZenditApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/esim/purchases/{transactionId}/qrcode`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters.transactionId))),
+            path: `/esim/purchases/{transactionId}/qrcode`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters['transactionId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -554,15 +740,11 @@ export class ZenditApi extends runtime.BaseAPI {
         return new runtime.BlobApiResponse(response);
     }
 
-    /**
-     * Get eSim QR code by transaction id
-     */
     async esimPurchasesTransactionIdQrcodeGet(transactionId: string, responseType: "blob", initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>
     async esimPurchasesTransactionIdQrcodeGet(transactionId: string, responseType: "json", initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimQRCode>
     async esimPurchasesTransactionIdQrcodeGet(transactionId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>
     async esimPurchasesTransactionIdQrcodeGet(transactionId: string, responseType?: any, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimQRCode|Blob> {
-        const response = await this.esimPurchasesTransactionIdQrcodeGetRaw({ transactionId: transactionId}, responseType, initOverrides);
-
+        const response = await this.esimPurchasesTransactionIdQrcodeGetRaw({ transactionId: transactionId }, responseType, initOverrides);
         return response.value();
     }
 
@@ -1385,7 +1567,8 @@ export const TransactionsGetProductTypeEnum = {
     ProductTypeESIM: 'ESIM',
     ProductTypeVoucher: 'VOUCHER',
     ProductTypeWalletRecharge: 'WALLET_RECHARGE',
-    ProductTypeRefund: 'REFUND'
+    ProductTypeRefund: 'REFUND',
+    ProductTypeBulkCheckout: 'BULK_CHECKOUT'
 } as const;
 export type TransactionsGetProductTypeEnum = typeof TransactionsGetProductTypeEnum[keyof typeof TransactionsGetProductTypeEnum];
 /**

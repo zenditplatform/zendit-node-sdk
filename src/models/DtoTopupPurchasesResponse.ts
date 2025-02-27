@@ -69,11 +69,11 @@ export function DtoTopupPurchasesResponseFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-  export function DtoTopupPurchasesResponseToJSON(json: any): DtoTopupPurchasesResponse {
-      return DtoTopupPurchasesResponseToJSONTyped(json, false);
-  }
+export function DtoTopupPurchasesResponseToJSON(json: any): DtoTopupPurchasesResponse {
+    return DtoTopupPurchasesResponseToJSONTyped(json, false);
+}
 
-  export function DtoTopupPurchasesResponseToJSONTyped(value?: DtoTopupPurchasesResponse | null, ignoreDiscriminator: boolean = false): any {
+export function DtoTopupPurchasesResponseToJSONTyped(value?: DtoTopupPurchasesResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

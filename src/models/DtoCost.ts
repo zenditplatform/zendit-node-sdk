@@ -65,11 +65,11 @@ export function DtoCostFromJSONTyped(json: any, ignoreDiscriminator: boolean): D
     };
 }
 
-  export function DtoCostToJSON(json: any): DtoCost {
-      return DtoCostToJSONTyped(json, false);
-  }
+export function DtoCostToJSON(json: any): DtoCost {
+    return DtoCostToJSONTyped(json, false);
+}
 
-  export function DtoCostToJSONTyped(value?: DtoCost | null, ignoreDiscriminator: boolean = false): any {
+export function DtoCostToJSONTyped(value?: DtoCost | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

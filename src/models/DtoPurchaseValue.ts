@@ -55,11 +55,11 @@ export function DtoPurchaseValueFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-  export function DtoPurchaseValueToJSON(json: any): DtoPurchaseValue {
-      return DtoPurchaseValueToJSONTyped(json, false);
-  }
+export function DtoPurchaseValueToJSON(json: any): DtoPurchaseValue {
+    return DtoPurchaseValueToJSONTyped(json, false);
+}
 
-  export function DtoPurchaseValueToJSONTyped(value?: DtoPurchaseValue | null, ignoreDiscriminator: boolean = false): any {
+export function DtoPurchaseValueToJSONTyped(value?: DtoPurchaseValue | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

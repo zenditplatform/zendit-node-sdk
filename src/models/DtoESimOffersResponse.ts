@@ -69,11 +69,11 @@ export function DtoESimOffersResponseFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-  export function DtoESimOffersResponseToJSON(json: any): DtoESimOffersResponse {
-      return DtoESimOffersResponseToJSONTyped(json, false);
-  }
+export function DtoESimOffersResponseToJSON(json: any): DtoESimOffersResponse {
+    return DtoESimOffersResponseToJSONTyped(json, false);
+}
 
-  export function DtoESimOffersResponseToJSONTyped(value?: DtoESimOffersResponse | null, ignoreDiscriminator: boolean = false): any {
+export function DtoESimOffersResponseToJSONTyped(value?: DtoESimOffersResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

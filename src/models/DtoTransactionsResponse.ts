@@ -69,11 +69,11 @@ export function DtoTransactionsResponseFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-  export function DtoTransactionsResponseToJSON(json: any): DtoTransactionsResponse {
-      return DtoTransactionsResponseToJSONTyped(json, false);
-  }
+export function DtoTransactionsResponseToJSON(json: any): DtoTransactionsResponse {
+    return DtoTransactionsResponseToJSONTyped(json, false);
+}
 
-  export function DtoTransactionsResponseToJSONTyped(value?: DtoTransactionsResponse | null, ignoreDiscriminator: boolean = false): any {
+export function DtoTransactionsResponseToJSONTyped(value?: DtoTransactionsResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

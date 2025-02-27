@@ -69,11 +69,11 @@ export function DtoVoucherPurchasesResponseFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-  export function DtoVoucherPurchasesResponseToJSON(json: any): DtoVoucherPurchasesResponse {
-      return DtoVoucherPurchasesResponseToJSONTyped(json, false);
-  }
+export function DtoVoucherPurchasesResponseToJSON(json: any): DtoVoucherPurchasesResponse {
+    return DtoVoucherPurchasesResponseToJSONTyped(json, false);
+}
 
-  export function DtoVoucherPurchasesResponseToJSONTyped(value?: DtoVoucherPurchasesResponse | null, ignoreDiscriminator: boolean = false): any {
+export function DtoVoucherPurchasesResponseToJSONTyped(value?: DtoVoucherPurchasesResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

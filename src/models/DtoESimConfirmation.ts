@@ -69,11 +69,11 @@ export function DtoESimConfirmationFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-  export function DtoESimConfirmationToJSON(json: any): DtoESimConfirmation {
-      return DtoESimConfirmationToJSONTyped(json, false);
-  }
+export function DtoESimConfirmationToJSON(json: any): DtoESimConfirmation {
+    return DtoESimConfirmationToJSONTyped(json, false);
+}
 
-  export function DtoESimConfirmationToJSONTyped(value?: DtoESimConfirmation | null, ignoreDiscriminator: boolean = false): any {
+export function DtoESimConfirmationToJSONTyped(value?: DtoESimConfirmation | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

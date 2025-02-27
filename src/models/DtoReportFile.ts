@@ -45,11 +45,11 @@ export function DtoReportFileFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-  export function DtoReportFileToJSON(json: any): DtoReportFile {
-      return DtoReportFileToJSONTyped(json, false);
-  }
+export function DtoReportFileToJSON(json: any): DtoReportFile {
+    return DtoReportFileToJSONTyped(json, false);
+}
 
-  export function DtoReportFileToJSONTyped(value?: DtoReportFile | null, ignoreDiscriminator: boolean = false): any {
+export function DtoReportFileToJSONTyped(value?: DtoReportFile | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
