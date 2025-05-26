@@ -13,7 +13,11 @@ import type {
   DtoESimPurchaseMakeInput,
   DtoESimPurchaseResponse,
   DtoESimPurchasesResponse,
+  DtoESimRefund,
+  DtoESimRefundStatus,
   DtoPhoneNumberLookupResponse,
+  DtoPromo,
+  DtoPromosResponse,
   DtoRedemptionInstructionInfo,
   DtoReportTransactions,
   DtoReportTransactionsPeriod,
@@ -54,8 +58,16 @@ import {
     DtoESimPurchaseResponseToJSON,
     DtoESimPurchasesResponseFromJSON,
     DtoESimPurchasesResponseToJSON,
+    DtoESimRefundFromJSON,
+    DtoESimRefundToJSON,
+    DtoESimRefundStatusFromJSON,
+    DtoESimRefundStatusToJSON,
     DtoPhoneNumberLookupResponseFromJSON,
     DtoPhoneNumberLookupResponseToJSON,
+    DtoPromoFromJSON,
+    DtoPromoToJSON,
+    DtoPromosResponseFromJSON,
+    DtoPromosResponseToJSON,
     DtoRedemptionInstructionInfoFromJSON,
     DtoRedemptionInstructionInfoToJSON,
     DtoReportTransactionsFromJSON,
@@ -145,6 +157,28 @@ export interface EsimPurchasesTransactionIdGetRequest {
 
 export interface EsimPurchasesTransactionIdQrcodeGetRequest {
     transactionId: string;
+}
+
+export interface EsimPurchasesTransactionIdRefundGetRequest {
+    transactionId: string;
+}
+
+export interface EsimPurchasesTransactionIdRefundPostRequest {
+    transactionId: string;
+}
+
+export interface PromosGetRequest {
+    limit: number;
+    offset: number;
+    brand?: string;
+    country?: Array<string>;
+    language?: string;
+    region?: string;
+    status?: string;
+}
+
+export interface PromosPromoIdGetRequest {
+    promoId: string;
 }
 
 export interface ReportsTransactionsPostRequest {
@@ -746,6 +780,189 @@ export class ZenditApi extends runtime.BaseAPI {
     async esimPurchasesTransactionIdQrcodeGet(transactionId: string, responseType?: any, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimQRCode|Blob> {
         const response = await this.esimPurchasesTransactionIdQrcodeGetRaw({ transactionId: transactionId }, responseType, initOverrides);
         return response.value();
+    }
+
+    /**
+     * Get status of refund transaction
+     */
+    async esimPurchasesTransactionIdRefundGetRaw(requestParameters: EsimPurchasesTransactionIdRefundGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESimRefundStatus>> {
+        if (requestParameters['transactionId'] == null) {
+            throw new runtime.RequiredError(
+                'transactionId',
+                'Required parameter "transactionId" was null or undefined when calling esimPurchasesTransactionIdRefundGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/esim/purchases/{transactionId}/refund`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters['transactionId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoESimRefundStatusFromJSON(jsonValue));
+    }
+
+    /**
+     * Get status of refund transaction
+     */
+    async esimPurchasesTransactionIdRefundGet(transactionId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimRefundStatus> {
+        const response = await this.esimPurchasesTransactionIdRefundGetRaw({ transactionId: transactionId }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Refund eSim purchase by transaction id
+     */
+    async esimPurchasesTransactionIdRefundPostRaw(requestParameters: EsimPurchasesTransactionIdRefundPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoESimRefund>> {
+        if (requestParameters['transactionId'] == null) {
+            throw new runtime.RequiredError(
+                'transactionId',
+                'Required parameter "transactionId" was null or undefined when calling esimPurchasesTransactionIdRefundPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/esim/purchases/{transactionId}/refund`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters['transactionId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoESimRefundFromJSON(jsonValue));
+    }
+
+    /**
+     * Refund eSim purchase by transaction id
+     */
+    async esimPurchasesTransactionIdRefundPost(transactionId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoESimRefund> {
+        const response = await this.esimPurchasesTransactionIdRefundPostRaw({ transactionId: transactionId }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get list of promotions
+     */
+    async promosGetRaw(requestParameters: PromosGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoPromosResponse>> {
+        if (requestParameters['limit'] == null) {
+            throw new runtime.RequiredError(
+                'limit',
+                'Required parameter "limit" was null or undefined when calling promosGet().'
+            );
+        }
+
+        if (requestParameters['offset'] == null) {
+            throw new runtime.RequiredError(
+                'offset',
+                'Required parameter "offset" was null or undefined when calling promosGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['_limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['offset'] != null) {
+            queryParameters['_offset'] = requestParameters['offset'];
+        }
+
+        if (requestParameters['brand'] != null) {
+            queryParameters['brand'] = requestParameters['brand'];
+        }
+
+        if (requestParameters['country'] != null) {
+            queryParameters['country'] = requestParameters['country']!.join(runtime.COLLECTION_FORMATS["csv"]);
+        }
+
+        if (requestParameters['language'] != null) {
+            queryParameters['language'] = requestParameters['language'];
+        }
+
+        if (requestParameters['region'] != null) {
+            queryParameters['region'] = requestParameters['region'];
+        }
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/promos`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoPromosResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get list of promotions
+     */
+    async promosGet(limit: number, offset: number, brand?: string, country?: Array<string>, language?: string, region?: string, status?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoPromosResponse> {
+        const response = await this.promosGetRaw({ limit: limit, offset: offset, brand: brand, country: country, language: language, region: region, status: status }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get promo by id
+     */
+    async promosPromoIdGetRaw(requestParameters: PromosPromoIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoPromo>> {
+        if (requestParameters['promoId'] == null) {
+            throw new runtime.RequiredError(
+                'promoId',
+                'Required parameter "promoId" was null or undefined when calling promosPromoIdGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/promos/{promoId}`.replace(`{${"promoId"}}`, encodeURIComponent(String(requestParameters['promoId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoPromoFromJSON(jsonValue));
+    }
+
+    /**
+     * Get promo by id
+     */
+    async promosPromoIdGet(promoId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoPromo> {
+        const response = await this.promosPromoIdGetRaw({ promoId: promoId }, initOverrides);
+        return await response.value();
     }
 
     /**

@@ -18,6 +18,12 @@ export interface DtoPrice {
      * @type {number}
      * @memberof DtoPrice
      */
+    currencyDivisor: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoPrice
+     */
     fixed?: number;
     /**
      * 
@@ -62,6 +68,7 @@ export interface DtoPrice {
  */
 export function instanceOfDtoPrice(value: object): value is DtoPrice {
     if (!('currency' in value) || value['currency'] === undefined) return false;
+    if (!('currencyDivisor' in value) || value['currencyDivisor'] === undefined) return false;
     return true;
 }
 
@@ -76,6 +83,7 @@ export function DtoPriceFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     return {
         
         'currency': json['currency'],
+        'currencyDivisor': json['currencyDivisor'],
         'fixed': json['fixed'] == null ? undefined : json['fixed'],
         'fx': json['fx'] == null ? undefined : json['fx'],
         'margin': json['margin'] == null ? undefined : json['margin'],
@@ -98,6 +106,7 @@ export function DtoPriceToJSONTyped(value?: DtoPrice | null, ignoreDiscriminator
     return {
         
         'currency': value['currency'],
+        'currencyDivisor': value['currencyDivisor'],
         'fixed': value['fixed'],
         'fx': value['fx'],
         'margin': value['margin'],

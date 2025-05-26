@@ -96,6 +96,12 @@ export interface DtoTopupPurchase {
     costCurrency: string;
     /**
      * 
+     * @type {number}
+     * @memberof DtoTopupPurchase
+     */
+    costCurrencyDivisor: number;
+    /**
+     * 
      * @type {string}
      * @memberof DtoTopupPurchase
      */
@@ -162,6 +168,12 @@ export interface DtoTopupPurchase {
     priceCurrency: string;
     /**
      * 
+     * @type {number}
+     * @memberof DtoTopupPurchase
+     */
+    priceCurrencyDivisor: number;
+    /**
+     * 
      * @type {DtoPriceType}
      * @memberof DtoTopupPurchase
      */
@@ -196,6 +208,12 @@ export interface DtoTopupPurchase {
      * @memberof DtoTopupPurchase
      */
     sendCurrency: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoTopupPurchase
+     */
+    sendCurrencyDivisor: number;
     /**
      * 
      * @type {DtoTopupSender}
@@ -274,6 +292,7 @@ export function instanceOfDtoTopupPurchase(value: object): value is DtoTopupPurc
     if (!('brandName' in value) || value['brandName'] === undefined) return false;
     if (!('cost' in value) || value['cost'] === undefined) return false;
     if (!('costCurrency' in value) || value['costCurrency'] === undefined) return false;
+    if (!('costCurrencyDivisor' in value) || value['costCurrencyDivisor'] === undefined) return false;
     if (!('country' in value) || value['country'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('dataGB' in value) || value['dataGB'] === undefined) return false;
@@ -284,11 +303,13 @@ export function instanceOfDtoTopupPurchase(value: object): value is DtoTopupPurc
     if (!('offerId' in value) || value['offerId'] === undefined) return false;
     if (!('price' in value) || value['price'] === undefined) return false;
     if (!('priceCurrency' in value) || value['priceCurrency'] === undefined) return false;
+    if (!('priceCurrencyDivisor' in value) || value['priceCurrencyDivisor'] === undefined) return false;
     if (!('priceType' in value) || value['priceType'] === undefined) return false;
     if (!('productType' in value) || value['productType'] === undefined) return false;
     if (!('recipientPhoneNumber' in value) || value['recipientPhoneNumber'] === undefined) return false;
     if (!('send' in value) || value['send'] === undefined) return false;
     if (!('sendCurrency' in value) || value['sendCurrency'] === undefined) return false;
+    if (!('sendCurrencyDivisor' in value) || value['sendCurrencyDivisor'] === undefined) return false;
     if (!('sender' in value) || value['sender'] === undefined) return false;
     if (!('shortNotes' in value) || value['shortNotes'] === undefined) return false;
     if (!('smsNumber' in value) || value['smsNumber'] === undefined) return false;
@@ -317,6 +338,7 @@ export function DtoTopupPurchaseFromJSONTyped(json: any, ignoreDiscriminator: bo
         'confirmation': json['confirmation'] == null ? undefined : DtoConfirmationFromJSON(json['confirmation']),
         'cost': json['cost'],
         'costCurrency': json['costCurrency'],
+        'costCurrencyDivisor': json['costCurrencyDivisor'],
         'country': json['country'],
         'createdAt': json['createdAt'],
         'dataGB': json['dataGB'],
@@ -328,12 +350,14 @@ export function DtoTopupPurchaseFromJSONTyped(json: any, ignoreDiscriminator: bo
         'offerId': json['offerId'],
         'price': json['price'],
         'priceCurrency': json['priceCurrency'],
+        'priceCurrencyDivisor': json['priceCurrencyDivisor'],
         'priceType': DtoPriceTypeFromJSON(json['priceType']),
         'productType': DtoProductTypeFromJSON(json['productType']),
         'recipientPhoneNumber': json['recipientPhoneNumber'],
         'regions': json['regions'] == null ? undefined : json['regions'],
         'send': json['send'],
         'sendCurrency': json['sendCurrency'],
+        'sendCurrencyDivisor': json['sendCurrencyDivisor'],
         'sender': DtoTopupSenderFromJSON(json['sender']),
         'shortNotes': json['shortNotes'],
         'smsNumber': json['smsNumber'],
@@ -364,6 +388,7 @@ export function DtoTopupPurchaseToJSONTyped(value?: DtoTopupPurchase | null, ign
         'confirmation': DtoConfirmationToJSON(value['confirmation']),
         'cost': value['cost'],
         'costCurrency': value['costCurrency'],
+        'costCurrencyDivisor': value['costCurrencyDivisor'],
         'country': value['country'],
         'createdAt': value['createdAt'],
         'dataGB': value['dataGB'],
@@ -375,12 +400,14 @@ export function DtoTopupPurchaseToJSONTyped(value?: DtoTopupPurchase | null, ign
         'offerId': value['offerId'],
         'price': value['price'],
         'priceCurrency': value['priceCurrency'],
+        'priceCurrencyDivisor': value['priceCurrencyDivisor'],
         'priceType': DtoPriceTypeToJSON(value['priceType']),
         'productType': DtoProductTypeToJSON(value['productType']),
         'recipientPhoneNumber': value['recipientPhoneNumber'],
         'regions': value['regions'],
         'send': value['send'],
         'sendCurrency': value['sendCurrency'],
+        'sendCurrencyDivisor': value['sendCurrencyDivisor'],
         'sender': DtoTopupSenderToJSON(value['sender']),
         'shortNotes': value['shortNotes'],
         'smsNumber': value['smsNumber'],

@@ -40,73 +40,79 @@ import {
 /**
  * 
  * @export
- * @interface DtoTransaction
+ * @interface DtoESimRefundStatus
  */
-export interface DtoTransaction {
+export interface DtoESimRefundStatus {
     /**
      * 
      * @type {number}
-     * @memberof DtoTransaction
+     * @memberof DtoESimRefundStatus
      */
     amount: number;
     /**
      * 
      * @type {string}
-     * @memberof DtoTransaction
+     * @memberof DtoESimRefundStatus
      */
     createdAt: string;
     /**
      * 
      * @type {string}
-     * @memberof DtoTransaction
+     * @memberof DtoESimRefundStatus
      */
     currency: string;
     /**
      * 
      * @type {number}
-     * @memberof DtoTransaction
+     * @memberof DtoESimRefundStatus
      */
     currencyDivisor: number;
     /**
      * 
      * @type {DtoError}
-     * @memberof DtoTransaction
+     * @memberof DtoESimRefundStatus
      */
     error?: DtoError;
     /**
      * 
      * @type {Array<DtoTransactionLogItem>}
-     * @memberof DtoTransaction
+     * @memberof DtoESimRefundStatus
      */
     log: Array<DtoTransactionLogItem>;
     /**
      * 
      * @type {DtoProductType}
-     * @memberof DtoTransaction
+     * @memberof DtoESimRefundStatus
      */
     productType: DtoProductType;
     /**
      * 
+     * @type {string}
+     * @memberof DtoESimRefundStatus
+     */
+    refundedTransactionId: string;
+    /**
+     * 
      * @type {DtoTransactionStatus}
-     * @memberof DtoTransaction
+     * @memberof DtoESimRefundStatus
      */
     status: DtoTransactionStatus;
     /**
-     * client operate with clientTransactionId
+     * 
      * @type {string}
-     * @memberof DtoTransaction
+     * @memberof DtoESimRefundStatus
      */
     transactionId: string;
     /**
      * 
      * @type {DtoTransactionType}
-     * @memberof DtoTransaction
+     * @memberof DtoESimRefundStatus
      */
     type: DtoTransactionType;
     /**
      * 
      * @type {string}
-     * @memberof DtoTransaction
+     * @memberof DtoESimRefundStatus
      */
     updatedAt: string;
 }
@@ -114,15 +120,16 @@ export interface DtoTransaction {
 
 
 /**
- * Check if a given object implements the DtoTransaction interface.
+ * Check if a given object implements the DtoESimRefundStatus interface.
  */
-export function instanceOfDtoTransaction(value: object): value is DtoTransaction {
+export function instanceOfDtoESimRefundStatus(value: object): value is DtoESimRefundStatus {
     if (!('amount' in value) || value['amount'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('currencyDivisor' in value) || value['currencyDivisor'] === undefined) return false;
     if (!('log' in value) || value['log'] === undefined) return false;
     if (!('productType' in value) || value['productType'] === undefined) return false;
+    if (!('refundedTransactionId' in value) || value['refundedTransactionId'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
     if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
@@ -130,11 +137,11 @@ export function instanceOfDtoTransaction(value: object): value is DtoTransaction
     return true;
 }
 
-export function DtoTransactionFromJSON(json: any): DtoTransaction {
-    return DtoTransactionFromJSONTyped(json, false);
+export function DtoESimRefundStatusFromJSON(json: any): DtoESimRefundStatus {
+    return DtoESimRefundStatusFromJSONTyped(json, false);
 }
 
-export function DtoTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoTransaction {
+export function DtoESimRefundStatusFromJSONTyped(json: any, ignoreDiscriminator: boolean): DtoESimRefundStatus {
     if (json == null) {
         return json;
     }
@@ -147,6 +154,7 @@ export function DtoTransactionFromJSONTyped(json: any, ignoreDiscriminator: bool
         'error': json['error'] == null ? undefined : DtoErrorFromJSON(json['error']),
         'log': ((json['log'] as Array<any>).map(DtoTransactionLogItemFromJSON)),
         'productType': DtoProductTypeFromJSON(json['productType']),
+        'refundedTransactionId': json['refundedTransactionId'],
         'status': DtoTransactionStatusFromJSON(json['status']),
         'transactionId': json['transactionId'],
         'type': DtoTransactionTypeFromJSON(json['type']),
@@ -154,11 +162,11 @@ export function DtoTransactionFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function DtoTransactionToJSON(json: any): DtoTransaction {
-    return DtoTransactionToJSONTyped(json, false);
+export function DtoESimRefundStatusToJSON(json: any): DtoESimRefundStatus {
+    return DtoESimRefundStatusToJSONTyped(json, false);
 }
 
-export function DtoTransactionToJSONTyped(value?: DtoTransaction | null, ignoreDiscriminator: boolean = false): any {
+export function DtoESimRefundStatusToJSONTyped(value?: DtoESimRefundStatus | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -172,6 +180,7 @@ export function DtoTransactionToJSONTyped(value?: DtoTransaction | null, ignoreD
         'error': DtoErrorToJSON(value['error']),
         'log': ((value['log'] as Array<any>).map(DtoTransactionLogItemToJSON)),
         'productType': DtoProductTypeToJSON(value['productType']),
+        'refundedTransactionId': value['refundedTransactionId'],
         'status': DtoTransactionStatusToJSON(value['status']),
         'transactionId': value['transactionId'],
         'type': DtoTransactionTypeToJSON(value['type']),
