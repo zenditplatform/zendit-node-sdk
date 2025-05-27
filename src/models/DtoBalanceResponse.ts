@@ -19,6 +19,12 @@ export interface DtoBalanceResponse {
      * @memberof DtoBalanceResponse
      */
     currency: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoBalanceResponse
+     */
+    currencyDivisor: number;
 }
 
 /**
@@ -27,6 +33,7 @@ export interface DtoBalanceResponse {
 export function instanceOfDtoBalanceResponse(value: object): value is DtoBalanceResponse {
     if (!('availableBalance' in value) || value['availableBalance'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
+    if (!('currencyDivisor' in value) || value['currencyDivisor'] === undefined) return false;
     return true;
 }
 
@@ -42,6 +49,7 @@ export function DtoBalanceResponseFromJSONTyped(json: any, ignoreDiscriminator: 
         
         'availableBalance': json['availableBalance'],
         'currency': json['currency'],
+        'currencyDivisor': json['currencyDivisor'],
     };
 }
 
@@ -58,6 +66,7 @@ export function DtoBalanceResponseToJSONTyped(value?: DtoBalanceResponse | null,
         
         'availableBalance': value['availableBalance'],
         'currency': value['currency'],
+        'currencyDivisor': value['currencyDivisor'],
     };
 }
 

@@ -27,6 +27,12 @@ export interface DtoVoucherReceipt {
     currency: string;
     /**
      * 
+     * @type {number}
+     * @memberof DtoVoucherReceipt
+     */
+    currencyDivisor: number;
+    /**
+     * 
      * @type {string}
      * @memberof DtoVoucherReceipt
      */
@@ -100,6 +106,7 @@ export function instanceOfDtoVoucherReceipt(value: object): value is DtoVoucherR
     if (!('accountId' in value) || value['accountId'] === undefined) return false;
     if (!('confirmationNumber' in value) || value['confirmationNumber'] === undefined) return false;
     if (!('currency' in value) || value['currency'] === undefined) return false;
+    if (!('currencyDivisor' in value) || value['currencyDivisor'] === undefined) return false;
     if (!('deliveryType' in value) || value['deliveryType'] === undefined) return false;
     if (!('epin' in value) || value['epin'] === undefined) return false;
     if (!('expiresAt' in value) || value['expiresAt'] === undefined) return false;
@@ -127,6 +134,7 @@ export function DtoVoucherReceiptFromJSONTyped(json: any, ignoreDiscriminator: b
         'accountId': json['accountId'],
         'confirmationNumber': json['confirmationNumber'],
         'currency': json['currency'],
+        'currencyDivisor': json['currencyDivisor'],
         'deliveryType': json['deliveryType'],
         'epin': json['epin'],
         'expiresAt': json['expiresAt'],
@@ -155,6 +163,7 @@ export function DtoVoucherReceiptToJSONTyped(value?: DtoVoucherReceipt | null, i
         'accountId': value['accountId'],
         'confirmationNumber': value['confirmationNumber'],
         'currency': value['currency'],
+        'currencyDivisor': value['currencyDivisor'],
         'deliveryType': value['deliveryType'],
         'epin': value['epin'],
         'expiresAt': value['expiresAt'],

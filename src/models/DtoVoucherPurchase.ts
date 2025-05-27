@@ -103,6 +103,12 @@ export interface DtoVoucherPurchase {
     costCurrency: string;
     /**
      * 
+     * @type {number}
+     * @memberof DtoVoucherPurchase
+     */
+    costCurrencyDivisor: number;
+    /**
+     * 
      * @type {string}
      * @memberof DtoVoucherPurchase
      */
@@ -157,6 +163,12 @@ export interface DtoVoucherPurchase {
     priceCurrency: string;
     /**
      * 
+     * @type {number}
+     * @memberof DtoVoucherPurchase
+     */
+    priceCurrencyDivisor: number;
+    /**
+     * 
      * @type {DtoPriceType}
      * @memberof DtoVoucherPurchase
      */
@@ -191,6 +203,12 @@ export interface DtoVoucherPurchase {
      * @memberof DtoVoucherPurchase
      */
     sendCurrency: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoVoucherPurchase
+     */
+    sendCurrencyDivisor: number;
     /**
      * 
      * @type {string}
@@ -239,6 +257,7 @@ export function instanceOfDtoVoucherPurchase(value: object): value is DtoVoucher
     if (!('brandName' in value) || value['brandName'] === undefined) return false;
     if (!('cost' in value) || value['cost'] === undefined) return false;
     if (!('costCurrency' in value) || value['costCurrency'] === undefined) return false;
+    if (!('costCurrencyDivisor' in value) || value['costCurrencyDivisor'] === undefined) return false;
     if (!('country' in value) || value['country'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('fields' in value) || value['fields'] === undefined) return false;
@@ -247,10 +266,12 @@ export function instanceOfDtoVoucherPurchase(value: object): value is DtoVoucher
     if (!('offerId' in value) || value['offerId'] === undefined) return false;
     if (!('price' in value) || value['price'] === undefined) return false;
     if (!('priceCurrency' in value) || value['priceCurrency'] === undefined) return false;
+    if (!('priceCurrencyDivisor' in value) || value['priceCurrencyDivisor'] === undefined) return false;
     if (!('priceType' in value) || value['priceType'] === undefined) return false;
     if (!('productType' in value) || value['productType'] === undefined) return false;
     if (!('send' in value) || value['send'] === undefined) return false;
     if (!('sendCurrency' in value) || value['sendCurrency'] === undefined) return false;
+    if (!('sendCurrencyDivisor' in value) || value['sendCurrencyDivisor'] === undefined) return false;
     if (!('shortNotes' in value) || value['shortNotes'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
     if (!('subTypes' in value) || value['subTypes'] === undefined) return false;
@@ -274,6 +295,7 @@ export function DtoVoucherPurchaseFromJSONTyped(json: any, ignoreDiscriminator: 
         'confirmation': json['confirmation'] == null ? undefined : DtoConfirmationFromJSON(json['confirmation']),
         'cost': json['cost'],
         'costCurrency': json['costCurrency'],
+        'costCurrencyDivisor': json['costCurrencyDivisor'],
         'country': json['country'],
         'createdAt': json['createdAt'],
         'error': json['error'] == null ? undefined : DtoErrorFromJSON(json['error']),
@@ -283,12 +305,14 @@ export function DtoVoucherPurchaseFromJSONTyped(json: any, ignoreDiscriminator: 
         'offerId': json['offerId'],
         'price': json['price'],
         'priceCurrency': json['priceCurrency'],
+        'priceCurrencyDivisor': json['priceCurrencyDivisor'],
         'priceType': DtoPriceTypeFromJSON(json['priceType']),
         'productType': DtoProductTypeFromJSON(json['productType']),
         'receipt': json['receipt'] == null ? undefined : DtoVoucherReceiptFromJSON(json['receipt']),
         'regions': json['regions'] == null ? undefined : json['regions'],
         'send': json['send'],
         'sendCurrency': json['sendCurrency'],
+        'sendCurrencyDivisor': json['sendCurrencyDivisor'],
         'shortNotes': json['shortNotes'],
         'status': DtoTransactionStatusFromJSON(json['status']),
         'subTypes': json['subTypes'],
@@ -314,6 +338,7 @@ export function DtoVoucherPurchaseToJSONTyped(value?: DtoVoucherPurchase | null,
         'confirmation': DtoConfirmationToJSON(value['confirmation']),
         'cost': value['cost'],
         'costCurrency': value['costCurrency'],
+        'costCurrencyDivisor': value['costCurrencyDivisor'],
         'country': value['country'],
         'createdAt': value['createdAt'],
         'error': DtoErrorToJSON(value['error']),
@@ -323,12 +348,14 @@ export function DtoVoucherPurchaseToJSONTyped(value?: DtoVoucherPurchase | null,
         'offerId': value['offerId'],
         'price': value['price'],
         'priceCurrency': value['priceCurrency'],
+        'priceCurrencyDivisor': value['priceCurrencyDivisor'],
         'priceType': DtoPriceTypeToJSON(value['priceType']),
         'productType': DtoProductTypeToJSON(value['productType']),
         'receipt': DtoVoucherReceiptToJSON(value['receipt']),
         'regions': value['regions'],
         'send': value['send'],
         'sendCurrency': value['sendCurrency'],
+        'sendCurrencyDivisor': value['sendCurrencyDivisor'],
         'shortNotes': value['shortNotes'],
         'status': DtoTransactionStatusToJSON(value['status']),
         'subTypes': value['subTypes'],

@@ -18,6 +18,12 @@ export interface DtoZend {
      * @type {number}
      * @memberof DtoZend
      */
+    currencyDivisor: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoZend
+     */
     fixed?: number;
     /**
      * 
@@ -44,6 +50,7 @@ export interface DtoZend {
  */
 export function instanceOfDtoZend(value: object): value is DtoZend {
     if (!('currency' in value) || value['currency'] === undefined) return false;
+    if (!('currencyDivisor' in value) || value['currencyDivisor'] === undefined) return false;
     return true;
 }
 
@@ -58,6 +65,7 @@ export function DtoZendFromJSONTyped(json: any, ignoreDiscriminator: boolean): D
     return {
         
         'currency': json['currency'],
+        'currencyDivisor': json['currencyDivisor'],
         'fixed': json['fixed'] == null ? undefined : json['fixed'],
         'fx': json['fx'] == null ? undefined : json['fx'],
         'max': json['max'] == null ? undefined : json['max'],
@@ -77,6 +85,7 @@ export function DtoZendToJSONTyped(value?: DtoZend | null, ignoreDiscriminator: 
     return {
         
         'currency': value['currency'],
+        'currencyDivisor': value['currencyDivisor'],
         'fixed': value['fixed'],
         'fx': value['fx'],
         'max': value['max'],

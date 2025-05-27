@@ -29,6 +29,13 @@ import {
     DtoErrorToJSON,
     DtoErrorToJSONTyped,
 } from './DtoError';
+import type { DtoESimRefund } from './DtoESimRefund';
+import {
+    DtoESimRefundFromJSON,
+    DtoESimRefundFromJSONTyped,
+    DtoESimRefundToJSON,
+    DtoESimRefundToJSONTyped,
+} from './DtoESimRefund';
 import type { DtoTransactionLogItem } from './DtoTransactionLogItem';
 import {
     DtoTransactionLogItemFromJSON,
@@ -94,6 +101,12 @@ export interface DtoESimPurchase {
      * @memberof DtoESimPurchase
      */
     costCurrency: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoESimPurchase
+     */
+    costCurrencyDivisor: number;
     /**
      * 
      * @type {string}
@@ -168,6 +181,12 @@ export interface DtoESimPurchase {
     priceCurrency: string;
     /**
      * 
+     * @type {number}
+     * @memberof DtoESimPurchase
+     */
+    priceCurrencyDivisor: number;
+    /**
+     * 
      * @type {DtoPriceType}
      * @memberof DtoESimPurchase
      */
@@ -178,6 +197,12 @@ export interface DtoESimPurchase {
      * @memberof DtoESimPurchase
      */
     productType: DtoProductType;
+    /**
+     * 
+     * @type {DtoESimRefund}
+     * @memberof DtoESimPurchase
+     */
+    refund?: DtoESimRefund;
     /**
      * 
      * @type {Array<string>}
@@ -262,6 +287,7 @@ export function instanceOfDtoESimPurchase(value: object): value is DtoESimPurcha
     if (!('brandName' in value) || value['brandName'] === undefined) return false;
     if (!('cost' in value) || value['cost'] === undefined) return false;
     if (!('costCurrency' in value) || value['costCurrency'] === undefined) return false;
+    if (!('costCurrencyDivisor' in value) || value['costCurrencyDivisor'] === undefined) return false;
     if (!('country' in value) || value['country'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('dataGB' in value) || value['dataGB'] === undefined) return false;
@@ -273,6 +299,7 @@ export function instanceOfDtoESimPurchase(value: object): value is DtoESimPurcha
     if (!('offerId' in value) || value['offerId'] === undefined) return false;
     if (!('price' in value) || value['price'] === undefined) return false;
     if (!('priceCurrency' in value) || value['priceCurrency'] === undefined) return false;
+    if (!('priceCurrencyDivisor' in value) || value['priceCurrencyDivisor'] === undefined) return false;
     if (!('priceType' in value) || value['priceType'] === undefined) return false;
     if (!('productType' in value) || value['productType'] === undefined) return false;
     if (!('regions' in value) || value['regions'] === undefined) return false;
@@ -304,6 +331,7 @@ export function DtoESimPurchaseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'confirmation': json['confirmation'] == null ? undefined : DtoESimConfirmationFromJSON(json['confirmation']),
         'cost': json['cost'],
         'costCurrency': json['costCurrency'],
+        'costCurrencyDivisor': json['costCurrencyDivisor'],
         'country': json['country'],
         'createdAt': json['createdAt'],
         'dataGB': json['dataGB'],
@@ -316,8 +344,10 @@ export function DtoESimPurchaseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'offerId': json['offerId'],
         'price': json['price'],
         'priceCurrency': json['priceCurrency'],
+        'priceCurrencyDivisor': json['priceCurrencyDivisor'],
         'priceType': DtoPriceTypeFromJSON(json['priceType']),
         'productType': DtoProductTypeFromJSON(json['productType']),
+        'refund': json['refund'] == null ? undefined : DtoESimRefundFromJSON(json['refund']),
         'regions': json['regions'],
         'roaming': ((json['roaming'] as Array<any>).map(DtoESimRoamingFromJSON)),
         'shortNotes': json['shortNotes'],
@@ -349,6 +379,7 @@ export function DtoESimPurchaseToJSONTyped(value?: DtoESimPurchase | null, ignor
         'confirmation': DtoESimConfirmationToJSON(value['confirmation']),
         'cost': value['cost'],
         'costCurrency': value['costCurrency'],
+        'costCurrencyDivisor': value['costCurrencyDivisor'],
         'country': value['country'],
         'createdAt': value['createdAt'],
         'dataGB': value['dataGB'],
@@ -361,8 +392,10 @@ export function DtoESimPurchaseToJSONTyped(value?: DtoESimPurchase | null, ignor
         'offerId': value['offerId'],
         'price': value['price'],
         'priceCurrency': value['priceCurrency'],
+        'priceCurrencyDivisor': value['priceCurrencyDivisor'],
         'priceType': DtoPriceTypeToJSON(value['priceType']),
         'productType': DtoProductTypeToJSON(value['productType']),
+        'refund': DtoESimRefundToJSON(value['refund']),
         'regions': value['regions'],
         'roaming': ((value['roaming'] as Array<any>).map(DtoESimRoamingToJSON)),
         'shortNotes': value['shortNotes'],
