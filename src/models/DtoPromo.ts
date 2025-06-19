@@ -15,6 +15,13 @@ import {
     DtoOfferBrandToJSON,
     DtoOfferBrandToJSONTyped,
 } from './DtoOfferBrand';
+import type { DtoPromoStatus } from './DtoPromoStatus';
+import {
+    DtoPromoStatusFromJSON,
+    DtoPromoStatusFromJSONTyped,
+    DtoPromoStatusToJSON,
+    DtoPromoStatusToJSONTyped,
+} from './DtoPromoStatus';
 
 /**
  * 
@@ -84,10 +91,10 @@ export interface DtoPromo {
     startAt?: string;
     /**
      * 
-     * @type {string}
+     * @type {DtoPromoStatus}
      * @memberof DtoPromo
      */
-    status?: string;
+    status?: DtoPromoStatus;
     /**
      * 
      * @type {string}
@@ -95,6 +102,8 @@ export interface DtoPromo {
      */
     updatedAt?: string;
 }
+
+
 
 /**
  * Check if a given object implements the DtoPromo interface.
@@ -123,7 +132,7 @@ export function DtoPromoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'minValue': json['minValue'] == null ? undefined : json['minValue'],
         'regions': json['regions'] == null ? undefined : json['regions'],
         'startAt': json['startAt'] == null ? undefined : json['startAt'],
-        'status': json['status'] == null ? undefined : json['status'],
+        'status': json['status'] == null ? undefined : DtoPromoStatusFromJSON(json['status']),
         'updatedAt': json['updatedAt'] == null ? undefined : json['updatedAt'],
     };
 }
@@ -149,7 +158,7 @@ export function DtoPromoToJSONTyped(value?: DtoPromo | null, ignoreDiscriminator
         'minValue': value['minValue'],
         'regions': value['regions'],
         'startAt': value['startAt'],
-        'status': value['status'],
+        'status': DtoPromoStatusToJSON(value['status']),
         'updatedAt': value['updatedAt'],
     };
 }
