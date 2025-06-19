@@ -171,10 +171,10 @@ export interface PromosGetRequest {
     limit: number;
     offset: number;
     brand?: string;
-    country?: Array<string>;
+    country?: string;
     language?: string;
-    region?: string;
-    status?: string;
+    region?: PromosGetRegionEnum;
+    status?: PromosGetStatusEnum;
 }
 
 export interface PromosPromoIdGetRequest {
@@ -273,7 +273,7 @@ export interface VouchersPurchasesTransactionIdGetRequest {
 export class ZenditApi extends runtime.BaseAPI {
 
     /**
-     * Get list of transactions
+     * Retrieve wallet balance
      */
     async balanceGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoBalanceResponse>> {
         const queryParameters: any = {};
@@ -295,7 +295,7 @@ export class ZenditApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get list of transactions
+     * Retrieve wallet balance
      */
     async balanceGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoBalanceResponse> {
         const response = await this.balanceGetRaw(initOverrides);
@@ -889,7 +889,7 @@ export class ZenditApi extends runtime.BaseAPI {
         }
 
         if (requestParameters['country'] != null) {
-            queryParameters['country'] = requestParameters['country']!.join(runtime.COLLECTION_FORMATS["csv"]);
+            queryParameters['country'] = requestParameters['country'];
         }
 
         if (requestParameters['language'] != null) {
@@ -911,7 +911,7 @@ export class ZenditApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/promos`,
+            path: `/promos/`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -923,7 +923,7 @@ export class ZenditApi extends runtime.BaseAPI {
     /**
      * Get list of promotions
      */
-    async promosGet(limit: number, offset: number, brand?: string, country?: Array<string>, language?: string, region?: string, status?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoPromosResponse> {
+    async promosGet(limit: number, offset: number, brand?: string, country?: string, language?: string, region?: PromosGetRegionEnum, status?: PromosGetStatusEnum, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoPromosResponse> {
         const response = await this.promosGetRaw({ limit: limit, offset: offset, brand: brand, country: country, language: language, region: region, status: status }, initOverrides);
         return await response.value();
     }
@@ -1745,6 +1745,34 @@ export const EsimPurchasesGetStatusEnum = {
     TransactionStatusFailed: 'FAILED'
 } as const;
 export type EsimPurchasesGetStatusEnum = typeof EsimPurchasesGetStatusEnum[keyof typeof EsimPurchasesGetStatusEnum];
+/**
+ * @export
+ */
+export const PromosGetRegionEnum = {
+    RegionAfrica: 'Africa',
+    RegionAsia: 'Asia',
+    RegionCaribbean: 'Caribbean',
+    RegionCentralAmerica: 'Central America',
+    RegionEasternEurope: 'Eastern Europe',
+    RegionGlobal: 'Global',
+    RegionMiddleEastAndNorthAfrica: 'Middle East and North Africa',
+    RegionNorthAmerica: 'North America',
+    RegionOceania: 'Oceania',
+    RegionSouthAmerica: 'South America',
+    RegionSouthAsia: 'South Asia',
+    RegionSoutheastAsia: 'Southeast Asia',
+    RegionWesternEurope: 'Western Europe'
+} as const;
+export type PromosGetRegionEnum = typeof PromosGetRegionEnum[keyof typeof PromosGetRegionEnum];
+/**
+ * @export
+ */
+export const PromosGetStatusEnum = {
+    PromoStatusActive: 'active',
+    PromoStatusExpired: 'expired',
+    PromoStatusPending: 'pending'
+} as const;
+export type PromosGetStatusEnum = typeof PromosGetStatusEnum[keyof typeof PromosGetStatusEnum];
 /**
  * @export
  */

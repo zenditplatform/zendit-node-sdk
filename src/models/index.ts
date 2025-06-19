@@ -27,6 +27,7 @@ export * from './DtoPriceType';
 export * from './DtoProductType';
 export * from './DtoPromo';
 export * from './DtoPromoDescription';
+export * from './DtoPromoStatus';
 export * from './DtoPromosResponse';
 export * from './DtoPurchaseValue';
 export * from './DtoRedemptionInstruction';
