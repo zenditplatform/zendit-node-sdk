@@ -97,6 +97,12 @@ export interface DtoESimPurchase {
     cost: number;
     /**
      * 
+     * @type {number}
+     * @memberof DtoESimPurchase
+     */
+    costBase: number;
+    /**
+     * 
      * @type {string}
      * @memberof DtoESimPurchase
      */
@@ -107,6 +113,12 @@ export interface DtoESimPurchase {
      * @memberof DtoESimPurchase
      */
     costCurrencyDivisor: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoESimPurchase
+     */
+    costFee: number;
     /**
      * 
      * @type {string}
@@ -286,8 +298,10 @@ export function instanceOfDtoESimPurchase(value: object): value is DtoESimPurcha
     if (!('brand' in value) || value['brand'] === undefined) return false;
     if (!('brandName' in value) || value['brandName'] === undefined) return false;
     if (!('cost' in value) || value['cost'] === undefined) return false;
+    if (!('costBase' in value) || value['costBase'] === undefined) return false;
     if (!('costCurrency' in value) || value['costCurrency'] === undefined) return false;
     if (!('costCurrencyDivisor' in value) || value['costCurrencyDivisor'] === undefined) return false;
+    if (!('costFee' in value) || value['costFee'] === undefined) return false;
     if (!('country' in value) || value['country'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('dataGB' in value) || value['dataGB'] === undefined) return false;
@@ -330,8 +344,10 @@ export function DtoESimPurchaseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'brandName': json['brandName'],
         'confirmation': json['confirmation'] == null ? undefined : DtoESimConfirmationFromJSON(json['confirmation']),
         'cost': json['cost'],
+        'costBase': json['costBase'],
         'costCurrency': json['costCurrency'],
         'costCurrencyDivisor': json['costCurrencyDivisor'],
+        'costFee': json['costFee'],
         'country': json['country'],
         'createdAt': json['createdAt'],
         'dataGB': json['dataGB'],
@@ -378,8 +394,10 @@ export function DtoESimPurchaseToJSONTyped(value?: DtoESimPurchase | null, ignor
         'brandName': value['brandName'],
         'confirmation': DtoESimConfirmationToJSON(value['confirmation']),
         'cost': value['cost'],
+        'costBase': value['costBase'],
         'costCurrency': value['costCurrency'],
         'costCurrencyDivisor': value['costCurrencyDivisor'],
+        'costFee': value['costFee'],
         'country': value['country'],
         'createdAt': value['createdAt'],
         'dataGB': value['dataGB'],

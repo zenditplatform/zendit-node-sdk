@@ -8,6 +8,7 @@ export const DtoProductType = {
     ProductTypeTopup: 'TOPUP',
     ProductTypeESIM: 'ESIM',
     ProductTypeVoucher: 'VOUCHER',
+    ProductTypeBillPay: 'BILL_PAY',
     ProductTypeWalletRecharge: 'WALLET_RECHARGE',
     ProductTypeRefund: 'REFUND',
     ProductTypeBulkCheckout: 'BULK_CHECKOUT'

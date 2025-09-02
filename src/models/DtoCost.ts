@@ -24,6 +24,24 @@ export interface DtoCost {
      * @type {number}
      * @memberof DtoCost
      */
+    discount: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoCost
+     */
+    fee: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoCost
+     */
+    feePct: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoCost
+     */
     fixed?: number;
     /**
      * 
@@ -51,6 +69,9 @@ export interface DtoCost {
 export function instanceOfDtoCost(value: object): value is DtoCost {
     if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('currencyDivisor' in value) || value['currencyDivisor'] === undefined) return false;
+    if (!('discount' in value) || value['discount'] === undefined) return false;
+    if (!('fee' in value) || value['fee'] === undefined) return false;
+    if (!('feePct' in value) || value['feePct'] === undefined) return false;
     return true;
 }
 
@@ -66,6 +87,9 @@ export function DtoCostFromJSONTyped(json: any, ignoreDiscriminator: boolean): D
         
         'currency': json['currency'],
         'currencyDivisor': json['currencyDivisor'],
+        'discount': json['discount'],
+        'fee': json['fee'],
+        'feePct': json['feePct'],
         'fixed': json['fixed'] == null ? undefined : json['fixed'],
         'fx': json['fx'] == null ? undefined : json['fx'],
         'max': json['max'] == null ? undefined : json['max'],
@@ -86,6 +110,9 @@ export function DtoCostToJSONTyped(value?: DtoCost | null, ignoreDiscriminator: 
         
         'currency': value['currency'],
         'currencyDivisor': value['currencyDivisor'],
+        'discount': value['discount'],
+        'fee': value['fee'],
+        'feePct': value['feePct'],
         'fixed': value['fixed'],
         'fx': value['fx'],
         'max': value['max'],
