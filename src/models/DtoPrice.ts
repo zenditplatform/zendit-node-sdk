@@ -36,6 +36,12 @@ export interface DtoPrice {
      * @type {number}
      * @memberof DtoPrice
      */
+    increment?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoPrice
+     */
     margin?: number;
     /**
      * 
@@ -86,6 +92,7 @@ export function DtoPriceFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'currencyDivisor': json['currencyDivisor'],
         'fixed': json['fixed'] == null ? undefined : json['fixed'],
         'fx': json['fx'] == null ? undefined : json['fx'],
+        'increment': json['increment'] == null ? undefined : json['increment'],
         'margin': json['margin'] == null ? undefined : json['margin'],
         'max': json['max'] == null ? undefined : json['max'],
         'min': json['min'] == null ? undefined : json['min'],
@@ -109,6 +116,7 @@ export function DtoPriceToJSONTyped(value?: DtoPrice | null, ignoreDiscriminator
         'currencyDivisor': value['currencyDivisor'],
         'fixed': value['fixed'],
         'fx': value['fx'],
+        'increment': value['increment'],
         'margin': value['margin'],
         'max': value['max'],
         'min': value['min'],

@@ -1,13 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import { mapValues } from '../runtime';
-import type { DtoVoucherField } from './DtoVoucherField';
-import {
-    DtoVoucherFieldFromJSON,
-    DtoVoucherFieldFromJSONTyped,
-    DtoVoucherFieldToJSON,
-    DtoVoucherFieldToJSONTyped,
-} from './DtoVoucherField';
 import type { DtoPriceType } from './DtoPriceType';
 import {
     DtoPriceTypeFromJSON,
@@ -57,6 +50,13 @@ import {
     DtoTransactionStatusToJSON,
     DtoTransactionStatusToJSONTyped,
 } from './DtoTransactionStatus';
+import type { DtoPurchaseField } from './DtoPurchaseField';
+import {
+    DtoPurchaseFieldFromJSON,
+    DtoPurchaseFieldFromJSONTyped,
+    DtoPurchaseFieldToJSON,
+    DtoPurchaseFieldToJSONTyped,
+} from './DtoPurchaseField';
 import type { DtoVoucherReceipt } from './DtoVoucherReceipt';
 import {
     DtoVoucherReceiptFromJSON,
@@ -97,6 +97,12 @@ export interface DtoVoucherPurchase {
     cost: number;
     /**
      * 
+     * @type {number}
+     * @memberof DtoVoucherPurchase
+     */
+    costBase: number;
+    /**
+     * 
      * @type {string}
      * @memberof DtoVoucherPurchase
      */
@@ -107,6 +113,12 @@ export interface DtoVoucherPurchase {
      * @memberof DtoVoucherPurchase
      */
     costCurrencyDivisor: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoVoucherPurchase
+     */
+    costFee: number;
     /**
      * 
      * @type {string}
@@ -127,10 +139,10 @@ export interface DtoVoucherPurchase {
     error?: DtoError;
     /**
      * 
-     * @type {Array<DtoVoucherField>}
+     * @type {Array<DtoPurchaseField>}
      * @memberof DtoVoucherPurchase
      */
-    fields: Array<DtoVoucherField>;
+    fields: Array<DtoPurchaseField>;
     /**
      * 
      * @type {Array<DtoTransactionLogItem>}
@@ -256,8 +268,10 @@ export function instanceOfDtoVoucherPurchase(value: object): value is DtoVoucher
     if (!('brand' in value) || value['brand'] === undefined) return false;
     if (!('brandName' in value) || value['brandName'] === undefined) return false;
     if (!('cost' in value) || value['cost'] === undefined) return false;
+    if (!('costBase' in value) || value['costBase'] === undefined) return false;
     if (!('costCurrency' in value) || value['costCurrency'] === undefined) return false;
     if (!('costCurrencyDivisor' in value) || value['costCurrencyDivisor'] === undefined) return false;
+    if (!('costFee' in value) || value['costFee'] === undefined) return false;
     if (!('country' in value) || value['country'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('fields' in value) || value['fields'] === undefined) return false;
@@ -294,12 +308,14 @@ export function DtoVoucherPurchaseFromJSONTyped(json: any, ignoreDiscriminator: 
         'brandName': json['brandName'],
         'confirmation': json['confirmation'] == null ? undefined : DtoConfirmationFromJSON(json['confirmation']),
         'cost': json['cost'],
+        'costBase': json['costBase'],
         'costCurrency': json['costCurrency'],
         'costCurrencyDivisor': json['costCurrencyDivisor'],
+        'costFee': json['costFee'],
         'country': json['country'],
         'createdAt': json['createdAt'],
         'error': json['error'] == null ? undefined : DtoErrorFromJSON(json['error']),
-        'fields': ((json['fields'] as Array<any>).map(DtoVoucherFieldFromJSON)),
+        'fields': ((json['fields'] as Array<any>).map(DtoPurchaseFieldFromJSON)),
         'log': ((json['log'] as Array<any>).map(DtoTransactionLogItemFromJSON)),
         'notes': json['notes'],
         'offerId': json['offerId'],
@@ -337,12 +353,14 @@ export function DtoVoucherPurchaseToJSONTyped(value?: DtoVoucherPurchase | null,
         'brandName': value['brandName'],
         'confirmation': DtoConfirmationToJSON(value['confirmation']),
         'cost': value['cost'],
+        'costBase': value['costBase'],
         'costCurrency': value['costCurrency'],
         'costCurrencyDivisor': value['costCurrencyDivisor'],
+        'costFee': value['costFee'],
         'country': value['country'],
         'createdAt': value['createdAt'],
         'error': DtoErrorToJSON(value['error']),
-        'fields': ((value['fields'] as Array<any>).map(DtoVoucherFieldToJSON)),
+        'fields': ((value['fields'] as Array<any>).map(DtoPurchaseFieldToJSON)),
         'log': ((value['log'] as Array<any>).map(DtoTransactionLogItemToJSON)),
         'notes': value['notes'],
         'offerId': value['offerId'],

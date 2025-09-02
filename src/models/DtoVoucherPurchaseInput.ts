@@ -1,13 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import { mapValues } from '../runtime';
-import type { DtoVoucherField } from './DtoVoucherField';
-import {
-    DtoVoucherFieldFromJSON,
-    DtoVoucherFieldFromJSONTyped,
-    DtoVoucherFieldToJSON,
-    DtoVoucherFieldToJSONTyped,
-} from './DtoVoucherField';
 import type { DtoPurchaseValue } from './DtoPurchaseValue';
 import {
     DtoPurchaseValueFromJSON,
@@ -15,6 +8,13 @@ import {
     DtoPurchaseValueToJSON,
     DtoPurchaseValueToJSONTyped,
 } from './DtoPurchaseValue';
+import type { DtoPurchaseField } from './DtoPurchaseField';
+import {
+    DtoPurchaseFieldFromJSON,
+    DtoPurchaseFieldFromJSONTyped,
+    DtoPurchaseFieldToJSON,
+    DtoPurchaseFieldToJSONTyped,
+} from './DtoPurchaseField';
 
 /**
  * 
@@ -24,10 +24,10 @@ import {
 export interface DtoVoucherPurchaseInput {
     /**
      * 
-     * @type {Array<DtoVoucherField>}
+     * @type {Array<DtoPurchaseField>}
      * @memberof DtoVoucherPurchaseInput
      */
-    fields: Array<DtoVoucherField>;
+    fields: Array<DtoPurchaseField>;
     /**
      * 
      * @type {string}
@@ -68,7 +68,7 @@ export function DtoVoucherPurchaseInputFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'fields': ((json['fields'] as Array<any>).map(DtoVoucherFieldFromJSON)),
+        'fields': ((json['fields'] as Array<any>).map(DtoPurchaseFieldFromJSON)),
         'offerId': json['offerId'],
         'transactionId': json['transactionId'],
         'value': json['value'] == null ? undefined : DtoPurchaseValueFromJSON(json['value']),
@@ -86,7 +86,7 @@ export function DtoVoucherPurchaseInputToJSONTyped(value?: DtoVoucherPurchaseInp
 
     return {
         
-        'fields': ((value['fields'] as Array<any>).map(DtoVoucherFieldToJSON)),
+        'fields': ((value['fields'] as Array<any>).map(DtoPurchaseFieldToJSON)),
         'offerId': value['offerId'],
         'transactionId': value['transactionId'],
         'value': DtoPurchaseValueToJSON(value['value']),

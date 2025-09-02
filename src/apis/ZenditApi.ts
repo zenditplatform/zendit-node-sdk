@@ -4,6 +4,13 @@ import type {DtoESimQRCode} from '../models/index';
 import * as runtime from '../runtime';
 import type {
   DtoBalanceResponse,
+  DtoBillPayBillResponse,
+  DtoBillPayOffer,
+  DtoBillPayOffersResponse,
+  DtoBillPayPurchase,
+  DtoBillPayPurchaseInput,
+  DtoBillPayPurchaseResponse,
+  DtoBillPayPurchasesResponse,
   DtoBrandInfo,
   DtoBrandsResponse,
   DtoESIMPlansResponse,
@@ -40,6 +47,20 @@ import type {
 import {
     DtoBalanceResponseFromJSON,
     DtoBalanceResponseToJSON,
+    DtoBillPayBillResponseFromJSON,
+    DtoBillPayBillResponseToJSON,
+    DtoBillPayOfferFromJSON,
+    DtoBillPayOfferToJSON,
+    DtoBillPayOffersResponseFromJSON,
+    DtoBillPayOffersResponseToJSON,
+    DtoBillPayPurchaseFromJSON,
+    DtoBillPayPurchaseToJSON,
+    DtoBillPayPurchaseInputFromJSON,
+    DtoBillPayPurchaseInputToJSON,
+    DtoBillPayPurchaseResponseFromJSON,
+    DtoBillPayPurchaseResponseToJSON,
+    DtoBillPayPurchasesResponseFromJSON,
+    DtoBillPayPurchasesResponseToJSON,
     DtoBrandInfoFromJSON,
     DtoBrandInfoToJSON,
     DtoBrandsResponseFromJSON,
@@ -105,6 +126,40 @@ import {
     DtoVoucherPurchasesResponseFromJSON,
     DtoVoucherPurchasesResponseToJSON,
 } from '../models/index';
+
+export interface BillpayOffersGetRequest {
+    limit: number;
+    offset: number;
+    brand?: string;
+    country?: string;
+    regions?: BillpayOffersGetRegionsEnum;
+    subType?: string;
+}
+
+export interface BillpayOffersOfferIdBillGetRequest {
+    offerId: string;
+    billIdentifier?: string;
+    accountNumber?: string;
+}
+
+export interface BillpayOffersOfferIdGetRequest {
+    offerId: string;
+}
+
+export interface BillpayPurchasesGetRequest {
+    limit: number;
+    offset: number;
+    createdAt?: string;
+    status?: BillpayPurchasesGetStatusEnum;
+}
+
+export interface BillpayPurchasesPostRequest {
+    data: DtoBillPayPurchaseInput;
+}
+
+export interface BillpayPurchasesTransactionIdGetRequest {
+    transactionId: string;
+}
 
 export interface BrandsBrandGetRequest {
     brand: string;
@@ -299,6 +354,293 @@ export class ZenditApi extends runtime.BaseAPI {
      */
     async balanceGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoBalanceResponse> {
         const response = await this.balanceGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get list of BillPay offers
+     */
+    async billpayOffersGetRaw(requestParameters: BillpayOffersGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoBillPayOffersResponse>> {
+        if (requestParameters['limit'] == null) {
+            throw new runtime.RequiredError(
+                'limit',
+                'Required parameter "limit" was null or undefined when calling billpayOffersGet().'
+            );
+        }
+
+        if (requestParameters['offset'] == null) {
+            throw new runtime.RequiredError(
+                'offset',
+                'Required parameter "offset" was null or undefined when calling billpayOffersGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['_limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['offset'] != null) {
+            queryParameters['_offset'] = requestParameters['offset'];
+        }
+
+        if (requestParameters['brand'] != null) {
+            queryParameters['brand'] = requestParameters['brand'];
+        }
+
+        if (requestParameters['country'] != null) {
+            queryParameters['country'] = requestParameters['country'];
+        }
+
+        if (requestParameters['regions'] != null) {
+            queryParameters['regions'] = requestParameters['regions'];
+        }
+
+        if (requestParameters['subType'] != null) {
+            queryParameters['subType'] = requestParameters['subType'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/billpay/offers`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoBillPayOffersResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get list of BillPay offers
+     */
+    async billpayOffersGet(limit: number, offset: number, brand?: string, country?: string, regions?: BillpayOffersGetRegionsEnum, subType?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoBillPayOffersResponse> {
+        const response = await this.billpayOffersGetRaw({ limit: limit, offset: offset, brand: brand, country: country, regions: regions, subType: subType }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get a BillPay bill for a specific offer
+     */
+    async billpayOffersOfferIdBillGetRaw(requestParameters: BillpayOffersOfferIdBillGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoBillPayBillResponse>> {
+        if (requestParameters['offerId'] == null) {
+            throw new runtime.RequiredError(
+                'offerId',
+                'Required parameter "offerId" was null or undefined when calling billpayOffersOfferIdBillGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['billIdentifier'] != null) {
+            queryParameters['billIdentifier'] = requestParameters['billIdentifier'];
+        }
+
+        if (requestParameters['accountNumber'] != null) {
+            queryParameters['accountNumber'] = requestParameters['accountNumber'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/billpay/offers/{offerId}/bill`.replace(`{${"offerId"}}`, encodeURIComponent(String(requestParameters['offerId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoBillPayBillResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a BillPay bill for a specific offer
+     */
+    async billpayOffersOfferIdBillGet(offerId: string, billIdentifier?: string, accountNumber?: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoBillPayBillResponse> {
+        const response = await this.billpayOffersOfferIdBillGetRaw({ offerId: offerId, billIdentifier: billIdentifier, accountNumber: accountNumber }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get a BillPay offer by the offer ID
+     */
+    async billpayOffersOfferIdGetRaw(requestParameters: BillpayOffersOfferIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoBillPayOffer>> {
+        if (requestParameters['offerId'] == null) {
+            throw new runtime.RequiredError(
+                'offerId',
+                'Required parameter "offerId" was null or undefined when calling billpayOffersOfferIdGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/billpay/offers/{offerId}`.replace(`{${"offerId"}}`, encodeURIComponent(String(requestParameters['offerId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoBillPayOfferFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a BillPay offer by the offer ID
+     */
+    async billpayOffersOfferIdGet(offerId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoBillPayOffer> {
+        const response = await this.billpayOffersOfferIdGetRaw({ offerId: offerId }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get list of BillPay purchases
+     */
+    async billpayPurchasesGetRaw(requestParameters: BillpayPurchasesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoBillPayPurchasesResponse>> {
+        if (requestParameters['limit'] == null) {
+            throw new runtime.RequiredError(
+                'limit',
+                'Required parameter "limit" was null or undefined when calling billpayPurchasesGet().'
+            );
+        }
+
+        if (requestParameters['offset'] == null) {
+            throw new runtime.RequiredError(
+                'offset',
+                'Required parameter "offset" was null or undefined when calling billpayPurchasesGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['_limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['offset'] != null) {
+            queryParameters['_offset'] = requestParameters['offset'];
+        }
+
+        if (requestParameters['createdAt'] != null) {
+            queryParameters['createdAt'] = requestParameters['createdAt'];
+        }
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/billpay/purchases`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoBillPayPurchasesResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get list of BillPay purchases
+     */
+    async billpayPurchasesGet(limit: number, offset: number, createdAt?: string, status?: BillpayPurchasesGetStatusEnum, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoBillPayPurchasesResponse> {
+        const response = await this.billpayPurchasesGetRaw({ limit: limit, offset: offset, createdAt: createdAt, status: status }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Create a BillPay purchase
+     */
+    async billpayPurchasesPostRaw(requestParameters: BillpayPurchasesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoBillPayPurchaseResponse>> {
+        if (requestParameters['data'] == null) {
+            throw new runtime.RequiredError(
+                'data',
+                'Required parameter "data" was null or undefined when calling billpayPurchasesPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/billpay/purchases`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: DtoBillPayPurchaseInputToJSON(requestParameters['data']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoBillPayPurchaseResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Create a BillPay purchase
+     */
+    async billpayPurchasesPost(data: DtoBillPayPurchaseInput, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoBillPayPurchaseResponse> {
+        const response = await this.billpayPurchasesPostRaw({ data: data }, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get a BillPay purchase by the transaction ID
+     */
+    async billpayPurchasesTransactionIdGetRaw(requestParameters: BillpayPurchasesTransactionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DtoBillPayPurchase>> {
+        if (requestParameters['transactionId'] == null) {
+            throw new runtime.RequiredError(
+                'transactionId',
+                'Required parameter "transactionId" was null or undefined when calling billpayPurchasesTransactionIdGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/billpay/purchases/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters['transactionId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DtoBillPayPurchaseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a BillPay purchase by the transaction ID
+     */
+    async billpayPurchasesTransactionIdGet(transactionId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoBillPayPurchase> {
+        const response = await this.billpayPurchasesTransactionIdGetRaw({ transactionId: transactionId }, initOverrides);
         return await response.value();
     }
 
@@ -1717,6 +2059,37 @@ export class ZenditApi extends runtime.BaseAPI {
 /**
  * @export
  */
+export const BillpayOffersGetRegionsEnum = {
+    RegionAfrica: 'Africa',
+    RegionAsia: 'Asia',
+    RegionCaribbean: 'Caribbean',
+    RegionCentralAmerica: 'Central America',
+    RegionEasternEurope: 'Eastern Europe',
+    RegionGlobal: 'Global',
+    RegionMiddleEastAndNorthAfrica: 'Middle East and North Africa',
+    RegionNorthAmerica: 'North America',
+    RegionOceania: 'Oceania',
+    RegionSouthAmerica: 'South America',
+    RegionSouthAsia: 'South Asia',
+    RegionSoutheastAsia: 'Southeast Asia',
+    RegionWesternEurope: 'Western Europe'
+} as const;
+export type BillpayOffersGetRegionsEnum = typeof BillpayOffersGetRegionsEnum[keyof typeof BillpayOffersGetRegionsEnum];
+/**
+ * @export
+ */
+export const BillpayPurchasesGetStatusEnum = {
+    TransactionStatusAccepted: 'ACCEPTED',
+    TransactionStatusPending: 'PENDING',
+    TransactionStatusAuthorized: 'AUTHORIZED',
+    TransactionStatusInProgress: 'IN_PROGRESS',
+    TransactionStatusDone: 'DONE',
+    TransactionStatusFailed: 'FAILED'
+} as const;
+export type BillpayPurchasesGetStatusEnum = typeof BillpayPurchasesGetStatusEnum[keyof typeof BillpayPurchasesGetStatusEnum];
+/**
+ * @export
+ */
 export const EsimOffersGetRegionsEnum = {
     RegionAfrica: 'Africa',
     RegionAsia: 'Asia',
@@ -1811,6 +2184,7 @@ export const TransactionsGetProductTypeEnum = {
     ProductTypeTopup: 'TOPUP',
     ProductTypeESIM: 'ESIM',
     ProductTypeVoucher: 'VOUCHER',
+    ProductTypeBillPay: 'BILL_PAY',
     ProductTypeWalletRecharge: 'WALLET_RECHARGE',
     ProductTypeRefund: 'REFUND',
     ProductTypeBulkCheckout: 'BULK_CHECKOUT'

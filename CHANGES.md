@@ -1,6 +1,12 @@
 zendit-node changelog
 =====================
 
+# [2025-09-02] Version 1.8.0
+
+- **Bill Pay**: Added bill pay endpoints
+- **catalog**: Enhanced with additional fields
+- **purchase**: Enhanced models with additional fields
+
 # [2025-05-26] Version 1.7.0
 
 - **promos**: Added promo endpoints
