@@ -55,6 +55,12 @@ export interface DtoESIMPlan {
      * @memberof DtoESIMPlan
      */
     status: DtoESIMPlanStatusEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DtoESIMPlan
+     */
+    unlimited: boolean;
 }
 
 
@@ -78,6 +84,7 @@ export function instanceOfDtoESIMPlan(value: object): value is DtoESIMPlan {
     if (!('offerId' in value) || value['offerId'] === undefined) return false;
     if (!('remainingDataGB' in value) || value['remainingDataGB'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('unlimited' in value) || value['unlimited'] === undefined) return false;
     return true;
 }
 
@@ -99,6 +106,7 @@ export function DtoESIMPlanFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'remainingDataGB': json['remainingDataGB'],
         'startAt': json['startAt'] == null ? undefined : json['startAt'],
         'status': json['status'],
+        'unlimited': json['unlimited'],
     };
 }
 
@@ -121,6 +129,7 @@ export function DtoESIMPlanToJSONTyped(value?: DtoESIMPlan | null, ignoreDiscrim
         'remainingDataGB': value['remainingDataGB'],
         'startAt': value['startAt'],
         'status': value['status'],
+        'unlimited': value['unlimited'],
     };
 }
 

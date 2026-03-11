@@ -86,6 +86,12 @@ export interface DtoBillPayBillResponse {
      * @type {number}
      * @memberof DtoBillPayBillResponse
      */
+    priceFee?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoBillPayBillResponse
+     */
     priceFx?: number;
     /**
      * 
@@ -143,6 +149,7 @@ export function DtoBillPayBillResponseFromJSONTyped(json: any, ignoreDiscriminat
         'price': json['price'] == null ? undefined : json['price'],
         'priceCurrency': json['priceCurrency'] == null ? undefined : json['priceCurrency'],
         'priceCurrencyDivisor': json['priceCurrencyDivisor'] == null ? undefined : json['priceCurrencyDivisor'],
+        'priceFee': json['priceFee'] == null ? undefined : json['priceFee'],
         'priceFx': json['priceFx'] == null ? undefined : json['priceFx'],
         'priceType': json['priceType'] == null ? undefined : DtoPriceTypeFromJSON(json['priceType']),
         'send': json['send'] == null ? undefined : json['send'],
@@ -173,6 +180,7 @@ export function DtoBillPayBillResponseToJSONTyped(value?: DtoBillPayBillResponse
         'price': value['price'],
         'priceCurrency': value['priceCurrency'],
         'priceCurrencyDivisor': value['priceCurrencyDivisor'],
+        'priceFee': value['priceFee'],
         'priceFx': value['priceFx'],
         'priceType': DtoPriceTypeToJSON(value['priceType']),
         'send': value['send'],

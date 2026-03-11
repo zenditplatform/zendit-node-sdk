@@ -17,6 +17,12 @@ import {
 export interface DtoESIMPlansResponse {
     /**
      * 
+     * @type {string}
+     * @memberof DtoESIMPlansResponse
+     */
+    firstInstalledAt: string;
+    /**
+     * 
      * @type {Array<DtoESIMPlan>}
      * @memberof DtoESIMPlansResponse
      */
@@ -33,6 +39,7 @@ export interface DtoESIMPlansResponse {
  * Check if a given object implements the DtoESIMPlansResponse interface.
  */
 export function instanceOfDtoESIMPlansResponse(value: object): value is DtoESIMPlansResponse {
+    if (!('firstInstalledAt' in value) || value['firstInstalledAt'] === undefined) return false;
     if (!('list' in value) || value['list'] === undefined) return false;
     if (!('total' in value) || value['total'] === undefined) return false;
     return true;
@@ -48,6 +55,7 @@ export function DtoESIMPlansResponseFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
+        'firstInstalledAt': json['firstInstalledAt'],
         'list': ((json['list'] as Array<any>).map(DtoESIMPlanFromJSON)),
         'total': json['total'],
     };
@@ -64,6 +72,7 @@ export function DtoESIMPlansResponseToJSONTyped(value?: DtoESIMPlansResponse | n
 
     return {
         
+        'firstInstalledAt': value['firstInstalledAt'],
         'list': ((value['list'] as Array<any>).map(DtoESIMPlanToJSON)),
         'total': value['total'],
     };
