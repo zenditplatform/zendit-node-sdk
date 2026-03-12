@@ -1,6 +1,13 @@
 zendit-node changelog
 =====================
 
+# [2026-03-11] Version 1.9.0
+
+- **purchases**: Added `priceBase` and `priceFee` fields to all purchase models (Bill Pay, eSIM, Topup, Voucher).
+- **pricing**: Added `fee` field to `DtoPrice` model.
+- **eSIM plans**: Added `unlimited` field to `DtoESIMPlan` and `firstInstalledAt` field to `DtoESIMPlansResponse`.
+- **promos**: Fixed trailing slash in promos endpoint path.
+
 # [2025-09-02] Version 1.8.0
 
 - **Bill Pay**: Added bill pay endpoints

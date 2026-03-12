@@ -1253,7 +1253,7 @@ export class ZenditApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/promos/`,
+            path: `/promos`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

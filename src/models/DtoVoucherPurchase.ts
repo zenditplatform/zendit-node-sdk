@@ -169,6 +169,12 @@ export interface DtoVoucherPurchase {
     price: number;
     /**
      * 
+     * @type {number}
+     * @memberof DtoVoucherPurchase
+     */
+    priceBase: number;
+    /**
+     * 
      * @type {string}
      * @memberof DtoVoucherPurchase
      */
@@ -179,6 +185,12 @@ export interface DtoVoucherPurchase {
      * @memberof DtoVoucherPurchase
      */
     priceCurrencyDivisor: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoVoucherPurchase
+     */
+    priceFee: number;
     /**
      * 
      * @type {DtoPriceType}
@@ -279,8 +291,10 @@ export function instanceOfDtoVoucherPurchase(value: object): value is DtoVoucher
     if (!('notes' in value) || value['notes'] === undefined) return false;
     if (!('offerId' in value) || value['offerId'] === undefined) return false;
     if (!('price' in value) || value['price'] === undefined) return false;
+    if (!('priceBase' in value) || value['priceBase'] === undefined) return false;
     if (!('priceCurrency' in value) || value['priceCurrency'] === undefined) return false;
     if (!('priceCurrencyDivisor' in value) || value['priceCurrencyDivisor'] === undefined) return false;
+    if (!('priceFee' in value) || value['priceFee'] === undefined) return false;
     if (!('priceType' in value) || value['priceType'] === undefined) return false;
     if (!('productType' in value) || value['productType'] === undefined) return false;
     if (!('send' in value) || value['send'] === undefined) return false;
@@ -320,8 +334,10 @@ export function DtoVoucherPurchaseFromJSONTyped(json: any, ignoreDiscriminator: 
         'notes': json['notes'],
         'offerId': json['offerId'],
         'price': json['price'],
+        'priceBase': json['priceBase'],
         'priceCurrency': json['priceCurrency'],
         'priceCurrencyDivisor': json['priceCurrencyDivisor'],
+        'priceFee': json['priceFee'],
         'priceType': DtoPriceTypeFromJSON(json['priceType']),
         'productType': DtoProductTypeFromJSON(json['productType']),
         'receipt': json['receipt'] == null ? undefined : DtoVoucherReceiptFromJSON(json['receipt']),
@@ -365,8 +381,10 @@ export function DtoVoucherPurchaseToJSONTyped(value?: DtoVoucherPurchase | null,
         'notes': value['notes'],
         'offerId': value['offerId'],
         'price': value['price'],
+        'priceBase': value['priceBase'],
         'priceCurrency': value['priceCurrency'],
         'priceCurrencyDivisor': value['priceCurrencyDivisor'],
+        'priceFee': value['priceFee'],
         'priceType': DtoPriceTypeToJSON(value['priceType']),
         'productType': DtoProductTypeToJSON(value['productType']),
         'receipt': DtoVoucherReceiptToJSON(value['receipt']),

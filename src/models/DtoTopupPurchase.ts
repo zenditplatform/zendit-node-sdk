@@ -174,6 +174,12 @@ export interface DtoTopupPurchase {
     price: number;
     /**
      * 
+     * @type {number}
+     * @memberof DtoTopupPurchase
+     */
+    priceBase: number;
+    /**
+     * 
      * @type {string}
      * @memberof DtoTopupPurchase
      */
@@ -184,6 +190,12 @@ export interface DtoTopupPurchase {
      * @memberof DtoTopupPurchase
      */
     priceCurrencyDivisor: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DtoTopupPurchase
+     */
+    priceFee: number;
     /**
      * 
      * @type {DtoPriceType}
@@ -316,8 +328,10 @@ export function instanceOfDtoTopupPurchase(value: object): value is DtoTopupPurc
     if (!('notes' in value) || value['notes'] === undefined) return false;
     if (!('offerId' in value) || value['offerId'] === undefined) return false;
     if (!('price' in value) || value['price'] === undefined) return false;
+    if (!('priceBase' in value) || value['priceBase'] === undefined) return false;
     if (!('priceCurrency' in value) || value['priceCurrency'] === undefined) return false;
     if (!('priceCurrencyDivisor' in value) || value['priceCurrencyDivisor'] === undefined) return false;
+    if (!('priceFee' in value) || value['priceFee'] === undefined) return false;
     if (!('priceType' in value) || value['priceType'] === undefined) return false;
     if (!('productType' in value) || value['productType'] === undefined) return false;
     if (!('recipientPhoneNumber' in value) || value['recipientPhoneNumber'] === undefined) return false;
@@ -365,8 +379,10 @@ export function DtoTopupPurchaseFromJSONTyped(json: any, ignoreDiscriminator: bo
         'notes': json['notes'],
         'offerId': json['offerId'],
         'price': json['price'],
+        'priceBase': json['priceBase'],
         'priceCurrency': json['priceCurrency'],
         'priceCurrencyDivisor': json['priceCurrencyDivisor'],
+        'priceFee': json['priceFee'],
         'priceType': DtoPriceTypeFromJSON(json['priceType']),
         'productType': DtoProductTypeFromJSON(json['productType']),
         'recipientPhoneNumber': json['recipientPhoneNumber'],
@@ -417,8 +433,10 @@ export function DtoTopupPurchaseToJSONTyped(value?: DtoTopupPurchase | null, ign
         'notes': value['notes'],
         'offerId': value['offerId'],
         'price': value['price'],
+        'priceBase': value['priceBase'],
         'priceCurrency': value['priceCurrency'],
         'priceCurrencyDivisor': value['priceCurrencyDivisor'],
+        'priceFee': value['priceFee'],
         'priceType': DtoPriceTypeToJSON(value['priceType']),
         'productType': DtoProductTypeToJSON(value['productType']),
         'recipientPhoneNumber': value['recipientPhoneNumber'],
