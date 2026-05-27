@@ -29,6 +29,13 @@ import {
     DtoErrorToJSON,
     DtoErrorToJSONTyped,
 } from './DtoError';
+import type { DtoESimPurchaseRoaming } from './DtoESimPurchaseRoaming';
+import {
+    DtoESimPurchaseRoamingFromJSON,
+    DtoESimPurchaseRoamingFromJSONTyped,
+    DtoESimPurchaseRoamingToJSON,
+    DtoESimPurchaseRoamingToJSONTyped,
+} from './DtoESimPurchaseRoaming';
 import type { DtoESimRefund } from './DtoESimRefund';
 import {
     DtoESimRefundFromJSON,
@@ -57,13 +64,6 @@ import {
     DtoTransactionStatusToJSON,
     DtoTransactionStatusToJSONTyped,
 } from './DtoTransactionStatus';
-import type { DtoESimRoaming } from './DtoESimRoaming';
-import {
-    DtoESimRoamingFromJSON,
-    DtoESimRoamingFromJSONTyped,
-    DtoESimRoamingToJSON,
-    DtoESimRoamingToJSONTyped,
-} from './DtoESimRoaming';
 
 /**
  * 
@@ -235,10 +235,10 @@ export interface DtoESimPurchase {
     regions: Array<string>;
     /**
      * 
-     * @type {Array<DtoESimRoaming>}
+     * @type {Array<DtoESimPurchaseRoaming>}
      * @memberof DtoESimPurchase
      */
-    roaming: Array<DtoESimRoaming>;
+    roaming: Array<DtoESimPurchaseRoaming>;
     /**
      * 
      * @type {string}
@@ -381,7 +381,7 @@ export function DtoESimPurchaseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'productType': DtoProductTypeFromJSON(json['productType']),
         'refund': json['refund'] == null ? undefined : DtoESimRefundFromJSON(json['refund']),
         'regions': json['regions'],
-        'roaming': ((json['roaming'] as Array<any>).map(DtoESimRoamingFromJSON)),
+        'roaming': ((json['roaming'] as Array<any>).map(DtoESimPurchaseRoamingFromJSON)),
         'shortNotes': json['shortNotes'],
         'smsNumber': json['smsNumber'],
         'smsUnlimited': json['smsUnlimited'],
@@ -433,7 +433,7 @@ export function DtoESimPurchaseToJSONTyped(value?: DtoESimPurchase | null, ignor
         'productType': DtoProductTypeToJSON(value['productType']),
         'refund': DtoESimRefundToJSON(value['refund']),
         'regions': value['regions'],
-        'roaming': ((value['roaming'] as Array<any>).map(DtoESimRoamingToJSON)),
+        'roaming': ((value['roaming'] as Array<any>).map(DtoESimPurchaseRoamingToJSON)),
         'shortNotes': value['shortNotes'],
         'smsNumber': value['smsNumber'],
         'smsUnlimited': value['smsUnlimited'],

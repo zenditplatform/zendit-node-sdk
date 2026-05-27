@@ -1,6 +1,14 @@
 /* tslint:disable */
 /* eslint-disable */
 import { mapValues } from '../runtime';
+import type { DtoESimNetwork } from './DtoESimNetwork';
+import {
+    DtoESimNetworkFromJSON,
+    DtoESimNetworkFromJSONTyped,
+    DtoESimNetworkToJSON,
+    DtoESimNetworkToJSONTyped,
+} from './DtoESimNetwork';
+
 /**
  * 
  * @export
@@ -19,6 +27,12 @@ export interface DtoESimRoaming {
      * @memberof DtoESimRoaming
      */
     dataSpeeds: Array<string>;
+    /**
+     * 
+     * @type {Array<DtoESimNetwork>}
+     * @memberof DtoESimRoaming
+     */
+    networks: Array<DtoESimNetwork>;
 }
 
 /**
@@ -27,6 +41,7 @@ export interface DtoESimRoaming {
 export function instanceOfDtoESimRoaming(value: object): value is DtoESimRoaming {
     if (!('country' in value) || value['country'] === undefined) return false;
     if (!('dataSpeeds' in value) || value['dataSpeeds'] === undefined) return false;
+    if (!('networks' in value) || value['networks'] === undefined) return false;
     return true;
 }
 
@@ -42,6 +57,7 @@ export function DtoESimRoamingFromJSONTyped(json: any, ignoreDiscriminator: bool
         
         'country': json['country'],
         'dataSpeeds': json['dataSpeeds'],
+        'networks': ((json['networks'] as Array<any>).map(DtoESimNetworkFromJSON)),
     };
 }
 
@@ -58,6 +74,7 @@ export function DtoESimRoamingToJSONTyped(value?: DtoESimRoaming | null, ignoreD
         
         'country': value['country'],
         'dataSpeeds': value['dataSpeeds'],
+        'networks': ((value['networks'] as Array<any>).map(DtoESimNetworkToJSON)),
     };
 }
 

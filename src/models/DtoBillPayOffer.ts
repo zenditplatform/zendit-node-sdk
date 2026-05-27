@@ -87,6 +87,12 @@ export interface DtoBillPayOffer {
     cutoffTime: string;
     /**
      * 
+     * @type {string}
+     * @memberof DtoBillPayOffer
+     */
+    cutoffTimezone: string;
+    /**
+     * 
      * @type {number}
      * @memberof DtoBillPayOffer
      */
@@ -180,6 +186,12 @@ export interface DtoBillPayOffer {
      * @type {boolean}
      * @memberof DtoBillPayOffer
      */
+    supportsLatePayments: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DtoBillPayOffer
+     */
     supportsOverpayment: boolean;
     /**
      * 
@@ -208,6 +220,7 @@ export function instanceOfDtoBillPayOffer(value: object): value is DtoBillPayOff
     if (!('country' in value) || value['country'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('cutoffTime' in value) || value['cutoffTime'] === undefined) return false;
+    if (!('cutoffTimezone' in value) || value['cutoffTimezone'] === undefined) return false;
     if (!('deliverySpeedSeconds' in value) || value['deliverySpeedSeconds'] === undefined) return false;
     if (!('enabled' in value) || value['enabled'] === undefined) return false;
     if (!('notes' in value) || value['notes'] === undefined) return false;
@@ -223,6 +236,7 @@ export function instanceOfDtoBillPayOffer(value: object): value is DtoBillPayOff
     if (!('shortNotes' in value) || value['shortNotes'] === undefined) return false;
     if (!('subTypes' in value) || value['subTypes'] === undefined) return false;
     if (!('supportsBillRetrieval' in value) || value['supportsBillRetrieval'] === undefined) return false;
+    if (!('supportsLatePayments' in value) || value['supportsLatePayments'] === undefined) return false;
     if (!('supportsOverpayment' in value) || value['supportsOverpayment'] === undefined) return false;
     if (!('supportsUnderpayment' in value) || value['supportsUnderpayment'] === undefined) return false;
     if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
@@ -246,6 +260,7 @@ export function DtoBillPayOfferFromJSONTyped(json: any, ignoreDiscriminator: boo
         'country': json['country'],
         'createdAt': json['createdAt'],
         'cutoffTime': json['cutoffTime'],
+        'cutoffTimezone': json['cutoffTimezone'],
         'deliverySpeedSeconds': json['deliverySpeedSeconds'],
         'enabled': json['enabled'],
         'notes': json['notes'],
@@ -261,6 +276,7 @@ export function DtoBillPayOfferFromJSONTyped(json: any, ignoreDiscriminator: boo
         'shortNotes': json['shortNotes'],
         'subTypes': json['subTypes'],
         'supportsBillRetrieval': json['supportsBillRetrieval'],
+        'supportsLatePayments': json['supportsLatePayments'],
         'supportsOverpayment': json['supportsOverpayment'],
         'supportsUnderpayment': json['supportsUnderpayment'],
         'updatedAt': json['updatedAt'],
@@ -285,6 +301,7 @@ export function DtoBillPayOfferToJSONTyped(value?: DtoBillPayOffer | null, ignor
         'country': value['country'],
         'createdAt': value['createdAt'],
         'cutoffTime': value['cutoffTime'],
+        'cutoffTimezone': value['cutoffTimezone'],
         'deliverySpeedSeconds': value['deliverySpeedSeconds'],
         'enabled': value['enabled'],
         'notes': value['notes'],
@@ -300,6 +317,7 @@ export function DtoBillPayOfferToJSONTyped(value?: DtoBillPayOffer | null, ignor
         'shortNotes': value['shortNotes'],
         'subTypes': value['subTypes'],
         'supportsBillRetrieval': value['supportsBillRetrieval'],
+        'supportsLatePayments': value['supportsLatePayments'],
         'supportsOverpayment': value['supportsOverpayment'],
         'supportsUnderpayment': value['supportsUnderpayment'],
         'updatedAt': value['updatedAt'],
