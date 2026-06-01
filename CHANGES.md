@@ -1,6 +1,12 @@
 zendit-node changelog
 =====================
 
+# [2026-05-27] Version 1.10.0
+
+- **Bill Pay**: Added `cutoffTimezone` and `supportsLatePayments` fields to `DtoBillPayOffer`.
+- **eSIM**: Added `networks` field to roaming with new `DtoESimNetwork` model.
+- **promos**: Added bonus/multiplier fields and `offerIds` to `DtoPromo`.
+
 # [2026-03-11] Version 1.9.0
 
 - **purchases**: Added `priceBase` and `priceFee` fields to all purchase models (Bill Pay, eSIM, Topup, Voucher).
