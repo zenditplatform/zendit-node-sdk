@@ -50,6 +50,13 @@ import {
     DtoTransactionStatusToJSON,
     DtoTransactionStatusToJSONTyped,
 } from './DtoTransactionStatus';
+import type { DtoPayment } from './DtoPayment';
+import {
+    DtoPaymentFromJSON,
+    DtoPaymentFromJSONTyped,
+    DtoPaymentToJSON,
+    DtoPaymentToJSONTyped,
+} from './DtoPayment';
 import type { DtoTopupSender } from './DtoTopupSender';
 import {
     DtoTopupSenderFromJSON,
@@ -166,6 +173,12 @@ export interface DtoTopupPurchase {
      * @memberof DtoTopupPurchase
      */
     offerId: string;
+    /**
+     * 
+     * @type {DtoPayment}
+     * @memberof DtoTopupPurchase
+     */
+    payment?: DtoPayment;
     /**
      * 
      * @type {number}
@@ -378,6 +391,7 @@ export function DtoTopupPurchaseFromJSONTyped(json: any, ignoreDiscriminator: bo
         'log': ((json['log'] as Array<any>).map(DtoTransactionLogItemFromJSON)),
         'notes': json['notes'],
         'offerId': json['offerId'],
+        'payment': json['payment'] == null ? undefined : DtoPaymentFromJSON(json['payment']),
         'price': json['price'],
         'priceBase': json['priceBase'],
         'priceCurrency': json['priceCurrency'],
@@ -432,6 +446,7 @@ export function DtoTopupPurchaseToJSONTyped(value?: DtoTopupPurchase | null, ign
         'log': ((value['log'] as Array<any>).map(DtoTransactionLogItemToJSON)),
         'notes': value['notes'],
         'offerId': value['offerId'],
+        'payment': DtoPaymentToJSON(value['payment']),
         'price': value['price'],
         'priceBase': value['priceBase'],
         'priceCurrency': value['priceCurrency'],

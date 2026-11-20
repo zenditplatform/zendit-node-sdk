@@ -22,6 +22,7 @@ import type {
   DtoESimPurchasesResponse,
   DtoESimRefund,
   DtoESimRefundStatus,
+  DtoPaymentResultInput,
   DtoPhoneNumberLookupResponse,
   DtoPromo,
   DtoPromosResponse,
@@ -83,6 +84,8 @@ import {
     DtoESimRefundToJSON,
     DtoESimRefundStatusFromJSON,
     DtoESimRefundStatusToJSON,
+    DtoPaymentResultInputFromJSON,
+    DtoPaymentResultInputToJSON,
     DtoPhoneNumberLookupResponseFromJSON,
     DtoPhoneNumberLookupResponseToJSON,
     DtoPromoFromJSON,
@@ -292,6 +295,11 @@ export interface TransactionsGetRequest {
 
 export interface TransactionsTransactionIdGetRequest {
     transactionId: string;
+}
+
+export interface TransactionsTransactionIdPaymentPostRequest {
+    transactionId: string;
+    data: DtoPaymentResultInput;
 }
 
 export interface VouchersOffersGetRequest {
@@ -1810,6 +1818,54 @@ export class ZenditApi extends runtime.BaseAPI {
     async transactionsTransactionIdGet(transactionId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DtoTransaction> {
         const response = await this.transactionsTransactionIdGetRaw({ transactionId: transactionId }, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Reports the outcome of a payment your payment processor took for a purchase made through the embeddable widget. Call it from your backend once the customer has paid or the payment has failed. transactionId is the transaction id sent in the Payment Request webhook.  A 200 response, with an empty body, means the report was taken into account, whatever it did to the transaction: a repeat of a result already applied and a success for a transaction that has already expired or failed both return 200 and change nothing. The outcome of the purchase is not returned here; it is delivered by the product webhook, which carries the payment details.  400 and 404 mean the report can never be accepted, so do not retry them. Any other non-200 response means the report was not taken into account: retry until you receive 200.
+     * Report the result of a payment taken by your own payment processor
+     */
+    async transactionsTransactionIdPaymentPostRaw(requestParameters: TransactionsTransactionIdPaymentPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['transactionId'] == null) {
+            throw new runtime.RequiredError(
+                'transactionId',
+                'Required parameter "transactionId" was null or undefined when calling transactionsTransactionIdPaymentPost().'
+            );
+        }
+
+        if (requestParameters['data'] == null) {
+            throw new runtime.RequiredError(
+                'data',
+                'Required parameter "data" was null or undefined when calling transactionsTransactionIdPaymentPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/transactions/{transactionId}/payment`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters['transactionId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: DtoPaymentResultInputToJSON(requestParameters['data']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Reports the outcome of a payment your payment processor took for a purchase made through the embeddable widget. Call it from your backend once the customer has paid or the payment has failed. transactionId is the transaction id sent in the Payment Request webhook.  A 200 response, with an empty body, means the report was taken into account, whatever it did to the transaction: a repeat of a result already applied and a success for a transaction that has already expired or failed both return 200 and change nothing. The outcome of the purchase is not returned here; it is delivered by the product webhook, which carries the payment details.  400 and 404 mean the report can never be accepted, so do not retry them. Any other non-200 response means the report was not taken into account: retry until you receive 200.
+     * Report the result of a payment taken by your own payment processor
+     */
+    async transactionsTransactionIdPaymentPost(transactionId: string, data: DtoPaymentResultInput, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.transactionsTransactionIdPaymentPostRaw({ transactionId: transactionId, data: data }, initOverrides);
     }
 
     /**

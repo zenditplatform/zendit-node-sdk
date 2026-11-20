@@ -52,20 +52,54 @@ test('vouchersOffersGet should return offers', async () => {
     expect(responseOffer.offerId).toBe(voucherOfferId);
 });
 
+// Sample values for the fields a voucher offer can require. The phone number is the one the sandbox
+// accepts, so that the purchase passes there.
+const voucherFieldValues = {
+    "sender.msisdn": "+2505550199",
+    "sender.country": "US",
+    "sender.firstName": "John",
+    "sender.lastName": "Doe",
+    "sender.email": "john.doe@example.com",
+    "recipient.msisdn": "+2505550199",
+    "recipient.country": "US",
+    "recipient.firstName": "John",
+    "recipient.lastName": "Doe",
+    "recipient.email": "john.doe@example.com",
+};
+
+// findPurchasableVoucherOffer picks an enabled fixed-price voucher offer whose required fields all
+// have a sample value, rather than relying on one offer staying in the sandbox catalog.
+async function findPurchasableVoucherOffer() {
+    const response = await zenditAPI.vouchersOffersGet(100, 0);
+    const offer = response.list.find((o) =>
+        o.enabled &&
+        o.priceType === "FIXED" &&
+        (o.requiredFields || []).every((field) => field in voucherFieldValues));
+    if (!offer) {
+        throw new Error("no enabled fixed-price voucher offer with supported required fields in the first 100 offers");
+    }
+    return offer;
+}
+
 test('vouchersPurchasesPost should create purchase', async () => {
-    const response = await zenditAPI.vouchersPurchasesPost({
-            offerId: "AMAZON_CA_005_EGIFT_USD",
-            fields: [
-                {key: "sender.msisdn", value: "+2505550199"}, // This testing phone number is used to pass the test case successfully in the sandbox
-                {key: "sender.country", value: "US"},
-                {key: "sender.firstName", value: "John"},
-                {key: "sender.lastName", value: "Doe"},
-                {key: "recipient.firstName", value: "John"},
-                {key: "recipient.lastName", value: "Doe"},
-                {key: "recipient.msisdn", value: "+2505550199"}, // This testing phone number is used to pass the test case successfully in the sandbox
-            ],
+    const offer = await findPurchasableVoucherOffer();
+    const fields = (offer.requiredFields || []).map((key) => ({key, value: voucherFieldValues[key]}));
+
+    let response;
+    try {
+        response = await zenditAPI.vouchersPurchasesPost({
+            offerId: offer.offerId,
+            fields,
             transactionId: uuid.v4(),
         });
+    } catch (err) {
+        // ResponseError carries no detail in its message: surface the API's answer.
+        if (err.response) {
+            const body = await err.response.text();
+            throw new Error(`vouchersPurchasesPost ${offer.offerId} returned ${err.response.status}: ${body}`);
+        }
+        throw err;
+    }
 
     expect(response.status).toBe("ACCEPTED");
 });
