@@ -64,6 +64,13 @@ import {
     DtoTransactionStatusToJSON,
     DtoTransactionStatusToJSONTyped,
 } from './DtoTransactionStatus';
+import type { DtoPayment } from './DtoPayment';
+import {
+    DtoPaymentFromJSON,
+    DtoPaymentFromJSONTyped,
+    DtoPaymentToJSON,
+    DtoPaymentToJSONTyped,
+} from './DtoPayment';
 
 /**
  * 
@@ -179,6 +186,12 @@ export interface DtoESimPurchase {
      * @memberof DtoESimPurchase
      */
     offerId: string;
+    /**
+     * 
+     * @type {DtoPayment}
+     * @memberof DtoESimPurchase
+     */
+    payment?: DtoPayment;
     /**
      * 
      * @type {number}
@@ -372,6 +385,7 @@ export function DtoESimPurchaseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'log': ((json['log'] as Array<any>).map(DtoTransactionLogItemFromJSON)),
         'notes': json['notes'],
         'offerId': json['offerId'],
+        'payment': json['payment'] == null ? undefined : DtoPaymentFromJSON(json['payment']),
         'price': json['price'],
         'priceBase': json['priceBase'],
         'priceCurrency': json['priceCurrency'],
@@ -424,6 +438,7 @@ export function DtoESimPurchaseToJSONTyped(value?: DtoESimPurchase | null, ignor
         'log': ((value['log'] as Array<any>).map(DtoTransactionLogItemToJSON)),
         'notes': value['notes'],
         'offerId': value['offerId'],
+        'payment': DtoPaymentToJSON(value['payment']),
         'price': value['price'],
         'priceBase': value['priceBase'],
         'priceCurrency': value['priceCurrency'],

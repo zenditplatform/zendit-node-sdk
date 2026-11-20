@@ -297,7 +297,7 @@ zenditAPI.vouchersOffersOfferIdGet('NETSHOES_BR_002_EGIFT_USD').then(v => {
 The following example will purchase the AIRCANADA_CA_001_EGIFT_USD for the recipient John Doe. Note fields list includes 6 reqired fields for the offer. Required fields will vary by offer and the catalog will return the list of fields that are required with each offer.
 
 ```typescript
-const reqFields: Array<DtoVoucherField> = [
+const reqFields: Array<DtoPurchaseField> = [
         {key: "recipient.firstName", value: "John"},
         {key: "recipient.lastName", value: "Doe"},
         {key: "recipient.msisdn", value: "+15515551212"},
@@ -381,6 +381,55 @@ zenditAPI.transactionsGet(10, 0, 'gte2023-03-29T00:00:00Z').then(v => {
 })
 ```
 
+## Payments Taken by Your Own Payment Processor
+
+When a customer buys through the embeddable widget and your own payment processor takes the payment, Zendit sends you a Payment Request webhook. Once the customer has paid, or the payment has failed, report the result from your backend.
+
+### Report a Payment Result
+
+|Parameter |Required | Description|Example|
+-------|------------|------|------|
+|transactionId|Yes|Transaction ID sent in the Payment Request webhook|0f1db8e2-b0c9-49ac-a814-1f469e71c8a8|
+|data|Yes|DtoPaymentResultInput object, described below||
+
+DtoPaymentResultInput fields:
+
+|Field |Required | Description|Example|
+-------|------------|------|------|
+|paymentReference|Yes|The payment reference you returned from the Payment Request webhook|pay_12345|
+|paymentStatus|Yes|`SUCCESS` or `FAILURE`, see Payment Status in the ENUM section|SUCCESS|
+|paymentAmount|No|Amount the customer paid, in minor units of paymentCurrency. Send it together with paymentCurrency, or send neither|1099|
+|paymentCurrency|No|Currency of paymentAmount|USD|
+|customerReferenceId|No|Your reference for the customer|cust-42|
+
+The following example reports a successful payment for transaction 0f1db8e2-b0c9-49ac-a814-1f469e71c8a8:
+
+```typescript
+zenditAPI.transactionsTransactionIdPaymentPost('0f1db8e2-b0c9-49ac-a814-1f469e71c8a8', {
+  paymentReference: 'pay_12345',
+  paymentStatus: DtoPaymentStatus.PaymentStatusSuccess,
+  paymentAmount: 1099,
+  paymentCurrency: 'USD',
+}).then(() => {
+  console.log('payment result accepted');
+})
+```
+
+The method resolves with no value when the report has been taken into account. Repeating a result that has already been applied also succeeds and changes nothing. So does reporting success for a transaction that has already expired or failed. This method does not return the outcome of the purchase. That comes in the product webhook.
+
+A 400 or 404 error means the report can never be accepted, so do not retry it. On any other error the report was not taken into account: retry until the call succeeds.
+
+### Payment Details on Purchases
+
+The top-up, voucher, eSIM and bill pay purchase models (`DtoTopupPurchase`, `DtoVoucherPurchase`, `DtoESimPurchase`, `DtoBillPayPurchase`) have an optional `payment` field of type `DtoPayment`. It is present when the payment for the purchase was taken by a payment provider. It contains:
+
+|Field |Description|
+-------|------|
+|reference|Identifies the payment with the provider that took it. For a payment taken by your own payment processor, it is the payment reference you returned from the Payment Request webhook|
+|amount, currency, currencyDivisor|What the customer paid, once the payment succeeded. They are present together or not at all|
+|customerReferenceId|Your reference for the customer, when your payment processor reported one|
+|customerEmailAddress|Your customer's email address: the one they entered in the widget, or the one on file for a registered customer|
+
 ## ENUM Values for Requests
 
 Zendit uses several ENUM string values for searches and responses. Refer to the following values for parameter values and their use in Zendit.
@@ -395,6 +444,13 @@ Zendit uses several ENUM string values for searches and responses. Refer to the 
 |IN_PROGRESS|Transaction is in progress for fulfillment with the provider|
 |DONE|Transaction has successfully completed|
 |FAIL|The transaction has failed to be fulfilled. Check the error reason and the log within the transaction to understand which step it failed and why|
+
+### Payment Status
+
+|Status |Description  |
+--------|-------------|
+|SUCCESS|The customer's payment succeeded|
+|FAILURE|The customer's payment failed|
 
 ### Price Type
 

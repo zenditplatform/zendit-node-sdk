@@ -1,6 +1,12 @@
 zendit-node changelog
 =====================
 
+# [2026-11-20] Version 1.11.0
+
+- **payments**: Added `transactionsTransactionIdPaymentPost` to report the result of a payment taken by your own payment processor (`POST /transactions/{transactionId}/payment`), with the new `DtoPaymentResultInput` and `DtoPaymentStatus` models.
+- **purchases**: Added an optional `payment` field (new `DtoPayment` model) to all purchase models (Bill Pay, eSIM, Topup, Voucher).
+- **example**: Replaced `DtoVoucherField`, no longer part of the SDK, with `DtoPurchaseField` in the example and the SDK guide.
+
 # [2026-05-27] Version 1.10.0
 
 - **Bill Pay**: Added `cutoffTimezone` and `supportsLatePayments` fields to `DtoBillPayOffer`.

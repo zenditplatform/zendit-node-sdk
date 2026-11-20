@@ -2,7 +2,7 @@ import * as uuid from "uuid";
 import * as dotenv from "dotenv"
 import {
     ZenditApi, DtoTransaction, DtoVoucherOffer, DtoTopupPurchase, DtoPurchaseValue, DtoVoucherPurchaseInput,
-    DtoValueType, DtoVoucherField, DtoTopupPurchaseMakeInput, DtoTopupSender, DtoESimOffer, DtoESimPurchaseMakeInput,
+    DtoValueType, DtoPurchaseField, DtoTopupPurchaseMakeInput, DtoTopupSender, DtoESimOffer, DtoESimPurchaseMakeInput,
     DtoTransactionStatus,
 } from "@zenditplatform/zendit-sdk";
 
@@ -66,7 +66,7 @@ const examples = async () => {
     console.log(voucherOfferData);
 
     console.log("\n====== PURCHASE FIXED VOUCHER OFFER ======")
-    const reqFields: Array<DtoVoucherField> = [
+    const reqFields: Array<DtoPurchaseField> = [
         {key: "recipient.firstName", value: "John"},
         {key: "recipient.lastName", value: "Doe"},
         {key: "recipient.msisdn", value: "+15515551212"},
